@@ -1,6 +1,15 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Main from "./routes/Main";
 
 function App() {
-  return <div>김나영22 하하</div>;
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Main></Main>}></Route>
+      </Routes>
+    </Router>
+  )
 }
 
 export default App;
