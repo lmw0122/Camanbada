@@ -16,6 +16,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Logo from "../img/logo.png";
 import FeedIcon from '@mui/icons-material/Feed';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { Link } from "react-router-dom";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -178,14 +179,20 @@ export default function PrimarySearchAppBar() {
               />
             </Search>
             {/* 커뮤니티 이동 */}
-            <IconButton size="large" aria-label="go to community" color="inherit">
-              <FeedIcon />
-            </IconButton>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
+            <Link to={'/community'}>
+              <IconButton size="large" aria-label="go to community" color="inherit">
+                <FeedIcon />
+              </IconButton>
+            </Link>
+            {/* 메시지 이동 */}
+            <Link to={'/message'}>
+              <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                <Badge badgeContent={4} color="error">
+                  <MailIcon />
+                </Badge>
+              </IconButton>
+            </Link>
+            {/* 알림창 */}
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
@@ -196,17 +203,19 @@ export default function PrimarySearchAppBar() {
               </Badge>
             </IconButton>
             {/* 프로필 */}
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              // onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            <Link to={'/profile'}>
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                // onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </Link>
             <IconButton
               size="large"
               edge="end"
