@@ -1,7 +1,16 @@
+import PrimarySearchAppBar from "../components/PrimarySearchAppBar";
+import Album from "../components/Album";
 
+// 현재 인기 캠핑장 순위
 function Main() {
 
-  return <h1>Main</h1>
+  return (
+    <div>
+      <PrimarySearchAppBar></PrimarySearchAppBar>
+      <Album></Album>
+    </div>
+
+  )
 }
 
 export default Main;
