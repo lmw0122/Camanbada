@@ -17,25 +17,12 @@ import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Logo from "../img/logo.png";
 
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
 
-// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const cards = [1, 2, 3];
+const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const theme = createTheme();
 
-export default function Album() {
+export default function SearchCampingAlbum() {
   return (
     <ThemeProvider theme={theme}>    
       <CssBaseline />
@@ -44,7 +31,7 @@ export default function Album() {
         <Box
           sx={{
             bgcolor: 'background.paper',
-            pt: 20,
+            pt: 10,
             pb: 6,
           }}
         >
@@ -69,18 +56,18 @@ export default function Album() {
               color="text.primary"
               gutterBottom
             >
-              현재 인기 캠핑장
+              '@@@' 검색 결과
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
+            {/* <Typography variant="h5" align="center" color="text.secondary" paragraph>
               좋아요 수가 많은 순서대로 캠핑장을 추천해준다.
-            </Typography>
+            </Typography> */}
           </Container>
         </Box>
         <Container sx={{ py: 0 }} maxWidth="lg">
           {/* End hero unit */}
           <Grid container spacing={4}>
             {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+              <Grid item key={card} xs={12} sm={6} md={3}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
