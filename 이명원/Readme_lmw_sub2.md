@@ -41,7 +41,8 @@ WebSocket Emulation
 
 SockJS
 
-![websocket](/uploads/dddabc951d5fcf5b4d0efb69f315171f/websocket.png)
+![sockjs](/uploads/a4a0b9b2c347521f0640a13bc17f09c8/sockjs.png)
+
 - 어플리케이션에서 우선적으로 WebSocket을 사용하도록 하지만 사용할 수 없는 경우에는 런타임 시점에 코드 변경없이 WebSocket이외의 대안으로 대체해준다.
 
 WebSocket Emulation Process
