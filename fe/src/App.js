@@ -6,6 +6,7 @@ import Login from "./routes/Login";
 import Community from "./routes/Community";
 import Profile from "./routes/Profile";
 import Message from "./routes/Message";
+import CampingDetail from "./routes/CampingDetail";
 
 function App() {
 
@@ -19,6 +20,8 @@ function App() {
         <Route path="/community" element={<Community></Community>}></Route>
         <Route path="/profile" element={<Profile></Profile>}></Route>
         <Route path="/message" element={<Message></Message>}></Route>
+        {/* 캠핑장 상세 수정해야함 */}
+        <Route path="/campingdetail" element={<CampingDetail></CampingDetail>}></Route>
       </Routes>
     </Router>
   )
