@@ -13,9 +13,10 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Logo from "../img/logo.png";
+import { Link } from "react-router-dom";
 
 // function Copyright() {
 //   return (
@@ -103,9 +104,12 @@ export default function Album() {
                       content.
                     </Typography> */}
                   </CardContent>
-                  <CardActions>
-                    <Button size="small">상세정보</Button>
-                  </CardActions>
+                  {/* 캠핑장 상세 정보 링크 걸기 */}
+                  <Link to={'/campingdetail'}>
+                    <CardActions>
+                      <Button size="small">상세정보</Button>
+                    </CardActions>
+                  </Link>
                 </Card>
               </Grid>
             ))}

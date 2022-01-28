@@ -160,13 +160,16 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" color="">
         <Toolbar>
-          <Box
-            component="img"
-            sx={{ height: 30 }}
-            alt="logo"
-            src={Logo}      
-          >
-          </Box>
+          {/* 로고 */}
+          <Link to={'/'}>
+            <Box
+              component="img"
+              sx={{ height: 30 }}
+              alt="logo"
+              src={Logo}      
+            >
+            </Box>
+          </Link>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <Search>
