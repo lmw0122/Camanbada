@@ -77,7 +77,7 @@ Public Key와 Private Key를 통해 다른 컴퓨터와 통신을 하기 위해�
 
 pem key를 이용하여 ec2-ubuntu 서버에 접속
 
-<img src="D:\D_downloads\D_YS\sickosik_git\S06P12C109\이윤식\images\캡처.PNG" style="zoom:200%;" />
+<img src=".\images\캡처.PNG" style="zoom:200%;" />
 
 ```
 ssh -i i6c109T.pem ubuntu@i6c109.p.ssafy.io
@@ -89,9 +89,7 @@ ssh -i i6c109T.pem ubuntu@i6c109.p.ssafy.io
 
 #### Workbench 접속
 
-![](D:\D_downloads\D_YS\sickosik_git\S06P12C109\이윤식\images\캡처2.PNG)
-
-
+![](.\images\캡처2.PNG)
 
 
 
