@@ -1,6 +1,6 @@
 ### JIRA
 
-![메인](C:\Users\gi718\OneDrive\바탕 화면\S06P12C109\기획 및 설계\JIRA\메인.PNG)
+![메인](\메인.PNG)
 
 ![좋아요와채팅](C:\Users\gi718\OneDrive\바탕 화면\S06P12C109\기획 및 설계\JIRA\좋아요와채팅.PNG)
 
