@@ -27,6 +27,7 @@ TCP : Transmission Control Protocol
 - 양방향 통신을 할 때 텍스트 등의 데이터가 전송되는 도착지점
 
 WebSocket
+
 ![websocket](/uploads/dddabc951d5fcf5b4d0efb69f315171f/websocket.png)
 - 기존의 단방향 HTTP 프로토콜과 호환되어 양방향 통신을 제공하기 위해 개발된 프로토콜
 - 일반 Socket 통신과 달리 HTTP 80 Port를 사용하므로 방화벽에 제약이 없다.
@@ -40,6 +41,7 @@ WebSocket Emulation
 
 SockJS
 
+![websocket](/uploads/dddabc951d5fcf5b4d0efb69f315171f/websocket.png)
 - 어플리케이션에서 우선적으로 WebSocket을 사용하도록 하지만 사용할 수 없는 경우에는 런타임 시점에 코드 변경없이 WebSocket이외의 대안으로 대체해준다.
 
 WebSocket Emulation Process
@@ -56,6 +58,8 @@ WebSocket Emulation Process
    3. transport : 전송 타입
 
 STOMP : Simple Text Oriented MEssaging Protocol
+
+![stomp](/uploads/3663e30bfc8ea72d7e70be823b178923/stomp.png)
 
 - 메세지 전송을 효율적으로 하기 위해 만들어진 프로토콜이다.
 - TCP 또는 WebSocket등 양방향 네트워크 프로토콜을 기반으로 동작한다.
