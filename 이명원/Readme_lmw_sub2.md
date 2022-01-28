@@ -27,7 +27,7 @@ TCP : Transmission Control Protocol
 - 양방향 통신을 할 때 텍스트 등의 데이터가 전송되는 도착지점
 
 WebSocket
-
+![websocket](/uploads/dddabc951d5fcf5b4d0efb69f315171f/websocket.png)
 - 기존의 단방향 HTTP 프로토콜과 호환되어 양방향 통신을 제공하기 위해 개발된 프로토콜
 - 일반 Socket 통신과 달리 HTTP 80 Port를 사용하므로 방화벽에 제약이 없다.
 - 접속까지는 HTTP 프로토콜을 이용하고 그 이후 통신은 WebSocket 프로토콜로 통신하게 된다.
@@ -69,26 +69,24 @@ STOMP : Simple Text Oriented MEssaging Protocol
   2.  RadditMQ, ActiveMQ 같은 Message Broker를 이용해 구독을 관리하고 메세지를 브로드캐스팅 할 수 있다.
   3.  WebSocket기반으로 각 연결마다 WebSocketHandler를 구현하는 것보다 @Controller 된 객체를 이용해 조직적으로 관리할 수 있다.
 - 설정 예시
-  import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
-  import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
-  @Configuration
-  @EnableWebSocketMessageBroker
-  public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+      import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+      import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
-      @Override
-      public void registerStompEndpoints(StompEndpointRegistry registry) {
+      @Configuration
+      @EnableWebSocketMessageBroker
+      public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-         registry.addEndpoint("/example").withSockJS();
+         @Override
+         public void registerStompEndpoints(StompEndpointRegistry registry) {
+            registry.addEndpoint("/example").withSockJS();
+         }
+         @Override
+         public void configureMessageBroker(MessageBrokerRegistry config) {
+            config.setApplicationDestinationPrefixes("/test");
+            config.enableSimpleBroker("/topic", "/queue");
+         }
+
       }
-
-      @Override
-      public void configureMessageBroker(MessageBrokerRegistry config) {
-
-         config.setApplicationDestinationPrefixes("/test");
-         config.enableSimpleBroker("/topic", "/queue");
-      }
-
-  }
-
+      
 다음주부터는 위 개념들과 예시들을 이용해 기본 채팅방 이동 구현과 실시간 채팅 구현을 할 예정이다.
