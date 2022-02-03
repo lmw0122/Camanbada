@@ -132,12 +132,8 @@ export default function BasicTabs() {
           </Box>
 
         </Container>
-
-
-
-
       </main>
     </ThemeProvider>
-    
+
   );
 }
