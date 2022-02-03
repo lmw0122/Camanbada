@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Paging from './Pagination';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,7 +7,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Pagination from '@mui/material/Pagination';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Container, CssBaseline, dividerClasses, Grid, Typography } from '@mui/material';
@@ -58,7 +58,7 @@ export default function BoardTable() {
               ))}
             </TableBody>
           </Table>
-          <Pagination count={10} showFirstButton showLastButton sx={{ m: 2 }} />  
+          <Paging />
         </TableContainer>
       </Grid>
     </ThemeProvider>

@@ -65,7 +65,7 @@ export default function SelectVariants() {
     <Box
       sx={{
         bgcolor: "background.paper",
-        pt: 10,
+        pt: 2,
         pb: 0,
       }}
     >
