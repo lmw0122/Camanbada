@@ -36,16 +36,6 @@ export default function SearchCampingAlbum() {
           }}
         >
           <Container maxWidth="lg">
-            {/* <Stack
-              sx={{ 
-                pt: 0,
-                pb: 3, 
-              }}
-              direction="row"
-              justifyContent="center"
-            >
-              <img src={require("../img/logo.png")} alt="logo"></img>
-            </Stack> */}
             <Typography
               sx={{
                 pt: 5,
@@ -58,9 +48,6 @@ export default function SearchCampingAlbum() {
             >
               '@@@' 검색 결과
             </Typography>
-            {/* <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              좋아요 수가 많은 순서대로 캠핑장을 추천해준다.
-            </Typography> */}
           </Container>
         </Box>
         <Container sx={{ py: 0 }} maxWidth="lg">
@@ -70,6 +57,7 @@ export default function SearchCampingAlbum() {
               <Grid item key={card} xs={12} sm={6} md={3}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                  align="center"
                 >
                   <CardMedia
                     component="img"
@@ -85,10 +73,6 @@ export default function SearchCampingAlbum() {
                     <Typography gutterBottom variant="h5" component="h2">
                       $캠핑장 이름
                     </Typography>
-                    {/* <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
-                    </Typography> */}
                   </CardContent>
                   <CardActions>
                     <Button size="small">상세정보</Button>
