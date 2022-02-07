@@ -1,4 +1,4 @@
-import SearchCampingAlbum from "../components/SearchCampingAlbum"; 
+import CampingFilteringAlbum from "../components/CampingFilteringAlbum";
 import NavBar from "../components/NavBar";
 
 
@@ -7,8 +7,7 @@ export default function CampingFiltering () {
   return (
     <div>
       <NavBar></NavBar>
-      
-      <SearchCampingAlbum></SearchCampingAlbum>
+      <CampingFilteringAlbum></CampingFilteringAlbum>
     </div>
   )
 }

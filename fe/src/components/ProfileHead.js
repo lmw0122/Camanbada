@@ -23,6 +23,8 @@ import CardActions from '@mui/material/CardActions';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import { Link } from "react-router-dom";
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -58,6 +60,13 @@ function a11yProps(index) {
 }
 
 const theme = createTheme();
+
+const Item = styled(Paper)(({ theme }) => ({
+  ...theme.typography.body2,
+  // padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 export default function ProfileHead() {
   const [value, setValue] = React.useState(0);
@@ -110,7 +119,31 @@ export default function ProfileHead() {
                 20
               </Typography>
             </Grid>
-            <Grid item align="center" md={2.4}>
+            <Stack
+              direction="column"
+              spacing={2}
+            >
+              <Item>
+                <Link to={'/create'} style={{textDecoration:'none'}}>
+                  <Button
+                    style={{
+                      backgroundColor: "#009688"
+                    }}
+                    variant="contained"
+                  >
+                    게시글 작성
+                  </Button>
+                </Link>
+              </Item>
+              <Item>
+                <Link to={'/profile/update'} style={{textDecoration:'none'}}>
+                  <Button variant="contained">
+                    프로필 편집
+                  </Button>
+                </Link>
+              </Item>
+            </Stack>
+            {/* <Grid item align="center" md={2.4}>
               <Link to={'/create'} style={{textDecoration:'none'}}>
                 <Button
                   style={{
@@ -126,8 +159,7 @@ export default function ProfileHead() {
                   프로필 편집
                 </Button>
               </Link>
-              
-            </Grid>
+            </Grid> */}
           </Grid>
           <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

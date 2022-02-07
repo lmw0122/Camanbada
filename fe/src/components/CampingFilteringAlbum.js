@@ -10,13 +10,13 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from "react-router-dom";
 
-const cards = [1, 2, 3];
+
+const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const theme = createTheme();
 
-export default function Album() {
+export default function CampingFilteringAlbum() {
   return (
     <ThemeProvider theme={theme}>    
       <CssBaseline />
@@ -25,21 +25,11 @@ export default function Album() {
         <Box
           sx={{
             bgcolor: 'background.paper',
-            pt: 20,
+            pt: 10,
             pb: 6,
           }}
         >
           <Container maxWidth="lg">
-            {/* <Stack
-              sx={{ 
-                pt: 0,
-                pb: 3, 
-              }}
-              direction="row"
-              justifyContent="center"
-            >
-              <img src={require("../img/logo.png")} alt="logo"></img>
-            </Stack> */}
             <Typography
               sx={{
                 pt: 5,
@@ -50,10 +40,7 @@ export default function Album() {
               color="text.primary"
               gutterBottom
             >
-              현재 인기 캠핑장
-            </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              좋아요 수가 많은 순서대로 캠핑장을 추천해준다.
+              '@@@' 검색 결과
             </Typography>
           </Container>
         </Box>
@@ -61,7 +48,7 @@ export default function Album() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+              <Grid item key={card} xs={12} sm={6} md={3}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                   align="center"
@@ -80,17 +67,10 @@ export default function Album() {
                     <Typography gutterBottom variant="h5" component="h2">
                       $캠핑장 이름
                     </Typography>
-                    {/* <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
-                    </Typography> */}
                   </CardContent>
-                  {/* 캠핑장 상세 정보 링크 걸기 */}
-                  <Link to={'/campingdetail'}>
-                    <CardActions>
-                      <Button size="small">상세정보</Button>
-                    </CardActions>
-                  </Link>
+                  <CardActions>
+                    <Button size="small">상세정보</Button>
+                  </CardActions>
                 </Card>
               </Grid>
             ))}

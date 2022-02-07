@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -10,13 +9,20 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from "react-router-dom";
+import CardHeader from '@mui/material/CardHeader';
+import Avatar from '@mui/material/Avatar';
+import { red } from '@mui/material/colors';
+import IconButton from '@mui/material/IconButton';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
 
-const cards = [1, 2, 3];
+
+const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const theme = createTheme();
 
-export default function Album() {
+export default function SearchCommunityAlbum() {
   return (
     <ThemeProvider theme={theme}>    
       <CssBaseline />
@@ -25,21 +31,11 @@ export default function Album() {
         <Box
           sx={{
             bgcolor: 'background.paper',
-            pt: 20,
+            pt: 10,
             pb: 6,
           }}
         >
           <Container maxWidth="lg">
-            {/* <Stack
-              sx={{ 
-                pt: 0,
-                pb: 3, 
-              }}
-              direction="row"
-              justifyContent="center"
-            >
-              <img src={require("../img/logo.png")} alt="logo"></img>
-            </Stack> */}
             <Typography
               sx={{
                 pt: 5,
@@ -50,10 +46,7 @@ export default function Album() {
               color="text.primary"
               gutterBottom
             >
-              현재 인기 캠핑장
-            </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              좋아요 수가 많은 순서대로 캠핑장을 추천해준다.
+              '@@@' 검색 결과
             </Typography>
           </Container>
         </Box>
@@ -61,37 +54,42 @@ export default function Album() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                  align="center"
-                >
+              <Grid item key={card} xs={12} sm={6} md={3}>
+                <Card sx={{ maxWidth: 345 }}>
+                  <CardHeader
+                    avatar={
+                      <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                        U
+                      </Avatar>
+                    }
+                    action={
+                      <IconButton aria-label="settings">
+                        <MoreVertIcon />
+                      </IconButton>
+                    }
+                    title="제목"
+                    subheader="날짜?"
+                  />
                   <CardMedia
                     component="img"
-                    sx={{
-                      // 16:9
-                      // pt: '56.25%',
-                      pt: '0%',
-                    }}
+                    height="194"
                     image="https://images.unsplash.com/photo-1641157141085-8454fbc33f3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0MzExNTc1NQ&ixlib=rb-1.2.1&q=80&w=1080"
-                    alt="CampingImage"
+                    alt="BoardImage"
                   />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      $캠핑장 이름
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      게시글 내용
                     </Typography>
-                    {/* <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
-                    </Typography> */}
                   </CardContent>
-                  {/* 캠핑장 상세 정보 링크 걸기 */}
-                  <Link to={'/campingdetail'}>
-                    <CardActions>
-                      <Button size="small">상세정보</Button>
-                    </CardActions>
-                  </Link>
-                </Card>
+                  <CardActions disableSpacing>
+                    <IconButton aria-label="add to favorites">
+                      <FavoriteIcon />
+                    </IconButton>
+                    <IconButton aria-label="share">
+                      <ShareIcon />
+                    </IconButton>
+                  </CardActions>
+                </Card> 
               </Grid>
             ))}
           </Grid>
