@@ -5,12 +5,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputBase from '@mui/material/InputBase';
-import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 
 const Search = styled('div')(({ theme }) => ({
@@ -28,15 +25,15 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
+// const SearchIconWrapper = styled('div')(({ theme }) => ({
+//   padding: theme.spacing(0, 2),
+//   height: '100%',
+//   position: 'absolute',
+//   pointerEvents: 'none',
+//   display: 'flex',
+//   alignItems: 'center',
+//   justifyContent: 'center',
+// }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',

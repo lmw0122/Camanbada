@@ -13,6 +13,7 @@ import Search from "./routes/Search";
 import CampingFiltering from "./routes/CampingFiltering";
 import SearchUser from "./routes/SearchUser";
 import SearchCommunity from "./routes/SearchCommunity";
+import BoardDetail from "./routes/BoardDetail";
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
         <Route path="/profile" element={<Profile></Profile>}></Route>
         <Route path="/message" element={<Message></Message>}></Route>
         <Route path="/create" element={<Create></Create>}></Route>
-        {/* 캠핑장 상세 수정해야함 */}
+        {/* 캠핑장 상세 링크 수정 */}
         <Route path="/campingdetail" element={<CampingDetail></CampingDetail>}></Route>
         {/* 프로필 편집 링크 수정 */}
         <Route path="/profile/update" element={<Update></Update>}></Route>
@@ -36,6 +37,8 @@ function App() {
         <Route path="/search/camping" element={<SearchCamping></SearchCamping>}></Route>
         <Route path="/search/user" element={<SearchUser></SearchUser>}></Route>
         <Route path="/search/community" element={<SearchCommunity></SearchCommunity>}></Route>
+        {/* 게시글 상세 링크 수정 */}
+        <Route path="/board" element={<BoardDetail></BoardDetail>}></Route>
       </Routes>
     </Router>
   )

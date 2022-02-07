@@ -7,10 +7,8 @@ import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
-import Grid from '@mui/material/Grid';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
