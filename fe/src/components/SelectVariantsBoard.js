@@ -115,10 +115,16 @@ export default function SelectVariants() {
               </MenuItem>
               <MenuItem value={10}>서울특별시</MenuItem>
               <MenuItem value={20}>경기도</MenuItem>
+              <MenuItem value={10}>인천광역시</MenuItem>
               <MenuItem value={30}>강원도</MenuItem>
               <MenuItem value={40}>충청도</MenuItem>
+              <MenuItem value={40}>대전광역시</MenuItem>
               <MenuItem value={50}>전라도</MenuItem>
+              <MenuItem value={50}>광주광역시</MenuItem>
               <MenuItem value={60}>경상도</MenuItem>
+              <MenuItem value={60}>부산광역시</MenuItem>
+              <MenuItem value={60}>대구광역시</MenuItem>
+              <MenuItem value={60}>울산광역시</MenuItem>
               <MenuItem value={70}>제주특별자치도</MenuItem>
             </Select>
           </FormControl>

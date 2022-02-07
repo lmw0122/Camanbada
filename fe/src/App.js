@@ -8,6 +8,7 @@ import Profile from "./routes/Profile";
 import Message from "./routes/Message";
 import CampingDetail from "./routes/CampingDetail";
 import Create from "./routes/Create";
+import BoardUpdate from "./routes/BoardUpdate";
 import Update from "./routes/Update";
 import Search from "./routes/Search";
 import CampingFiltering from "./routes/CampingFiltering";
@@ -28,6 +29,7 @@ function App() {
         <Route path="/profile" element={<Profile></Profile>}></Route>
         <Route path="/message" element={<Message></Message>}></Route>
         <Route path="/create" element={<Create></Create>}></Route>
+        <Route path="/board/update" element={<BoardUpdate></BoardUpdate>}></Route>
         {/* 캠핑장 상세 수정해야함 */}
         <Route path="/campingdetail" element={<CampingDetail></CampingDetail>}></Route>
         {/* 프로필 편집 링크 수정 */}

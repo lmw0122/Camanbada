@@ -122,7 +122,7 @@ export default function ProfileHead() {
                 </Button>
               </Link>
               <Link to={'/profile/update'} style={{textDecoration:'none'}}>
-                <Button variant="contained">
+                <Button variant="contained" sx={{ mt : 1}}>
                   프로필 편집
                 </Button>
               </Link>
