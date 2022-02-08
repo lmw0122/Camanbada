@@ -30,12 +30,9 @@ function App() {
         <Route path="/profile" element={<Profile></Profile>}></Route>
         <Route path="/message" element={<Message></Message>}></Route>
         <Route path="/create" element={<Create></Create>}></Route>
-<<<<<<< HEAD
         <Route path="/board/update" element={<BoardUpdate></BoardUpdate>}></Route>
         {/* 캠핑장 상세 수정해야함 */}
-=======
         {/* 캠핑장 상세 링크 수정 */}
->>>>>>> 4a18334741f437f6218bb3bd86494bb1b9f0fd75
         <Route path="/campingdetail" element={<CampingDetail></CampingDetail>}></Route>
         {/* 프로필 편집 링크 수정 */}
         <Route path="/profile/update" element={<Update></Update>}></Route>
