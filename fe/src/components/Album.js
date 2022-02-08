@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
+import Stack from '@mui/material/Stack';
 
 const cards = [1, 2, 3];
 
@@ -25,12 +26,12 @@ export default function Album() {
         <Box
           sx={{
             bgcolor: 'background.paper',
-            pt: 20,
-            pb: 6,
+            mt: 15,
+            mb: 4,
           }}
         >
           <Container maxWidth="lg">
-            {/* <Stack
+            <Stack
               sx={{ 
                 pt: 0,
                 pb: 3, 
@@ -39,20 +40,20 @@ export default function Album() {
               justifyContent="center"
             >
               <img src={require("../img/logo.png")} alt="logo"></img>
-            </Stack> */}
+            </Stack>
             <Typography
               sx={{
                 pt: 5,
+                fontWeight: 'bold',
               }}
-              component="h1"
-              variant="h2"
+              variant="h4"
               align="center"
               color="text.primary"
               gutterBottom
             >
               현재 인기 캠핑장
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
+            <Typography variant="h6" align="center" color="text.secondary" paragraph>
               좋아요 수가 많은 순서대로 캠핑장을 추천해준다.
             </Typography>
           </Container>

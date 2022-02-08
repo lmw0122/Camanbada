@@ -1,10 +1,13 @@
+import MessageListContainer from "../components/chat/MessageListContainer";
+import RoomContainer from "../components/chat/RoomContainer";
 
 
 export default function Message () {
 
   return (
     <div>
-      <h1>Message</h1>
+      <MessageListContainer></MessageListContainer>
+      <RoomContainer></RoomContainer>
     </div>
   )
 }

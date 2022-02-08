@@ -55,16 +55,16 @@ export default function NewsFeed() {
             <Typography
               sx={{
                 pt: 1,
+                fontWeight: 'bold',
               }}
-              component="h1"
-              variant="h2"
+              variant="h4"
               align="center"
               color="text.primary"
               gutterBottom
             >
               뉴스피드
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
+            <Typography variant="h6" align="center" color="text.secondary" paragraph>
               팔로우한 사람들 게시물 표시.
             </Typography>
           </Container>
