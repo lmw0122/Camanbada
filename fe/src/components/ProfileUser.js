@@ -18,16 +18,16 @@ class ProfileUser extends Component {
     if (this.state.userE === true) {
       return (
         <Link to={'/profile/update'} style={{textDecoration:'none'}}>
-        <Button
-          style={{
-            border: "1px black solid",
-            color: "black"
-          }}
-          variant="outlined"
-        >
-          게시글 작성
-        </Button>
-      </Link>  
+          <Button
+            style={{
+              border: "1px black solid",
+              color: "black"
+            }}
+            variant="outlined"
+          >
+            게시글 작성
+          </Button>
+        </Link>  
       ) 
     } else {
       return (
