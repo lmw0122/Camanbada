@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.19a64c23.css",
+    "main.js": "/static/js/main.e27f42e1.js",
+    "static/media/camping1.jpg": "/static/media/camping1.89aebd8cdf244a32c6e3.jpg",
+    "static/media/camping4.jpg": "/static/media/camping4.0bbf654c20b3c1947b84.jpg",
+    "static/media/camping2.jpg": "/static/media/camping2.3e9743978960538f6c21.jpg",
+    "static/media/camping5.jpg": "/static/media/camping5.677b276856efed57c58d.jpg",
+    "static/media/camping3.jpg": "/static/media/camping3.a93f7861c9b2067847df.jpg",
+    "static/media/logo.png": "/static/media/logo.dc61a5de61946aa67907.png",
+    "index.html": "/index.html",
+    "main.19a64c23.css.map": "/static/css/main.19a64c23.css.map",
+    "main.e27f42e1.js.map": "/static/js/main.e27f42e1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.19a64c23.css",
+    "static/js/main.e27f42e1.js"
+  ]
+}

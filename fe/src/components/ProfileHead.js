@@ -25,6 +25,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Link } from "react-router-dom";
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import IsFollow from "./IsFollow";
+import ProfileUser from "./ProfileUser";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -65,11 +67,13 @@ const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   // padding: theme.spacing(1),
   textAlign: 'center',
-  color: theme.palette.text.secondary,
+  // color: theme.palette.text.secondary,
 }));
 
 export default function ProfileHead() {
   const [value, setValue] = React.useState(0);
+
+  const [isfollowed, setIsfollowed] = React.useState('false');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -86,40 +90,73 @@ export default function ProfileHead() {
             justifyContent="center"
             alignItems="center"
             sx={{
-              mb: 10
+              mb: 5
             }}
           >
-            <Grid item align="center"md={2.4}>
-              <AccountCircleIcon  sx={{ fontSize: 120 }} />
-              <Typography variant="h5">
-                닉네임
-              </Typography>
+            <Grid item align="center" md={2.4} sx={{ mr: 4 }}>
+              <AccountCircleIcon  sx={{ fontSize: 150 }} />
             </Grid>
-            <Grid item align="center" md={2.4}>
-              <Typography>
-                게시물
-              </Typography>
-              <Typography>
-                4
-              </Typography>
+            <Grid item md={7.2}>
+              {/* 닉네임 */}
+              <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
+                <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+                  싸피lee2022
+                </Typography>
+                <ProfileUser />
+                {/* <Link to={'/message'} style={{textDecoration:'none'}}>
+                  <Button
+                    style={{
+                      border: "1px black solid",
+                      color: "black"
+                    }}
+                    variant="outlined"
+                  >
+                    메시지 보내기
+                  </Button>
+                </Link>                */}
+                <IsFollow />
+              </Stack>
+              {/* 게시물, 팔로워, 팔로우 부분 */}
+              <Stack direction="row" spacing={4} sx={{ mb: 2 }}>
+                <Stack direction="row" spacing={1}>
+                  <Typography sx={{ fontSize: 20 }}>
+                    게시물
+                  </Typography>
+                  <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>
+                    4
+                  </Typography>
+                </Stack>
+                <Stack direction="row" spacing={1}>
+                  <Typography sx={{ fontSize: 20 }}>
+                    팔로워
+                  </Typography>
+                  <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>
+                    16
+                  </Typography>
+                </Stack>
+                <Stack direction="row" spacing={1}>
+                  <Typography sx={{ fontSize: 20 }}>
+                    팔로우
+                  </Typography>
+                  <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>
+                    20
+                  </Typography>
+                </Stack>
+              </Stack>
+              {/* 자기 소개 부분 */}
+              <Stack>
+                {/* 150자 예시 */}
+                모든 게 마음먹기 달렸어
+                어떤 게 행복한 삶인가요
+                사는 게 힘이 들다 하지만
+                쉽게만 살아가면 재미없어 bingo! (bingo!)
+                거룩한 인생 고귀한 삶을 살며
+                부끄럼 없는 투명한 마음으로
+                이내 삶이 끝날 그 마지막 순간에
+                나 웃어보리라 나 바라는 대로 (bingo!)
+              </Stack>
             </Grid>
-            <Grid item align="center" md={2.4}>
-              <Typography>
-                팔로워
-              </Typography>
-              <Typography>
-                16
-              </Typography>
-            </Grid>
-            <Grid item align="center" md={2.4}>
-              <Typography>
-                팔로잉
-              </Typography>
-              <Typography>
-                20
-              </Typography>
-            </Grid>
-            <Stack
+            {/* <Stack
               direction="column"
               spacing={2}
             >
@@ -142,30 +179,14 @@ export default function ProfileHead() {
                   </Button>
                 </Link>
               </Item>
-            </Stack>
-            {/* <Grid item align="center" md={2.4}>
-              <Link to={'/create'} style={{textDecoration:'none'}}>
-                <Button
-                  style={{
-                    backgroundColor: "#009688"
-                  }}
-                  variant="contained"
-                >
-                  게시글 작성
-                </Button>
-              </Link>
-              <Link to={'/profile/update'} style={{textDecoration:'none'}}>
-                <Button variant="contained" sx={{ mt : 1}}>
-                  프로필 편집
-                </Button>
-              </Link>
-            </Grid> */}
+            </Stack> */}
           </Grid>
+          
           <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
-                <Tab label="내가 올린 게시물" {...a11yProps(0)} />
-                <Tab label="내가 좋아요한 캠핑장" {...a11yProps(1)} />
+                <Tab label="올린 게시물" {...a11yProps(0)} />
+                <Tab label="좋아요한 캠핑장" {...a11yProps(1)} />
               </Tabs>
             </Box>
             <TabPanel value={value} index={0} align="center">

@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -71,6 +72,26 @@ export default function SelectVariants() {
       <Container maxWidth="lg">
         <Stack
           sx={{ 
+            mb: 5, 
+          }}
+          direction="row"
+          justifyContent="center"
+        >
+          <img src={require("../img/logo.png")} alt="logo"></img>
+        </Stack>
+        <Typography
+          sx={{
+            fontWeight: 'bold',
+          }}
+          variant="h4"
+          align="center"
+          color="text.primary"
+          gutterBottom
+        >
+          캠핑장을 검색하세요!
+        </Typography>
+        <Stack
+          sx={{ 
             pt: 0,
             pb: 0, 
           }}
@@ -111,9 +132,6 @@ export default function SelectVariants() {
           </FormControl>
           <FormControl variant="filled" sx={{ m: 1, minWidth: 300 }}>
             <Search>
-              {/* <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper> */}
               <StyledInputBase
                 placeholder="캠핑장 이름을 입력하세요."
                 inputProps={{ 'aria-label': 'search' }}

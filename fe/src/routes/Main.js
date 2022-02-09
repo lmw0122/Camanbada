@@ -9,8 +9,8 @@ function Main() {
   return (
     <div>
       <NavBar></NavBar>
-      <Album></Album>
       <SelectVariants></SelectVariants>
+      <Album></Album>
       <NewsFeed></NewsFeed>
     </div>
 
