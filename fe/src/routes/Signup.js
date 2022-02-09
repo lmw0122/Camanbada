@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import axios from 'axios'
 import Copyright from "../components/Copyright";
+import Logo from "../img/logo.png";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -51,9 +52,11 @@ export default function SignUp() {
       e.preventDefault()
       try {
         await axios
-          .post('http://localhost:3000/signup', {
-            username: id,
+          .post('http://i6c109.p.ssafy.io:3000/signup', {
+            id: id,
             password: password,
+            passwordConfirm : passwordConfirm,
+            nickname : nickname,
             email: email,
           })
           .then((res) => {
@@ -72,8 +75,8 @@ export default function SignUp() {
   // 아이디
   const onChangeName = useCallback((e) => {
     setId(e.target.value)
-    if (e.target.value.length < 2 || e.target.value.length > 15) {
-      setIdMessage('2글자 이상 15글자 미만으로 입력해주세요.')
+    if (e.target.value.length < 5 || e.target.value.length > 15) {
+      setIdMessage('5글자 이상 15글자 미만으로 입력해주세요.')
       setIsId(false)
     } else {
       setIdMessage('올바른 이름 형식입니다 :)')
@@ -150,6 +153,12 @@ export default function SignUp() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="sm">
         <CssBaseline />
+        <Box
+              component="img"
+              sx={{ height: 100, mt : 3, ml : 5 }}
+              alt="logo"
+              src={Logo}      
+        ></Box>
         <Box
           sx={{
             marginTop: 5,
@@ -252,7 +261,7 @@ export default function SignUp() {
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/login" variant="body2">
-                  Already have an account? Login
+                  계정이 이미 있으신가요?? 로그인하러 가기!
                 </Link>
               </Grid>
             </Grid>

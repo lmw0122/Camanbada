@@ -84,7 +84,8 @@ export default function SignInSide() {
               component="img"
               sx={{ height: 80, mb: 2 }}
               alt="logo"
-              src={Logo}      
+              src={Logo}
+                    
             >
             </Box>
             {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -161,7 +162,7 @@ export default function SignInSide() {
                 </Grid> */}
                 <Grid item>
                   <Link href="/Signup" variant="body2">
-                    아이디가 없으신가요? 회원가입하러 가기.
+                    아이디가 없으신가요? 회원가입하러 가기!
                   </Link>
                 </Grid>
               </Grid>

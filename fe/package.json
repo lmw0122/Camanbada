@@ -11,17 +11,17 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.25.0",
-<<<<<<< HEAD
     "qs": "^6.10.3",
-=======
->>>>>>> af5470fb69d1dc9893a2e7c4afd46c38df169879
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-js-pagination": "^3.0.3",
+    "react-responsive-carousel": "^3.2.22",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
+    "react-slick": "^0.28.1",
     "react-swipeable-views": "^0.14.0",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.3",
     "web-vitals": "^2.1.4"
   },

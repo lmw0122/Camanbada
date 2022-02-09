@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Main from "./routes/Main";
+import NoLogin from "./routes/NoLogin";
 import SignUp from "./routes/Signup";
 import SearchCamping from "./routes/SearchCamping";
 import Login from "./routes/Login";
@@ -11,6 +12,7 @@ import Create from "./routes/Create";
 import BoardUpdate from "./routes/BoardUpdate";
 import Update from "./routes/Update";
 import Search from "./routes/Search";
+import Test from "./routes/test.js"
 import CampingFiltering from "./routes/CampingFiltering";
 import SearchUser from "./routes/SearchUser";
 import SearchCommunity from "./routes/SearchCommunity";
@@ -22,7 +24,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Main></Main>}></Route>
+        <Route path="/test" element={<Test></Test>}></Route>
+        <Route path="/main" element={<Main></Main>}></Route>
+        <Route path="/" element={<NoLogin></NoLogin>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>
         <Route path="/camping" element={<CampingFiltering></CampingFiltering>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>

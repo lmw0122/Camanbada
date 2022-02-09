@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Container, CssBaseline, Typography, Grid, TextField, Stack, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NavBar from '../components/NavBar'
 
@@ -37,10 +38,20 @@ export default function Update() {
               <Typography sx={{ ml : '13ch', fontWeight: 'bold', mb : 2}}>사용자 아이디</Typography>
             </Stack>
             <Stack direction="row" sx={{ mt : 2}}>
+              <Typography >이메일</Typography>
+              <Typography sx={{ ml : '13ch', fontWeight: 'bold', mb : 2}}>사용자 이메일</Typography>
+            </Stack>
+            <Stack direction="row" sx={{ mt : 2}}>
               <Typography sx={{ mr : 2, width : 150 }}>소개글</Typography>
               <TextField sx={{ width : '50ch' }} multiline />
               <Typography sx={{ m : 2}}>0 / 150</Typography>
             </Stack>
+            <Stack direction="row" sx={{ mt : 2}}>
+              <Typography sx={{ mr : 2, width : 150 }}>닉네임</Typography>
+              <TextField sx={{ width : '50ch' }}/>
+              <Button variant="contained" sx={{ ml : 2, width : '16ch' }}>중복 확인</Button>
+            </Stack>
+            <Divider sx={{ borderBottomWidth: 2, my: 2 }} />
             <Stack direction="row" sx={{ mt : 2}}>
               <Typography sx={{ mr : 2, width : 150 }}>비밀번호</Typography>
               <TextField sx={{ width : '50ch' }}/>
@@ -49,15 +60,6 @@ export default function Update() {
               <Typography sx={{ mr : 2, width : 150 }}>비밀번호 확인</Typography>
               <TextField sx={{ width : '50ch' }}/>
               <Button variant="contained" sx={{ ml : 2}}>비밀번호 수정</Button>
-            </Stack>
-            <Stack direction="row" sx={{ mt : 2}}>
-              <Typography sx={{ mr : 2, width : 150 }}>닉네임</Typography>
-              <TextField sx={{ width : '50ch' }}/>
-              <Button variant="contained" sx={{ ml : 2, width : '16ch' }}>중복 확인</Button>
-            </Stack>
-            <Stack direction="row" sx={{ mt : 2}}>
-              <Typography >이메일</Typography>
-              <Typography sx={{ ml : '13ch', fontWeight: 'bold', mb : 2}}>사용자 이메일</Typography>
             </Stack>
           </Grid>
         </Grid>
