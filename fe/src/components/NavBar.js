@@ -17,6 +17,8 @@ import Logo from "../img/logo.png";
 import FeedIcon from '@mui/icons-material/Feed';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from "react-router-dom";
+import FormControl from '@mui/material/FormControl';
+import Button from '@mui/material/Button';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -174,33 +176,45 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             {/* 검색창 */}
-            <Search>
-              <Link to={'/search'}>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
+            <FormControl variant="filled" sx={{ my: 1, minWidth: 300 }}>
+              <Search>
                 <StyledInputBase
-                  placeholder="Search…"
+                  placeholder="검색어를 입력하세요."
                   inputProps={{ 'aria-label': 'search' }}
                 />
-              </Link>
-            </Search>
+              </Search>
+            </FormControl>
+            <Button
+                type="submit"
+                sx={{
+                  my: 1,
+                  mr: 3,
+                  minWidth: 40,
+                  height: '5ch'
+                }}
+                variant="contained"
+              >
+                <SearchIcon />
+            </Button>
             {/* 커뮤니티 이동 */}
+            
             <Link to={'/community'}>
-              <IconButton size="large" aria-label="go to community" color="inherit">
+              <IconButton size="large" aria-label="go to community" color="primary">
                 <FeedIcon />
               </IconButton>
             </Link>
+
+            
             {/* 메시지 이동 */}
             <Link to={'/message'}>
-              <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="error">
-                  <MailIcon />
-                </Badge>
+              <IconButton size="large" aria-label="show 4 new mails" color="primary">
+                <MailIcon />
+                {/* <Badge badgeContent={4} color="error">
+                </Badge> */}
               </IconButton>
             </Link>
             {/* 알림창 */}
-            <IconButton
+            {/* <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
@@ -208,7 +222,7 @@ export default function PrimarySearchAppBar() {
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             {/* 프로필 */}
             <Link to={'/profile'}>
               <IconButton
@@ -218,7 +232,7 @@ export default function PrimarySearchAppBar() {
                 aria-controls={menuId}
                 aria-haspopup="true"
                 // onClick={handleProfileMenuOpen}
-                color="inherit"
+                color="primary"
               >
                 <AccountCircle />
               </IconButton>
@@ -227,7 +241,7 @@ export default function PrimarySearchAppBar() {
               size="large"
               edge="end"
               aria-label="logout"
-              color="inherit"
+              color="error"
             >
               <LogoutIcon />
             </IconButton>

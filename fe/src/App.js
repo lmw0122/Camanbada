@@ -15,6 +15,7 @@ import CampingFiltering from "./routes/CampingFiltering";
 import SearchUser from "./routes/SearchUser";
 import SearchCommunity from "./routes/SearchCommunity";
 import BoardDetail from "./routes/BoardDetail";
+import Test from "./components/Test";
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route path="/search/community" element={<SearchCommunity></SearchCommunity>}></Route>
         {/* 게시글 상세 링크 수정 */}
         <Route path="/board" element={<BoardDetail></BoardDetail>}></Route>
+        <Route path="/test" element={<Test></Test>}></Route>
       </Routes>
     </Router>
   )

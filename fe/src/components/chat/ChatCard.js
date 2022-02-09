@@ -56,6 +56,7 @@ const ChatCard = () => {
                     2020-01-02
                 </SenderDate>
             </Card>
+            
         </>
     );
 };

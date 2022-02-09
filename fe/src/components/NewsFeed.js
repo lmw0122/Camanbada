@@ -47,8 +47,8 @@ export default function NewsFeed() {
       <Box
           sx={{
             bgcolor: 'background.paper',
-            pt: 10,
-            pb: 6,
+            pt: 5,
+            pb: 2,
           }}
         >
           <Container maxWidth="lg">
@@ -58,15 +58,15 @@ export default function NewsFeed() {
                 fontWeight: 'bold',
               }}
               variant="h4"
-              align="center"
+              align="left"
               color="text.primary"
               gutterBottom
             >
               뉴스피드
             </Typography>
-            <Typography variant="h6" align="center" color="text.secondary" paragraph>
+            {/* <Typography variant="h6" align="center" color="text.secondary" paragraph>
               팔로우한 사람들 게시물 표시.
-            </Typography>
+            </Typography> */}
           </Container>
         </Box>
         <Container sx={{ py: 0, mb:8 }} maxWidth="lg">
@@ -80,11 +80,11 @@ export default function NewsFeed() {
                         U
                       </Avatar>
                     }
-                    action={
-                      <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                      </IconButton>
-                    }
+                    // action={
+                    //   <IconButton aria-label="settings">
+                    //     <MoreVertIcon />
+                    //   </IconButton>
+                    // }
                     title="제목"
                     subheader="날짜?"
                   />
@@ -100,12 +100,15 @@ export default function NewsFeed() {
                     </Typography>
                   </CardContent>
                   <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
+                    <IconButton aria-label="add to favorites" color="warning">
                       <FavoriteIcon />
+                      <Typography>
+                        23
+                      </Typography>
                     </IconButton>
-                    <IconButton aria-label="share">
+                    {/* <IconButton aria-label="share">
                       <ShareIcon />
-                    </IconButton>
+                    </IconButton> */}
                   </CardActions>
                 </Card>         
               </Grid>

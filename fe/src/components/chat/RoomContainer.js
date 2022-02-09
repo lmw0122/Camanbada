@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import RoomTemplate from './RoomTemplate';
 import SendForm from './SendForm';
+import NavBar from "../NavBar";
 
 const Wrap = styled.div`
     padding-top: 150px;
@@ -14,6 +15,7 @@ const Wrap = styled.div`
 const RoomContainer = () => {
     return(
         <Wrap>
+            <NavBar></NavBar>
             <RoomTemplate />
             <SendForm />
         </Wrap>

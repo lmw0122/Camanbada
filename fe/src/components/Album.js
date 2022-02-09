@@ -26,36 +26,34 @@ export default function Album() {
         <Box
           sx={{
             bgcolor: 'background.paper',
-            mt: 15,
-            mb: 4,
+            mt: 5,
+            mb: 2,
           }}
         >
           <Container maxWidth="lg">
-            <Stack
+            {/* <Stack
               sx={{ 
-                pt: 0,
-                pb: 3, 
+                mb: 5, 
               }}
               direction="row"
               justifyContent="center"
             >
               <img src={require("../img/logo.png")} alt="logo"></img>
-            </Stack>
+            </Stack> */}
             <Typography
               sx={{
-                pt: 5,
                 fontWeight: 'bold',
               }}
               variant="h4"
-              align="center"
+              align="left"
               color="text.primary"
               gutterBottom
             >
               현재 인기 캠핑장
             </Typography>
-            <Typography variant="h6" align="center" color="text.secondary" paragraph>
+            {/* <Typography variant="h6" align="center" color="text.secondary" paragraph>
               좋아요 수가 많은 순서대로 캠핑장을 추천해준다.
-            </Typography>
+            </Typography> */}
           </Container>
         </Box>
         <Container sx={{ py: 0 }} maxWidth="lg">
@@ -87,9 +85,9 @@ export default function Album() {
                     </Typography> */}
                   </CardContent>
                   {/* 캠핑장 상세 정보 링크 걸기 */}
-                  <Link to={'/campingdetail'}>
-                    <CardActions>
-                      <Button size="small">상세정보</Button>
+                  <Link to={'/campingdetail'} >
+                    <CardActions >
+                      <Button size="small" >상세정보</Button>
                     </CardActions>
                   </Link>
                 </Card>
