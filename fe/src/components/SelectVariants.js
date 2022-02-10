@@ -12,17 +12,14 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import Axios from "axios";
-import regionData from './regionData.json';
-import e from 'cors';
+import { Link } from "react-router-dom";
+
 
 
 const PROVINCES = ["서울시", "부산시", "인천시", "대구시", "광주시", "대전시", "울산시",
               "세종시", "경기도", "강원도", "충청북도", "충청남도", "경상북도", 
               "경상남도", "전라북도", "전라남도", "제주도"
 ]
-
-
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -65,6 +62,8 @@ export default function SelectVariants() {
   // 시군구
   const [city, setCity] = React.useState('');
 
+  const [camp, setCamp] = React.useState('');
+
   
   const handleChange1 = (event) => {
     setProvince(event.target.value);
@@ -73,7 +72,25 @@ export default function SelectVariants() {
   const handleChange2 = (event) => {
     setCity(event.target.value);
   };
+
+  // onChange={(event, value) => console.log(value)}
+
+  // const handleChange3 = (event, value) => {
+  //   setCamp(event.target.value)
+  // }
+  const handleChange3 = (event, value) => {
+    // console.log(value)
+    setCamp(value)
+  }
+ 
+  // console.log(camp)
   
+  // const handleChange3 = (event) => {
+  //   setCamp(event.target.value);
+  // };
+
+  // console.log(camp)
+
   // 시군구 드롭박스 
   var dropbox2 = [];
 
@@ -117,6 +134,7 @@ export default function SelectVariants() {
   
 
   var dropbox3 = [];
+  var camps = [];
 
   const [campings, setCampings] = React.useState([]);
 
@@ -131,56 +149,37 @@ export default function SelectVariants() {
   React.useEffect(() => {
     getCampings()
   }, []);
-  // console.log(campings)
-  // React.useEffect(() => {
-  //   Axios.get('http://i6c109.p.ssafy.io:5555/camp/basic/all').then((res) => {
-  //     if (res.data) {
-  //       for (var i=0; i<res.data.length; i++) {
-  //         if (res.data[i].doNm === province && res.data[i].sigunguNm === city) {
-  //           dropbox3.push(res.data[i].facltNm)
-  //         }
-  //       }
-  //       // console.log(res.data[0]);
-  //       console.log(dropbox3)
-  //     } else {
-  //       alert('no data zz');
-  //     }
-  //   });
-  // }, []);
 
   for (var i=0; i<campings.length; i++) {
     if (province !== '') {
       if (city === '') {
         if (campings[i].doNm === province) {
           dropbox3.push(campings[i].facltNm);
+          camps.push(campings[i].campId)
+          
         } 
       } else {
         if (campings[i].doNm === province && campings[i].sigunguNm === city) {
           dropbox3.push(campings[i].facltNm);
+          camps.push(campings[i].campId)
         }
       }
     } 
     //   else {
     //   dropbox3.push(campings[i].facltNm)
     // }
-
   }
-
-  if (dropbox3.length === 0) {
-    dropbox3 = ['해당 지역에 캠핑장이 없습니다.']
+  var finalc = '';
+  for (var i=0; i<camps.length; i++) {
+    if (camp === dropbox3[i]) {
+      finalc = camps[i]
+    }
   }
-  // console.log(province)
-  // console.log(dropbox3)
-  
-  // const top100Films = [
-  //   { title: 'The Shawshank Redemption', year: 1994 },
-  //   { title: 'The Godfather', year: 1972 },
-  //   { title: 'The Godfather: Part II', year: 1974 },
-  //   { title: 'The Dark Knight', year: 2008 },
-  //   { title: '12 Angry Men', year: 1957 },
-  //   { title: "Schindler's List", year: 1993 },
-  //   { title: 'Pulp Fiction', year: 1994 },
-  // ]
+  // console.log(finalc)
+
+  // if (dropbox3.length === 0) {
+  //   dropbox3 = ['해당 지역에 캠핑장이 없습니다.']
+  // }
 
   return (
     <Box
@@ -253,18 +252,20 @@ export default function SelectVariants() {
                   {drop}
                 </MenuItem>           
               ))}
-              
             </Select>
           </FormControl>
           <Autocomplete
+            onChange={handleChange3}
             sx={{ minWidth: 300, m: 1 }}
             freeSolo
             id="free-solo-2-demo"
             disableClearable
             options={dropbox3.map((db3) => db3)}
-            // options={top100Films.map((option) => option.title)}
+            // value={camp}
+            // onChange={handleChange3}
             renderInput={(params) => (
               <TextField
+                
                 {...params}
                 label="캠핑장 이름을 입력하세요."
                 InputProps={{
@@ -273,18 +274,20 @@ export default function SelectVariants() {
                 }}
               />
             )}
-          />          
-          <Button
-              type="submit"
-              sx={{
-                m: 1,
-                minWidth: 100,
-                height: '7ch'
-              }}
-              variant="contained"
-            >
-              검색
-          </Button>
+          />
+          <Link to={`/camping/${finalc}`}>
+            <Button
+                type="submit"
+                sx={{
+                  m: 1,
+                  minWidth: 100,
+                  height: '7ch'
+                }}
+                variant="contained"
+              >
+                검색
+            </Button> 
+          </Link>          
         </Stack>
       </Container>  
     </Box>
