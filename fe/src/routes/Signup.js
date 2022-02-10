@@ -47,17 +47,35 @@ export default function SignUp() {
   //   });
   // };
 
+  const handleJoin = () => {
+    fetch('http://i6c109.p.ssafy.io:8000/user/', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: id,
+        password: password,
+        nickname: nickname
+      })
+    })
+    .then(function (res) {
+      console.log(res)
+    })
+    
+
+  }
+
+
+
+
   const onSubmit = useCallback(
     async (e) => {
       e.preventDefault()
       try {
-        await axios
-          .post('http://i6c109.p.ssafy.io:3000/signup', {
-            id: id,
-            password: password,
-            passwordConfirm : passwordConfirm,
-            nickname : nickname,
-            email: email,
+        axios.post('http://i6c109.p.ssafy.io:8000/user/', {
+            "id": id,
+            "password": password,
+            // passwordConfirm : passwordConfirm,
+            "nickname" : nickname,
+            "email": email,
           })
           .then((res) => {
             console.log('response:', res)
@@ -173,7 +191,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5" sx={{mb: 6, mt : 2}}>
             Sign up
           </Typography>
-          <Box component="form" noValidate xs={{ mt: 3 }} onSubmit={onSubmit}>
+          <Box component="form" noValidate xs={{ mt: 3 }} onSubmit={handleJoin}>
             <Grid container spacing={2}>
               <Grid item xs={9}>
                 <TextField

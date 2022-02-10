@@ -1,13 +1,20 @@
-import MessageListContainer from "../components/chat/MessageListContainer";
-import RoomContainer from "../components/chat/RoomContainer";
+// import * as React from "react";
+// import * as Stomp from 'stompjs';
+// import * as SockJS from "sockjs-client";
+
+import MessageRoom from "../components/MessageRoom";
+import MessageRooms from "../components/MessageRooms";
 
 
 export default function Message () {
 
+  
+  
+
   return (
     <div>
-      <MessageListContainer></MessageListContainer>
-      <RoomContainer></RoomContainer>
+      {/* <MessageRoom></MessageRoom> */}
+      <MessageRooms></MessageRooms>
     </div>
   )
 }
