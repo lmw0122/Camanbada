@@ -21,6 +21,8 @@ import camping5 from "../img/campingImg/camping5.jpg";
 import Auth from "../components/Auth";
 import Stack from '@mui/material/Stack';
 import Logo from "../img/logo.png";
+import axios from 'axios'
+
 
 const theme = createTheme();
 
@@ -33,23 +35,64 @@ imgArray[4] = camping5;
 
 const imgNum = Math.round(Math.random()*4);
 
-
-
-
 export default function SignInSide() {
-  const REST_API_KEY = "62d89027fc4602266f22c5f9f2386dcf";
-  const REDIRECT_URI = "http://localhost:3000/oauth/kakao/callback";
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  
+  const KAKAO_AUTH_URL = "http://i6c109.p.ssafy.io:8000/oauth/getKakao";
+  const AUTH_URL = "http://i6c109.p.ssafy.io:8000/user/login";
+  const HOME_URL = "http://localhost:3000/main";
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
+    const id = data.get('id');
+    const password = data.get('password');
+
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      "id": id,
+      "password": password,
     });
+
+    axios.post(AUTH_URL, {
+      "id": id,
+      "password": password,
+    })
+      .then((response) => {
+        const token = response.headers.authorization;
+        localStorage.removeItem("accessToken");
+        localStorage.setItem("accessToken", token);
+        window.location.href = (HOME_URL);
+      }).catch((error) => {
+        //에러처리
+        alert("아이디와 비밀번호를 확인해주세요");
+      })
+      ;
   };
+
+
+  //테스트용
+  // const kakaoLogin = ()=>{
+  //   axios.get('http://i6c109.p.ssafy.io:8000/oauth/getKakao', )
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       let url = response.data;
+  //       url = url.replace("localhost", "i6c109.p.ssafy.io");
+  //       console.log(url);
+  //       window.location.href=(url);
+  //   });
+  // }
+
+  //배포용 - KAKAO_AUTH_URL 바꿔주세요
+  const kakaoLogin = ()=>{
+    axios.get('http://localhost:8050/oauth/getKakao')
+      .then((response) => {
+        const url = response.data;
+        window.location.href = (url);
+    }).catch((error) => {
+      //에러처리
+      alert("아이디와 비밀번호를 확인해주세요");
+    });
+  } 
 
   return (
     <ThemeProvider theme={theme}>
@@ -136,11 +179,10 @@ export default function SignInSide() {
                 또는
               </Typography>
               <Stack align="center">
-                <a id="reauthenticate-popup-btn" href={KAKAO_AUTH_URL}>
+                <a id="reauthenticate-popup-btn" onClick={kakaoLogin}>
                   <img
                     src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
                     width="222"
-                    alt="카카오 로그인 버튼"
                   />
                 </a>
                 <p id="reauthenticate-popup-result"></p>
