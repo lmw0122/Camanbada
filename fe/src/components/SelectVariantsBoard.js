@@ -11,6 +11,7 @@ import Select from '@mui/material/Select';
 import InputBase from '@mui/material/InputBase';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import axios from 'axios'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -104,15 +105,27 @@ export default function SelectVariants() {
   let dropbox3 = [];
 
   const [campings, setCampings] = React.useState([]);
+  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list';
 
-  const getCampings = async() => {
-    const json = await (
-      await fetch (
-        `http://i6c109.p.ssafy.io:8092/camp/basic/list`
-      )
-    ).json();
-    setCampings(json);
+  const getCampings = () => {
+    axios.get(CAMP_GET_URL,)
+      .then((response) => {
+        setCampings(response.data);
+      }).catch((error) => {
+        //에러처리
+        alert("캠핑장이 없습니다");
+      });
   };
+  // const getCampings = async() => {
+  //   const json = await (
+  //     await fetch (
+  //       `http://i6c109.p.ssafy.io:8092/camp/basic/list`
+  //     )
+  //   ).json();
+  //   console.log(json);
+  //   setCampings(json);
+
+  // };
 
   React.useEffect(() => {
     getCampings()

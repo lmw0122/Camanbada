@@ -8,17 +8,19 @@ import { Typography, Stack } from '@mui/material';
 
 
 
-export default function RadioButtonsGroup() {
+export default function RadioButtonsGroup(props) {
 	const [isChecked, setIsChecked] = useState();
-	function checkOnlyOne(e) {
-	
-	const refName = this.refs.name;
-	  refName.forEach((c) => {
-	    c.ckecked = false;
-	  })
-	  e.checked = true;
+
+	function checkOnlyOneCamp(e) {
+		const refName = e.target.value;
+		props.func1(refName);
+	}
+	function checkOnlyOneCommunity(e) {
+		const refName = e.target.value;
+		props.func2(refName);
 	}
 
+	
   return (
     <FormControl>
 			<Stack direction="row" spacing={1}>
@@ -26,7 +28,7 @@ export default function RadioButtonsGroup() {
 				<Typography sx={{ fontSize : 13}}>캠핑장을 선택해주세요.</Typography>
 			</Stack>
 			<RadioGroup
-				onClick={checkOnlyOne}
+				onChange={checkOnlyOneCamp}
 				row
 				aria-labelledby="radio-button"
 				name="radio-button-group"
@@ -38,7 +40,7 @@ export default function RadioButtonsGroup() {
 			</RadioGroup>
 			<FormLabel id="radio-button" sx={{ fontWeight : 'bold', fontSize : 18, mt : 1 }}>&lt;자유 소통&gt;</FormLabel>
 			<RadioGroup
-				onClick={checkOnlyOne}
+				onChange={checkOnlyOneCommunity}
 				row
 				aria-labelledby="radio-button"
 				name="radio-button-group"

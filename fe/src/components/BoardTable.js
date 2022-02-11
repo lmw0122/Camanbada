@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, Grid } from '@mui/material';
+import axios from 'axios'
 
 const theme = createTheme();
 
@@ -26,15 +27,23 @@ const theme = createTheme();
 
 
 export default function BoardTable() {
-  const [ dataList, setDataList ] = useState([]);
-  
+  const [dataList, setDataList] = useState([]);
+  const BOARD_GET_URL = 'http://i6c109.p.ssafy.io:8051/board';
+
   const getBoards = async () => {
-    const boardJson = await (
-      await fetch ('i6c109.p.ssafy.io:8051/board'
-      )
-    ).json();
-    console.log(boardJson);
-    setDataList(boardJson);
+    // const boardJson = await (
+    //   await fetch ('http://i6c109.p.ssafy.io:8051/board'
+    //   )
+    // ).json();
+    axios.get(BOARD_GET_URL,)
+      .then((response) => {
+        console.log(response.data);
+        setDataList(response.data);
+      }).catch((error) => {
+        //에러처리
+        alert("게시판이 비어있습니다");
+      });
+    // console.log(boardJson);
   };
 
   useEffect(() => {
@@ -59,16 +68,16 @@ export default function BoardTable() {
             <TableBody>
               {dataList ? dataList.map((d) => (
                 <TableRow
-                  key={d.num}
+                  key={d.boardId}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {d.num}
+                    {d.boardId}
                   </TableCell>
                   <TableCell align="center">{d.tag}</TableCell>
                   <TableCell align="center">{d.title}</TableCell>
-                  <TableCell align="center">{d.writer}</TableCell>
-                  <TableCell align="center">{d.created_at}</TableCell>
+                  <TableCell align="center">{d.clientId}</TableCell>
+                  <TableCell align="center">{d.date}</TableCell>
                 </TableRow>
               )) : ''}
             </TableBody>

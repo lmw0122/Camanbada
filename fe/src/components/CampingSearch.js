@@ -3,9 +3,18 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 
-export default function CampingSearch() {
+export default function CampingSearch(props) {
   const [campings, setCampings] = React.useState([]);
   let campingList = [];
+
+  function checkOnlyOneCamp(e) {
+    const content = e.target;
+    props.func(content.innerText);
+  }
+  
+  React.useEffect(() => {
+    getCampings()
+  }, []);
 
   const getCampings = async() => {
     const json = await (
@@ -13,16 +22,17 @@ export default function CampingSearch() {
         `http://i6c109.p.ssafy.io:8092/camp/basic/list`
       )
     ).json();
-    setCampings(json);
+    setCampings(json); 
   };
 
-  for (let i=0; i < campings.length; i++){
-    campingList.push(campings[i].facltNm);
+  for (let i = 0; i < campings.length; i++){
+    const campData = {
+      "id": campings[i].campId,
+      "name": campings[i].facltNm
+    };
+    campingList.push(campData);
   }
-  
-  React.useEffect(() => {
-    getCampings()
-  }, []);
+
 
   return (
     <Stack spacing={2} sx={{ width: 500, mt: 2 }}>
@@ -30,6 +40,7 @@ export default function CampingSearch() {
         freeSolo
         id="free-solo"
         disableClearable
+        onChange={checkOnlyOneCamp}
         options={campingList.map((option) => option)}
         renderInput={(params) => (
           <TextField

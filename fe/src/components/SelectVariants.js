@@ -141,7 +141,7 @@ export default function SelectVariants() {
   const getCampings = async() => {
     const json = await (
       await fetch (
-        `http://i6c109.p.ssafy.io:5555/camp/basic/all`
+        `http://i6c109.p.ssafy.io:8092/camp/basic/list`
       )
     ).json();
     setCampings(json);
