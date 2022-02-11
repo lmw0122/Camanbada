@@ -9,6 +9,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { Link } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -74,7 +75,9 @@ export default function BoardTable() {
                     {d.boardId}
                   </TableCell>
                   <TableCell align="center">{d.tag}</TableCell>
-                  <TableCell align="center">{d.title}</TableCell>
+                  <Link to={`/board/${d.boardId}`} >
+                    <TableCell align="center">{d.title}</TableCell>
+                  </Link>
                   <TableCell align="center">{d.clientId}</TableCell>
                   <TableCell align="center">{d.date}</TableCell>
                 </TableRow>
