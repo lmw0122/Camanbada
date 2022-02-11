@@ -80,6 +80,8 @@ export default function BasicTabs() {
     getBasic();
   }, []);
 
+  
+
   const setDetail = async () => {
     const json2 = await (
       await fetch (
@@ -137,7 +139,7 @@ export default function BasicTabs() {
                 // height='45vw'
                 image={basics.firstImageUrl}
                 // image="https://gocamping.or.kr/upload/camp/866/thumb/thumb_720_0210doTpcD0QrJTQnYauD1V6.jpg"
-                alt={"CampingImage"}
+                alt="CampingImage"
               />
             </Card>
           </Container>

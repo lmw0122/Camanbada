@@ -47,22 +47,40 @@ export default function SignUp() {
   //   });
   // };
 
-  const handleJoin = () => {
-    fetch('http://i6c109.p.ssafy.io:8000/user/', {
-      method: 'POST',
-      body: JSON.stringify({
-        id: id,
-        password: password,
-        nickname: nickname
-      })
-    })
-    .then(function (res) {
-      console.log(res)
-    })
-    
+  // const handleJoin = (e) => {
+  //   e.preventDefault();
+  //   axios.post("http://i6c109.p.ssafy.io:8000/user/", {
+  //     "id": id,
+  //     "password": password,
+  //     "nickname": nickname,
+  //   })
+  //   .then((res) => {
+  //     console.log(res)
+  //   }).catch((err) => {
+  //     console.log(err)
+  //   })
+  //   console.log(id)
+  // }
 
+  async function handleJoin(e) {
+    e.preventDefault()
+    try {
+      //응답 성공 
+      const response = await axios.post('http://i6c109.p.ssafy.io:8000/user/',{
+          //보내고자 하는 데이터 
+          id: id,
+          password: password,
+          nickname: nickname,
+      });
+      console.log(id)
+      console.log(password)
+      console.log(nickname)
+      console.log(response);
+      alert("회원가입에 성공하셨습니다!")
+    } catch (error) {
+      console.error(error);
+    }
   }
-
 
 
 
@@ -107,10 +125,10 @@ export default function SignUp() {
     setNickname(e.target.value)
     if (e.target.value.length < 2 || e.target.value.length > 15) {
       setnNicknameMessage('2글자 이상 15글자 미만으로 입력해주세요.')
-      setNickname(false)
+      setIsNickname(false)
     } else {
       setnNicknameMessage('올바른 이름 형식입니다 :)')
-      setNickname(true)
+      setIsNickname(true)
     }
   }, [])
 
