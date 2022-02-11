@@ -9,6 +9,7 @@ import Stack from '@mui/material/Stack';
 import axios from 'axios';
 
 export default function Create() {
+	const [campId, setCampId] = useState('')
   const [tag, setTag] = useState('')
   const [campingName, setCampingName] = useState('');
   const [title, setTitle] = useState('');
@@ -20,7 +21,7 @@ export default function Create() {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(e)
-    axios.post('i6c109.p.ssafy.io:8051/board', {
+    axios.post('http://i6c109.p.ssafy.io:8051/board', {
       tag : tag,
       campingName : campingName,
       title : title,
@@ -60,7 +61,7 @@ export default function Create() {
           </Box> */}
           <Typography align="right" sx={{ mr : 3}}>
             <Button
-              // onSubmit={onSubmit}
+              onSubmit={onSubmit}
               type="submit" 
               variant="contained" 
               sx={{ mt : 2 }}

@@ -48,7 +48,7 @@ export default function SignUp() {
   //   });
   // };
 
-<<<<<<< HEAD
+
   // const handleJoin = (e) => {
   //   e.preventDefault();
   //   axios.post("http://i6c109.p.ssafy.io:8000/user/", {
@@ -58,69 +58,32 @@ export default function SignUp() {
   //   })
   //   .then((res) => {
   //     console.log(res)
+  //     if (res.status === 200) {
+  //       <Link to="/main"></Link>
+  //     } 
   //   }).catch((err) => {
   //     console.log(err)
   //   })
   //   console.log(id)
   // }
-=======
-<<<<<<< HEAD
-  // const onSubmit = useCallback(
-  //   async (e) => {
-  //     e.preventDefault()
-  //     try {
-  //       await axios
-  //         .post('http://i6c109.p.ssafy.io:3000/signup', {
-  //           id: id,
-  //           password: password,
-  //           passwordConfirm : passwordConfirm,
-  //           nickname : nickname,
-  //           email: email,
-  //         })
-  //         .then((res) => {
-  //           console.log('response:', res)
-  //           if (res.status === 200) {
-  //             <Link to="/signup"></Link>
-  //           }
-  //         })
-  //     } catch (err) {
-  //       console.error(err)
-  //     }
-  //   },
-  //   [email, id, password]
-  // )
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    // console.log(e.target.id.value)
-    axios.post('i6c109.p.ssafy.io:8000/user/', {
-      id : id,
-      nickname : nickname,
-      password : password,
-      email : email
-    })
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
-=======
-  const handleJoin = () => {
-    fetch('http://i6c109.p.ssafy.io:8000/user/', {
-      method: 'POST',
-      body: JSON.stringify({
-        id: id,
-        password: password,
-        nickname: nickname
-      })
-    })
-    .then(function (res) {
-      console.log(res)
-    })
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   // console.log(e.target.id.value)
+  //   axios.post('i6c109.p.ssafy.io:8000/user/', {
+  //     id : id,
+  //     nickname : nickname,
+  //     password : password,
+  //     email : email
+  //   })
+  //   .then((res) => {
+  //     console.log(res)
+  //   })
+  //   .catch((err) => {
+  //     console.log(err)
+  //   })
+  // }
     
->>>>>>> 1e04705a061a7f0aef4da137950a3967dfa5053a
 
   async function handleJoin(e) {
     e.preventDefault()
@@ -137,6 +100,9 @@ export default function SignUp() {
       console.log(nickname)
       console.log(response);
       alert("회원가입에 성공하셨습니다!")
+      if (e.status === 200) {
+        <Link to="/signup"></Link>
+      }
     } catch (error) {
       console.error(error);
     }
@@ -144,30 +110,30 @@ export default function SignUp() {
 
 
 
-  const onSubmit = useCallback(
-    async (e) => {
-      e.preventDefault()
-      try {
-        axios.post('http://i6c109.p.ssafy.io:8000/user/', {
-            "id": id,
-            "password": password,
-            // passwordConfirm : passwordConfirm,
-            "nickname" : nickname,
-            "email": email,
-          })
-          .then((res) => {
-            console.log('response:', res)
-            if (res.status === 200) {
-              <Link to="/signup"></Link>
-            }
-          })
-      } catch (err) {
-        console.error(err)
-      }
-    },
-    [email, id, password]
-  )
->>>>>>> 0ef6357c257569093c86fdd1845d099072931f5a
+  // const onSubmit = useCallback(
+  //   async (e) => {
+  //     e.preventDefault()
+  //     try {
+  //       axios.post('http://i6c109.p.ssafy.io:8000/user/', {
+  //           "id": id,
+  //           "password": password,
+  //           // passwordConfirm : passwordConfirm,
+  //           "nickname" : nickname,
+  //           "email": email,
+  //         })
+  //         .then((res) => {
+  //           console.log('response:', res)
+  //           if (res.status === 200) {
+  //             <Link to="/signup"></Link>
+  //           }
+  //         })
+  //     } catch (err) {
+  //       console.error(err)
+  //     }
+  //   },
+  //   [email, id, password]
+  // )
+
 
   // 아이디
   const onChangeName = useCallback((e) => {

@@ -20,6 +20,7 @@ import BoardDetail from "./routes/BoardDetail";
 
 
 
+
 function App() {
 
   return (

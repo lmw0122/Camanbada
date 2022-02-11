@@ -18,7 +18,7 @@ function Main() {
   }
 
   return (
-    <div>
+    <div> 
       <NavBar></NavBar>
       <SelectVariants></SelectVariants>
       <Album></Album>

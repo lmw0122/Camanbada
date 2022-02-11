@@ -141,7 +141,7 @@ export default function SelectVariants() {
   const getCampings = async() => {
     const json = await (
       await fetch (
-        `http://i6c109.p.ssafy.io:5555/camp/basic/all`
+        `http://i6c109.p.ssafy.io:8092/camp/basic/list`
       )
     ).json();
     setCampings(json);
@@ -175,18 +175,15 @@ export default function SelectVariants() {
       finalc = camps[i]
     }
   }
-<<<<<<< HEAD
   // console.log(province)
   // console.log(dropbox3)
   
-=======
   // console.log(finalc)
 
   // if (dropbox3.length === 0) {
   //   dropbox3 = ['해당 지역에 캠핑장이 없습니다.']
   // }
 
->>>>>>> 0ef6357c257569093c86fdd1845d099072931f5a
   return (
     <Box
       sx={{

@@ -21,12 +21,7 @@ import camping5 from "../img/campingImg/camping5.jpg";
 import Auth from "../components/Auth";
 import Stack from '@mui/material/Stack';
 import Logo from "../img/logo.png";
-<<<<<<< HEAD
 import axios from 'axios';
-=======
-import axios from 'axios'
-
->>>>>>> 0ef6357c257569093c86fdd1845d099072931f5a
 
 const theme = createTheme();
 
@@ -73,20 +68,6 @@ export default function SignInSide() {
       ;
   };
 
-<<<<<<< HEAD
-  useEffect(() => {
-    axios.post('http://i6c109.p.ssafy.io:8000/user/login', {
-      "id" : "1234",
-      "password" : "1234"
-    })
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  })
-=======
 
   //테스트용
   // const kakaoLogin = ()=>{
@@ -111,7 +92,6 @@ export default function SignInSide() {
       alert("아이디와 비밀번호를 확인해주세요");
     });
   } 
->>>>>>> 0ef6357c257569093c86fdd1845d099072931f5a
 
   return (
     <ThemeProvider theme={theme}>
