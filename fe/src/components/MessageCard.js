@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import palette from '../../lib/styles/palettes';
+// import palette from './lib/styles/palettes';
+import palette from '../lib/styles/palettes';
 
 const Card = styled.div`
     width: 100%;
@@ -9,7 +10,7 @@ const Card = styled.div`
         background-color: ${palette.gray[2]}
     }
     padding-top: 1rem;
-    padding-left: 4rem;
+    // padding-left: 4rem;
 `;
 
 const Nickname = styled.div`
@@ -30,17 +31,21 @@ const Content = styled.div`
     overflow: hidden;
 `;
 
+
+
+
+
 const MessageCard = ({ item, i }) => {
     return(
         <Card>
             <Nickname>
-                { item.nickname } 
+                { item.user } 
             </Nickname>
             <Date>
-                { item.createdAt }
+                { item.date }
             </Date>
             <Content>
-                { item.content }
+                { item.message }
             </Content>
         </Card>
     );
