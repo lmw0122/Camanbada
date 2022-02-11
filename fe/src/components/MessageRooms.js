@@ -21,8 +21,7 @@ export default function MessageRooms() {
       console.log('하하')
      });
     
-    
-
+  
     
  });
 

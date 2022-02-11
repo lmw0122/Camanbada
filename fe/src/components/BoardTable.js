@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Paging from './Pagination';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,19 +12,35 @@ import { CssBaseline, Grid } from '@mui/material';
 
 const theme = createTheme();
 
-function createData(num, tag, title, writer, created_at) {
-  return { num, tag, title, writer, created_at };
-}
+// function createData(num, tag, title, writer, created_at) {
+//   return { num, tag, title, writer, created_at };
+// }
 
-const rows = [
-  createData(1, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
-  createData(2, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
-  createData(3, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
-  createData(4, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
-  createData(5, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
-];
+// const rows = [
+//   createData(1, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
+//   createData(2, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
+//   createData(3, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
+//   createData(4, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
+//   createData(5, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
+// ];
+
 
 export default function BoardTable() {
+  const [ dataList, setDataList ] = useState([]);
+  
+  const getBoards = async () => {
+    const boardJson = await (
+      await fetch ('i6c109.p.ssafy.io:8051/board'
+      )
+    ).json();
+    console.log(boardJson);
+    setDataList(boardJson);
+  };
+
+  useEffect(() => {
+    getBoards()
+  }, [])
+
   return (
     <ThemeProvider theme={theme} >
       <Grid container sx={{ height : '100vh', m: 4}}>
@@ -41,20 +57,20 @@ export default function BoardTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {dataList ? dataList.map((d) => (
                 <TableRow
-                  key={row.num}
+                  key={d.num}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.num}
+                    {d.num}
                   </TableCell>
-                  <TableCell align="center">{row.tag}</TableCell>
-                  <TableCell align="center">{row.title}</TableCell>
-                  <TableCell align="center">{row.writer}</TableCell>
-                  <TableCell align="center">{row.created_at}</TableCell>
+                  <TableCell align="center">{d.tag}</TableCell>
+                  <TableCell align="center">{d.title}</TableCell>
+                  <TableCell align="center">{d.writer}</TableCell>
+                  <TableCell align="center">{d.created_at}</TableCell>
                 </TableRow>
-              ))}
+              )) : ''}
             </TableBody>
           </Table>
           <Paging />
