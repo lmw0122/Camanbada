@@ -7,13 +7,21 @@ export default function Test () {
   const name = "나영";
   const encode = encodeURI(name);
 
+  
+
   useEffect(() => {
-    Axios.post('http://i6c109.p.ssafy.io:8000/user/login', {
-      "id" : "1234",
-      "password" : "1234"
+    Axios.post('http://i6c109.p.ssafy.io:8000/user', {
+      "email": "de@naver.com",
+      "id" : "haha",
+      "password" : "1234",
+      "nickname" : "haha",
+      "intro": "dd",
+      "photo": "dd",
+      "username": "dd"
     })
         .then((response) => {
-            console.log(response.headers.authorization)
+            // console.log(response.headers.authorization)
+            console.log(response)
             //console.log("token 입니당" + response.headers.authorization)
     });
   }, []);
@@ -23,22 +31,5 @@ export default function Test () {
       <h1>ㅋㅋㅋ</h1>
     </div>
   )
-
-  // useEffect(() => {
-  //   Axios.post('http://i6c109.p.ssafy.io:8000/user/login', {
-  //     "id" : "1234",
-  //     "password" : "1234"
-  //   })
-  //       .then((response) => {
-  //           console.log(response.headers.authorization)
-  //           //console.log("token 입니당" + response.headers.authorization)
-  //   });
-  // }, []);
-  // return (
-  //   <div>
-  //     {/* <h1>{user[0].intro}</h1> */}
-  //     <h1>ㅋㅋㅋ</h1>
-  //   </div>
-  // )
 
 }

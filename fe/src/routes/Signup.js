@@ -48,6 +48,7 @@ export default function SignUp() {
   //   });
   // };
 
+<<<<<<< HEAD
   // const onSubmit = useCallback(
   //   async (e) => {
   //     e.preventDefault()
@@ -89,6 +90,50 @@ export default function SignUp() {
       console.log(err)
     })
   }
+=======
+  const handleJoin = () => {
+    fetch('http://i6c109.p.ssafy.io:8000/user/', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: id,
+        password: password,
+        nickname: nickname
+      })
+    })
+    .then(function (res) {
+      console.log(res)
+    })
+    
+
+  }
+
+
+
+
+  const onSubmit = useCallback(
+    async (e) => {
+      e.preventDefault()
+      try {
+        axios.post('http://i6c109.p.ssafy.io:8000/user/', {
+            "id": id,
+            "password": password,
+            // passwordConfirm : passwordConfirm,
+            "nickname" : nickname,
+            "email": email,
+          })
+          .then((res) => {
+            console.log('response:', res)
+            if (res.status === 200) {
+              <Link to="/signup"></Link>
+            }
+          })
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    [email, id, password]
+  )
+>>>>>>> 0ef6357c257569093c86fdd1845d099072931f5a
 
   // 아이디
   const onChangeName = useCallback((e) => {
@@ -186,7 +231,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5" sx={{mb: 6, mt : 2}}>
             Sign up
           </Typography>
-          <Box component="form" noValidate xs={{ mt: 3 }} onSubmit={onSubmit}>
+          <Box component="form" noValidate xs={{ mt: 3 }} onSubmit={handleJoin}>
             <Grid container spacing={2}>
               <Grid item xs={9}>
                 <TextField

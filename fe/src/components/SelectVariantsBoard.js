@@ -1,5 +1,9 @@
 import * as React from 'react';
+<<<<<<< HEAD
 import { Container, Link, Box } from '@mui/material';
+=======
+import { Container, Typography, Box } from '@mui/material';
+>>>>>>> 0ef6357c257569093c86fdd1845d099072931f5a
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { styled, alpha } from '@mui/material/styles';
@@ -44,8 +48,13 @@ const PROVINCES = ["서울시", "부산시", "인천시", "대구시", "광주�
 
 export default function SelectVariants() {
   const [tag, setTag] = React.useState('');
+<<<<<<< HEAD
   // 시군구
   const [province, setProvince] = React.useState('');
+=======
+  const [province, setProvince] = React.useState('');
+  // 시군구
+>>>>>>> 0ef6357c257569093c86fdd1845d099072931f5a
   const [city, setCity] = React.useState('');
 
   const handleChange = (event) => {
@@ -134,6 +143,7 @@ export default function SelectVariants() {
   // if (dropbox3.length === 0) {
   //   dropbox3 = ['해당 지역에 캠핑장이 없습니다.']
 
+<<<<<<< HEAD
 return (
   <Box
     sx={{
@@ -235,6 +245,34 @@ return (
               label="말머리"
               onChange={handleChange}
             >
+=======
+  return (
+    <Box
+      sx={{
+        bgcolor: 'background.paper',
+        pt: 3,
+        pb: 0,
+      }}
+    >
+      <Container>
+        <Stack
+          sx={{ 
+            pt: 0,
+            pb: 0, 
+          }}
+          direction="row"
+          justifyContent="center"
+        >
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel htmlFor="tag-select">말머리</InputLabel>
+          <Select
+            id="tag-select"
+            defaultValue=""
+            // value={tag}
+            label="말머리"
+            onChange={handleChange}
+          >
+>>>>>>> 0ef6357c257569093c86fdd1845d099072931f5a
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
@@ -246,6 +284,7 @@ return (
             <ListSubheader sx={{ fontWeight: 'bold' }}>자유 소통</ListSubheader>
               <MenuItem value={5}>장비 후기</MenuItem>
               <MenuItem value={6}>자유</MenuItem>
+<<<<<<< HEAD
             </Select>
         </FormControl>
         <FormControl variant="filled" sx={{ my: 1, minWidth: 300 }}>
@@ -284,5 +323,78 @@ return (
       </Stack>
     </Container>
   </Box>
+=======
+          </Select>
+        </FormControl>
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="demo-simple-select-filled-label">전체/도</InputLabel>
+          <Select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            value={province}
+            onChange={handleChange1}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {PROVINCES.map((pro) => (
+              <MenuItem key={pro} value={pro}>
+                {pro}
+              </MenuItem>           
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="demo-simple-select-filled-label">시군구</InputLabel>
+          <Select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            value={city}
+            onChange={handleChange2}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {dropbox2.map((drop) => (
+              <MenuItem key={drop} value={drop}>
+                {drop}
+              </MenuItem>           
+            ))}
+            
+          </Select>
+        </FormControl>
+        <Autocomplete
+          sx={{ minWidth: 300, m: 1 }}
+          freeSolo
+          id="free-solo-2-demo"
+          disableClearable
+          options={dropbox3.map((db3) => db3)}
+          // options={top100Films.map((option) => option.title)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="캠핑장 이름을 입력하세요."
+              InputProps={{
+                ...params.InputProps,
+                type: 'search',
+              }}
+            />
+          )}
+        />   
+        <Button
+          type="submit"
+          sx={{
+            m: 1,
+            minWidth: 100,
+            height: "7ch",
+          }}
+          variant="contained"
+        >
+          검색
+        </Button>
+      </Stack>
+      </Container>
+    </Box>
+>>>>>>> 0ef6357c257569093c86fdd1845d099072931f5a
   );
 }
