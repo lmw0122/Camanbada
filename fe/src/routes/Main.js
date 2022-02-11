@@ -1,7 +1,7 @@
-import NavBar from "../components/NavBar";
-import Album from "../components/Album";
-import SelectVariants from "../components/SelectVariants";
-import NewsFeed from "../components/NewsFeed";
+import NavBar from "../components/common/NavBar";
+import Album from "../components/main/Album";
+import SelectVariants from "../components/main/SelectVariants";
+import NewsFeed from "../components/main/NewsFeed";
 
 
 // 현재 인기 캠핑장 순위

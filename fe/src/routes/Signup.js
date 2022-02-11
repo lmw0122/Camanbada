@@ -1,18 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import axios from 'axios'
-import Copyright from "../components/Copyright";
+import { Container, TextField, Box, CssBaseline, Typography, Button, Link, Grid } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Copyright from "../components/common/Copyright";
 import Logo from "../img/logo.png";
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
 const BASE_URL_USER = 'i6c109.p.ssafy.io:8000';
@@ -100,11 +93,7 @@ export default function SignUp() {
       console.log(nickname)
       console.log(response);
       alert("회원가입에 성공하셨습니다!")
-<<<<<<< HEAD
-      if (e.status === 200) {
-=======
       if (response.status === 200) {
->>>>>>> 7419366ac88bc25affae4c6a669b6f0b88624915
         <Link to="/signup"></Link>
       }
     } catch (error) {

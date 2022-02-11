@@ -1,10 +1,10 @@
 import * as React from 'react';
-import NavBar from '../components/NavBar'
-import SelectVariantsBoard from '../components/SelectVariantsBoard';
+import NavBar from '../components/common/NavBar'
+import SelectVariantsBoard from '../components/board/SelectVariantsBoard';
+import BoardTable from '../components/board/BoardTable';
 import Button from '@mui/material/Button';
 import { Container, CssBaseline, Grid, Typography } from '@mui/material';
 import { Link } from "react-router-dom";
-import BoardTable from '../components/BoardTable';
 
 function Community() {
   return (

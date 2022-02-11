@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { Container, CssBaseline, Typography, Grid, TextField, Stack, Box } from '@mui/material';
+import { Container, CssBaseline, Typography, Grid, TextField, Stack, Box, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import NavBar from '../components/NavBar'
+import NavBar from '../components/common/NavBar'
 
 const Input = styled('input')({
   display: 'none',

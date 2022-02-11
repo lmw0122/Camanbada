@@ -200,7 +200,7 @@ export default function SelectVariants() {
           direction="row"
           justifyContent="center"
         >
-          <img src={require("../img/logo.png")} alt="logo"></img>
+          <img src={require("../../img/logo.png")} alt="logo"></img>
         </Stack>
         <Typography
           sx={{

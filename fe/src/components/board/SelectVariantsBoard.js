@@ -1,21 +1,15 @@
 import * as React from 'react';
-<<<<<<< HEAD
 import axios from 'axios'
-=======
->>>>>>> 7419366ac88bc25affae4c6a669b6f0b88624915
-import { Container, Typography, Box, Link } from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
+import { Container, Typography, Box, Link, Stack, TextField } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
+import Autocomplete from '@mui/material/Autocomplete';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import ListSubheader from '@mui/material/ListSubheader';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputBase from '@mui/material/InputBase';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import axios from 'axios'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -50,11 +44,7 @@ const PROVINCES = ["서울시", "부산시", "인천시", "대구시", "광주�
 export default function SelectVariants() {
   const [tag, setTag] = React.useState('');
   // 시군구
-<<<<<<< HEAD
   const [province, setProvince] = React.useState([]);
-=======
-  const [province, setProvince] = React.useState('');
->>>>>>> 7419366ac88bc25affae4c6a669b6f0b88624915
   // 시군구
   const [city, setCity] = React.useState('');
 
@@ -149,15 +139,6 @@ export default function SelectVariants() {
   const [campings, setCampings] = React.useState([]);
   const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list';
 
-<<<<<<< HEAD
-  const getCampings = async() => {
-    const json = await (
-      await fetch (
-        `http://i6c109.p.ssafy.io:8092/camp/basic/list`
-      )
-    ).json();
-    setCampings(json);
-=======
   const getCampings = () => {
     axios.get(CAMP_GET_URL,)
       .then((response) => {
@@ -166,7 +147,6 @@ export default function SelectVariants() {
         //에러처리
         alert("캠핑장이 없습니다");
       });
->>>>>>> 7419366ac88bc25affae4c6a669b6f0b88624915
   };
   // const getCampings = async() => {
   //   const json = await (

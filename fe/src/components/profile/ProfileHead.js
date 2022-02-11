@@ -1,16 +1,13 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import IsFollow from "../IsFollow";
+import ProfileUser from "../ProfileUser";
+import { Container, CssBaseline, Typography, Grid, Stack, Box } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
-import Grid from '@mui/material/Grid';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import CardHeader from '@mui/material/CardHeader';
@@ -25,8 +22,6 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Link } from "react-router-dom";
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
-import IsFollow from "./IsFollow";
-import ProfileUser from "./ProfileUser";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

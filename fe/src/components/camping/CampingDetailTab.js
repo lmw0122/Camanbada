@@ -10,12 +10,9 @@ import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import { useParams } from 'react-router-dom';
-import CampingDefaultImage from "../img/CampingDefaultImage.png";
 import { RenderAfterNavermapsLoaded, NaverMap, Marker } from 'react-naver-maps';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import { Link } from "react-router-dom";
 
@@ -80,8 +77,6 @@ export default function BasicTabs() {
     getBasic();
   }, []);
 
-  
-
   const setDetail = async () => {
     const json2 = await (
       await fetch (
@@ -139,7 +134,7 @@ export default function BasicTabs() {
                 // height='45vw'
                 image={basics.firstImageUrl}
                 // image="https://gocamping.or.kr/upload/camp/866/thumb/thumb_720_0210doTpcD0QrJTQnYauD1V6.jpg"
-                alt="CampingImage"
+                alt={"CampingImage"}
               />
             </Card>
           </Container>

@@ -13,11 +13,7 @@ class IsFollow extends Component {
     this.state = {
       isfollowed: false,
       userE: true,
-<<<<<<< HEAD
     //   userE: false,
-=======
-      // userE: false,
->>>>>>> 7419366ac88bc25affae4c6a669b6f0b88624915
     }
     
   }

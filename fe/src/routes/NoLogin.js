@@ -2,10 +2,8 @@ import React from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import { Container, CssBaseline, Grid, Typography, Box, Link } from '@mui/material';
+import { Container, CssBaseline, Grid, Typography, Box, Link, Stack, Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 
 const theme = createTheme();
 

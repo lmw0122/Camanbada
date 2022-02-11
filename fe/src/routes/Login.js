@@ -1,32 +1,20 @@
 import React, { useEffect } from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import Copyright from "../components/Copyright";
+import axios from 'axios'
+import { Container, CssBaseline, Typography, Grid, Box, TextField, Stack, Button, Link, Paper } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Copyright from "../components/common/Copyright";
+import Auth from "../components/common/Auth";
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import camping1 from "../img/campingImg/camping1.jpg";
 import camping2 from "../img/campingImg/camping2.jpg";
 import camping3 from "../img/campingImg/camping3.jpg";
 import camping4 from "../img/campingImg/camping4.jpg";
 import camping5 from "../img/campingImg/camping5.jpg";
-import Auth from "../components/Auth";
-import Stack from '@mui/material/Stack';
 import Logo from "../img/logo.png";
-<<<<<<< HEAD
-import axios from 'axios';
-=======
-import axios from 'axios'
 
->>>>>>> 7419366ac88bc25affae4c6a669b6f0b88624915
 
 const theme = createTheme();
 

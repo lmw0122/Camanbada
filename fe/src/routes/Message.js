@@ -2,8 +2,8 @@
 // import * as Stomp from 'stompjs';
 // import * as SockJS from "sockjs-client";
 
-import MessageRoom from "../components/MessageRoom";
-import MessageRooms from "../components/MessageRooms";
+// import MessageRoom from "../components/chat/MessageRoom";
+import MessageRooms from "../components/chat/MessageRooms";
 
 
 export default function Message () {

@@ -1,20 +1,19 @@
 import React, { useCallback, useState } from 'react';
-import NavBar from '../components/NavBar'
-import Editor from '../components/Editor'
-import RadioButtonCamping from '../components/RadioButtonCamping'
-import CampingSearch from '../components/CampingSearch';
-import { Container, TextField, Box, CssBaseline, Typography } from '@mui/material';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 import axios from 'axios';
+import { Container, TextField, Box, CssBaseline, Typography, Stack, Button } from '@mui/material';
+import NavBar from '../../components/common/NavBar'
+import Editor from '../../components/board/Editor'
+import RadioButtonCamping from '../../components/board/RadioButtonCamping'
+import CampingSearch from '../../components/camping/CampingSearch';
+
 
 export default function Create() {
-	const [campId, setCampId] = useState('')
+  const [campId, setCampId] = useState('')
   const [tag, setTag] = useState('')
   const [campingName, setCampingName] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [clientId, setClientId] = useState('');
+  const [clientId, setClientId] = useState(''); 
   const [photo, setPhoto] = useState('');
   const HEADER = {
     'Authorization': localStorage.getItem("accessToken")
@@ -25,7 +24,6 @@ export default function Create() {
   const onSubmit = (e) => {
     console.log(tag + " " + campingName + " " + title + " " + content + " " + clientId + " " + photo);
     e.preventDefault();
-<<<<<<< HEAD
     console.log(e)
     axios.post('http://i6c109.p.ssafy.io:8051/board', {
       tag : tag,
@@ -36,7 +34,6 @@ export default function Create() {
     .then((res) => {
       console.log(res)
     })
-=======
     // axios.post('http://i6c109.p.ssafy.io:8051/board', {
     //   "campId": "1",
     //   "clientId": "작성자",
@@ -88,7 +85,6 @@ export default function Create() {
   const image_data = (data) => {
     console.log(data);
     setPhoto(data);
->>>>>>> 7419366ac88bc25affae4c6a669b6f0b88624915
   }
 
   return (
@@ -137,11 +133,7 @@ export default function Create() {
           </Box> */}
           <Typography align="right" sx={{ mr : 3}}>
             <Button
-<<<<<<< HEAD
-              onSubmit={onSubmit}
-=======
               onClick={onSubmit}
->>>>>>> 7419366ac88bc25affae4c6a669b6f0b88624915
               type="submit" 
               variant="contained" 
               sx={{ mt : 2 }}

@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { Box, Button } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
+import { Link } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
@@ -13,12 +14,11 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import Logo from "../img/logo.png";
 import FeedIcon from '@mui/icons-material/Feed';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Link } from "react-router-dom";
 import FormControl from '@mui/material/FormControl';
-import Button from '@mui/material/Button';
+import Logo from "../../img/logo.png";
+
 
 
 const Search = styled('div')(({ theme }) => ({

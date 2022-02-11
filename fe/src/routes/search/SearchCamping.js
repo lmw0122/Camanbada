@@ -1,4 +1,4 @@
-import SearchCampingAlbum from "../components/SearchCampingAlbum"
+import SearchCampingAlbum from "../../components/searchResult/SearchCampingAlbum"
 
 
 export default function SearchCamping () {

@@ -8,13 +8,8 @@ class ProfileUser extends Component {
     super(props);
   
     this.state = {
-<<<<<<< HEAD
-      userE: false,
-    //   userE: true,
-=======
       // userE: false,
       userE: true,
->>>>>>> 7419366ac88bc25affae4c6a669b6f0b88624915
     }
     
   }

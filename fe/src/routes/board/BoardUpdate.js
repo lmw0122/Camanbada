@@ -1,7 +1,7 @@
 import * as React from 'react';
-import NavBar from '../components/NavBar'
-import RadioButtonCamping from '../components/RadioButtonCamping'
-import CampingSearch from '../components/CampingSearch';
+import NavBar from '../components/common/NavBar'
+import RadioButtonCamping from '../components/board/RadioButtonCamping'
+import CampingSearch from '../components/camping/CampingSearch';
 import ImageUpload from '../components/ImageUpload'
 import { Container, TextField, Box, CssBaseline, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
