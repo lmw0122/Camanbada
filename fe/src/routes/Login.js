@@ -38,7 +38,7 @@ const imgNum = Math.round(Math.random()*4);
 export default function SignInSide() {
   const KAKAO_AUTH_URL = "http://i6c109.p.ssafy.io:8000/oauth/getKakao";
   const AUTH_URL = "http://i6c109.p.ssafy.io:8000/user/login";
-  const HOME_URL = "http://localhost:3000/main";
+  const HOME_URL = "http://i6c109.p.ssafy.io:80/main";
 
 
   const handleSubmit = (event) => {
@@ -84,7 +84,7 @@ export default function SignInSide() {
 
   //배포용 - KAKAO_AUTH_URL 바꿔주세요
   const kakaoLogin = ()=>{
-    axios.get('http://localhost:8050/oauth/getKakao')
+    axios.get(KAKAO_AUTH_URL)
       .then((response) => {
         const url = response.data;
         window.location.href = (url);
