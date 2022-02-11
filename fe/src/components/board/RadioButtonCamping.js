@@ -4,7 +4,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import { Typography, Stack } from '@mui/material';
+import { Typography, Stack, Grid } from '@mui/material';
 
 
 
@@ -33,13 +33,20 @@ export default function RadioButtonsGroup(props) {
 				aria-labelledby="radio-button"
 				name="radio-button-group"
 			>
-				<FormControlLabel value="share"  control={<Radio />} label="나눔" />
-				<FormControlLabel value="deal" control={<Radio />} label="거래" />
-				<FormControlLabel value="review" control={<Radio />} label="후기" />
-				<FormControlLabel value="free" control={<Radio />} label="자유" />
+				{/* 추후에 반응형 웹할 때 조절해야함!.. 임의로 조절함 */}
+				<Grid md={12}>
+					<FormControlLabel value="share"  control={<Radio />} label="나눔" />
+					<FormControlLabel value="deal" control={<Radio />} label="거래" />
+					<FormControlLabel value="review" control={<Radio />} label="후기" />
+					<FormControlLabel value="camping-free" control={<Radio />} label="자유" />
+				</Grid>
+					<FormLabel id="radio-button" sx={{ fontWeight : 'bold', fontSize : 18, mt : 1 }}>&lt;자유 소통&gt;</FormLabel>
+				<Grid md={12}>
+					<FormControlLabel value="equipment-review" control={<Radio />} label="장비 후기" />
+					<FormControlLabel value="equipment-free" control={<Radio />} label="자유" />
+				</Grid>
 			</RadioGroup>
-			<FormLabel id="radio-button" sx={{ fontWeight : 'bold', fontSize : 18, mt : 1 }}>&lt;자유 소통&gt;</FormLabel>
-			<RadioGroup
+			{/* <RadioGroup
 				onChange={checkOnlyOneCommunity}
 				row
 				aria-labelledby="radio-button"
@@ -47,7 +54,7 @@ export default function RadioButtonsGroup(props) {
 			>
 				<FormControlLabel value="equipment-review" control={<Radio />} label="장비 후기" />
 				<FormControlLabel value="free" control={<Radio />} label="자유" />
-			</RadioGroup>
+			</RadioGroup> */}
     </FormControl>
   );
 }

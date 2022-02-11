@@ -115,20 +115,6 @@ export default function BasicTabs() {
           >
             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
               <CampingImage basics={ basics }></CampingImage>
-              {/* <CardMedia
-                component="img"
-                sx={{
-                  // 16:9
-                  // pt: '56.25%',
-                  pt: '0%',
-                }}
-                // width='30vw'
-                // height='45vw'
-                // image={basics.firstImageUrl}
-                image={require("../../img/CampingDefaultImage.png").default}
-                // image="https://gocamping.or.kr/upload/camp/866/thumb/thumb_720_0210doTpcD0QrJTQnYauD1V6.jpg"
-                alt={"CampingImage"}
-              /> */}
             </Card>
           </Container>
           <Container>

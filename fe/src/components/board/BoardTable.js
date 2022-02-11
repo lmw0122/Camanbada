@@ -53,7 +53,7 @@ export default function BoardTable() {
     <ThemeProvider theme={theme} >
       <Grid container sx={{ height : '100vh', m: 4}}>
         <CssBaseline />
-        <TableContainer  maxWidth="sm" align="center">
+        <TableContainer align="center">
           <Table sx={{ m : 2, width: 700 }} aria-label="simple table">
             <TableHead>
               <TableRow>
