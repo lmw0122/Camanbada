@@ -1,7 +1,6 @@
 import * as React from 'react';
 import NavBar from '../components/NavBar'
 import RadioButtonCamping from '../components/RadioButtonCamping'
-import RadioButtonFree from '../components/RadioButtonFree'
 import CampingSearch from '../components/CampingSearch';
 import ImageUpload from '../components/ImageUpload'
 import { Container, TextField, Box, CssBaseline, Typography } from '@mui/material';
@@ -28,7 +27,6 @@ export default function BoardUpdate() {
         <Box sx={{ height : '700', border : '5px solid black', m : 5, py : 10, px : 15 }}>
           <Stack spacing={2} >
             <RadioButtonCamping></RadioButtonCamping>
-            <RadioButtonFree></RadioButtonFree>
           </Stack>
           <CampingSearch></CampingSearch>
           <Box sx={{ width: 500, maxWidth: "100%", mt : 2}}>
