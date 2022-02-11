@@ -1,4 +1,4 @@
-import SearchCommunityAlbum from "../components/searchResult/SearchCommunityAlbum";
+import SearchCommunityAlbum from "../../components/searchResult/SearchCommunityAlbum";
 
 export default function SearchCommunity () {
 

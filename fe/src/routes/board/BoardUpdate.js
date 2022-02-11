@@ -1,8 +1,7 @@
 import * as React from 'react';
-import NavBar from '../components/common/NavBar'
-import RadioButtonCamping from '../components/board/RadioButtonCamping'
-import CampingSearch from '../components/camping/CampingSearch';
-import ImageUpload from '../components/ImageUpload'
+import NavBar from '../../components/common/NavBar'
+import RadioButtonCamping from '../../components/board/RadioButtonCamping'
+import CampingSearch from '../../components/camping/CampingSearch';
 import { Container, TextField, Box, CssBaseline, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -36,7 +35,6 @@ export default function BoardUpdate() {
               label="제목을 입력해주세요"
             />
           </Box>
-          <ImageUpload></ImageUpload>
           <Box sx={{ width : 500, maxwidth: "100%", mt : 2 }}>
             <TextField
               label="내용을 입력해주세요."

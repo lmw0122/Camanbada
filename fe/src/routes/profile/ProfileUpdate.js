@@ -3,7 +3,7 @@ import { Container, CssBaseline, Typography, Grid, TextField, Stack, Box, Button
 import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import NavBar from '../components/common/NavBar'
+import NavBar from '../../components/common/NavBar'
 
 const Input = styled('input')({
   display: 'none',

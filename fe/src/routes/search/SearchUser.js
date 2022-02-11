@@ -1,4 +1,4 @@
-import SearchUserAlbum from "../components/searchResult/SearchUserAlbum";
+import SearchUserAlbum from "../../components/searchResult/SearchUserAlbum";
 
 export default function SearchUser () {
 

@@ -1,5 +1,6 @@
-import BoardDetailMine from "../components/board/BoardDetailMine";
-import NavBar from "../components/common/NavBar";
+import BoardDetailMine from "../../components/board/BoardDetailMine";
+import NavBar from "../../components/common/NavBar";
+
 
 export default function BoardDetail () {
 

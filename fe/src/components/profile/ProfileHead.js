@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import IsFollow from "../IsFollow";
-import ProfileUser from "../ProfileUser";
+import IsFollow from "./IsFollow";
+import ProfileUser from "./ProfileUser";
 import { Container, CssBaseline, Typography, Grid, Stack, Box } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';

@@ -1,5 +1,5 @@
-import CampingFilteringAlbum from "../components/searchResult/CampingFilteringAlbum";
-import NavBar from "../components/common/NavBar";
+import CampingFilteringAlbum from "../../components/searchResult/CampingFilteringAlbum";
+import NavBar from "../../components/common/NavBar";
 
 
 export default function CampingFiltering () {

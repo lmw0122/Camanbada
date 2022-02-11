@@ -1,5 +1,5 @@
-import NavBar from "../components/common/NavBar";
-import ProfileHead from "../components/profile/ProfileHead";
+import NavBar from "../../components/common/NavBar";
+import ProfileHead from "../../components/profile/ProfileHead";
 // import ProfileHeadOther from "../components/profile/ProfileHeadOther";
 
 export default function Profile () {
