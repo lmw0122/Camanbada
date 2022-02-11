@@ -21,7 +21,12 @@ import camping5 from "../img/campingImg/camping5.jpg";
 import Auth from "../components/Auth";
 import Stack from '@mui/material/Stack';
 import Logo from "../img/logo.png";
+<<<<<<< HEAD
 import axios from 'axios';
+=======
+import axios from 'axios'
+
+>>>>>>> 7419366ac88bc25affae4c6a669b6f0b88624915
 
 const theme = createTheme();
 
@@ -37,8 +42,8 @@ const imgNum = Math.round(Math.random()*4);
 export default function SignInSide() {
   const KAKAO_AUTH_URL = "http://i6c109.p.ssafy.io:8000/oauth/getKakao";
   const AUTH_URL = "http://i6c109.p.ssafy.io:8000/user/login";
-  const HOME_URL = "http://localhost:3000/main";
-
+  const HOME_URL = "http://i6c109.p.ssafy.io:80/main";
+  const HOME_TEST_URL = "http://localhost:3000/main";
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -60,7 +65,7 @@ export default function SignInSide() {
         const token = response.headers.authorization;
         localStorage.removeItem("accessToken");
         localStorage.setItem("accessToken", token);
-        window.location.href = (HOME_URL);
+        window.location.href = (HOME_TEST_URL);
       }).catch((error) => {
         //에러처리
         alert("아이디와 비밀번호를 확인해주세요");
@@ -83,7 +88,7 @@ export default function SignInSide() {
 
   //배포용 - KAKAO_AUTH_URL 바꿔주세요
   const kakaoLogin = ()=>{
-    axios.get('http://localhost:8050/oauth/getKakao')
+    axios.get(KAKAO_AUTH_URL)
       .then((response) => {
         const url = response.data;
         window.location.href = (url);

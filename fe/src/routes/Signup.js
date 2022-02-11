@@ -100,7 +100,11 @@ export default function SignUp() {
       console.log(nickname)
       console.log(response);
       alert("회원가입에 성공하셨습니다!")
+<<<<<<< HEAD
       if (e.status === 200) {
+=======
+      if (response.status === 200) {
+>>>>>>> 7419366ac88bc25affae4c6a669b6f0b88624915
         <Link to="/signup"></Link>
       }
     } catch (error) {

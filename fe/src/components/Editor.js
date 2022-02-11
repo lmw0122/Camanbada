@@ -2,8 +2,15 @@ import React, { useState, useMemo } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-export default function Editor() {
-	function imageHandler() {
+export default function Editor(props) {
+	const value = null;
+	function setContent(contents) {
+		props.func1(contents);
+	}
+	function setImage(image) {
+		props.func2(image);
+	}
+	const imageHandler = () => {
 		//input 파일 태그 생성
 		const input = document.createElement('input');
 		input.setAttribute('type', 'file');
@@ -11,23 +18,20 @@ export default function Editor() {
 		input.click();
 
 		// input change
-		input.onChange = (e) => {
-			const files = e.target.files;
+		input.addEventListener('change',(e) => {
+			const file = input.files[0];
 			const formData = new FormData();
-			formData.append('files', files[0])
+			formData.append('img', file);
 
-		//file 등록
-		const api = 'i6c109.p.ssafy.io:8051/board';
-		const tempFile = api.file.postTempFileUp(formData);
-		tempFile.then((res) => {
-			const fileSrno = res.fileSrno;
-			const range = this.quill.getSelection();
+			var reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = function () {
+				setImage(reader.result);
+   			};
 
-			this.quill.insertEmbed(range.index, 'image', 'i6c109.p.ssafy.io:8000/board' + fileSrno)
 		});
-	}}
-
-	const [value, setValue] = useState('');
+	}
+	
 
 	const modules = useMemo(()=> ({
 		toolbar: {
@@ -47,15 +51,15 @@ export default function Editor() {
           image: imageHandler,
         },
 		}
+		
 	}), [])
 	return (
 		<div style={{ height : "650px", marginTop : 18, width : "600px", align : "center"}}>
 			<ReactQuill
 				style={{ height : "600px"}}
 				theme="snow"
-				value={value}
 				modules={modules}
-				onChange={setValue}
+				onChange={setContent}
 			/>
 		</div>
   );
