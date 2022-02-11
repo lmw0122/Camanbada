@@ -15,6 +15,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
+const BASE_URL_USER = 'i6c109.p.ssafy.io:8000';
 
 export default function SignUp() {
   //아이디, 닉네임, 이메일, 비밀번호, 비밀번호 확인 초기 상태값 선언
@@ -47,30 +48,47 @@ export default function SignUp() {
   //   });
   // };
 
-  const onSubmit = useCallback(
-    async (e) => {
-      e.preventDefault()
-      try {
-        await axios
-          .post('http://i6c109.p.ssafy.io:3000/signup', {
-            id: id,
-            password: password,
-            passwordConfirm : passwordConfirm,
-            nickname : nickname,
-            email: email,
-          })
-          .then((res) => {
-            console.log('response:', res)
-            if (res.status === 200) {
-              <Link to="/signup"></Link>
-            }
-          })
-      } catch (err) {
-        console.error(err)
-      }
-    },
-    [email, id, password]
-  )
+  // const onSubmit = useCallback(
+  //   async (e) => {
+  //     e.preventDefault()
+  //     try {
+  //       await axios
+  //         .post('http://i6c109.p.ssafy.io:3000/signup', {
+  //           id: id,
+  //           password: password,
+  //           passwordConfirm : passwordConfirm,
+  //           nickname : nickname,
+  //           email: email,
+  //         })
+  //         .then((res) => {
+  //           console.log('response:', res)
+  //           if (res.status === 200) {
+  //             <Link to="/signup"></Link>
+  //           }
+  //         })
+  //     } catch (err) {
+  //       console.error(err)
+  //     }
+  //   },
+  //   [email, id, password]
+  // )
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    // console.log(e.target.id.value)
+    axios.post('i6c109.p.ssafy.io:8000/user/', {
+      id : id,
+      nickname : nickname,
+      password : password,
+      email : email
+    })
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 
   // 아이디
   const onChangeName = useCallback((e) => {
@@ -89,10 +107,10 @@ export default function SignUp() {
     setNickname(e.target.value)
     if (e.target.value.length < 2 || e.target.value.length > 15) {
       setnNicknameMessage('2글자 이상 15글자 미만으로 입력해주세요.')
-      setNickname(false)
+      setIsNickname(false)
     } else {
       setnNicknameMessage('올바른 이름 형식입니다 :)')
-      setNickname(true)
+      setIsNickname(true)
     }
   }, [])
 
@@ -143,11 +161,6 @@ export default function SignUp() {
     },
     [password]
   )
-
-  // 이메일 인증 팝업
-  // const onClickEmailButton = () => {
-    
-  // }
 
   return (
     <ThemeProvider theme={theme}>

@@ -4,13 +4,33 @@ import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 
 export default function CampingSearch() {
+  const [campings, setCampings] = React.useState([]);
+  let campingList = [];
+
+  const getCampings = async() => {
+    const json = await (
+      await fetch (
+        `http://i6c109.p.ssafy.io:5555/camp/basic/all`
+      )
+    ).json();
+    setCampings(json);
+  };
+
+  for (let i=0; i < campings.length; i++){
+    campingList.push(campings[i].facltNm);
+  }
+  
+  React.useEffect(() => {
+    getCampings()
+  }, []);
+
   return (
     <Stack spacing={2} sx={{ width: 500, mt: 2 }}>
       <Autocomplete
         freeSolo
         id="free-solo"
         disableClearable
-        options={campingData.map((option) => option.title)}
+        options={campingList.map((option) => option)}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -25,17 +45,3 @@ export default function CampingSearch() {
     </Stack>
   );
 }
-
-const campingData = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  {
-    title: 'The Lord of the Rings: The Return of the King',
-    year: 2003,
-  },
-];

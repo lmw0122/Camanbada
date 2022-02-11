@@ -20,11 +20,6 @@ function Community() {
             <Typography display="inline" component="h1" variant="h4" align="center" sx={{m: 2}}> 
               CAM:NABADA 커뮤니티
             </Typography>
-            <Link to={'/create'} style={{textDecoration:'none'}}>
-              <Button variant="contained">
-                게시글 작성
-              </Button>
-            </Link>
           </div>
           <SelectVariantsBoard />
         </Grid>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Copyright from "../components/Copyright";
 import Avatar from '@mui/material/Avatar';
@@ -21,6 +21,7 @@ import camping5 from "../img/campingImg/camping5.jpg";
 import Auth from "../components/Auth";
 import Stack from '@mui/material/Stack';
 import Logo from "../img/logo.png";
+import axios from 'axios';
 
 const theme = createTheme();
 
@@ -50,6 +51,19 @@ export default function SignInSide() {
       password: data.get('password'),
     });
   };
+
+  useEffect(() => {
+    axios.post('http://i6c109.p.ssafy.io:8000/user/login', {
+      "id" : "1234",
+      "password" : "1234"
+    })
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  })
 
   return (
     <ThemeProvider theme={theme}>

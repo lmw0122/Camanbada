@@ -29,24 +29,24 @@ function App() {
         <Route path="/main" element={<Main></Main>}></Route>
         <Route path="/" element={<NoLogin></NoLogin>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>
-        <Route path="/camping" element={<CampingFiltering></CampingFiltering>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
+        <Route path="/camping" element={<CampingFiltering></CampingFiltering>}></Route>
         <Route path="/community" element={<Community></Community>}></Route>
         <Route path="/profile" element={<Profile></Profile>}></Route>
+        <Route path="/profile/update" element={<Update></Update>}></Route>
         <Route path="/message" element={<Message></Message>}></Route>
+        {/* 캠핑장 상세 링크 수정 */}
+        {/* 캠핑장 상세 수정해야함 */}
+        <Route path="/camping/:campId" element={<CampingDetail></CampingDetail>}></Route>
         <Route path="/create" element={<Create></Create>}></Route>
         <Route path="/board/update" element={<BoardUpdate></BoardUpdate>}></Route>
-        {/* 캠핑장 상세 수정해야함 */}
-        {/* 캠핑장 상세 링크 수정 */}
-        <Route path="/camping/:campId" element={<CampingDetail></CampingDetail>}></Route>
+        {/* 게시글 상세 링크 수정 이게 맞나..?*/}
+        <Route path="/board/one/boardId" element={<BoardDetail></BoardDetail>}></Route>
         {/* 프로필 편집 링크 수정 */}
-        <Route path="/profile/update" element={<Update></Update>}></Route>
         <Route path="/search" element={<Search></Search>}></Route>
         <Route path="/search/camping" element={<SearchCamping></SearchCamping>}></Route>
         <Route path="/search/user" element={<SearchUser></SearchUser>}></Route>
         <Route path="/search/community" element={<SearchCommunity></SearchCommunity>}></Route>
-        {/* 게시글 상세 링크 수정 */}
-        <Route path="/board" element={<BoardDetail></BoardDetail>}></Route>
         <Route path="/test" element={<Test></Test>}></Route>
       </Routes>
     </Router>
