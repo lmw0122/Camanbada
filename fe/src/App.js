@@ -17,6 +17,7 @@ import SearchCamping from "./routes/search/SearchCamping";
 import SearchUser from "./routes/search/SearchUser";
 import SearchCommunity from "./routes/search/SearchCommunity";
 import Test from "./routes/test.js"
+import CampingCommunity from "./routes/camping/CampingCommunity";
 
 
 
@@ -39,8 +40,10 @@ function App() {
         {/* board */}
         {/* 게시글 상세 링크 수정 이게 맞나..?*/}
         <Route path="/board/update" element={<BoardUpdate></BoardUpdate>}></Route>
-        <Route path="/board/one/boardId" element={<BoardDetail></BoardDetail>}></Route>
+        <Route path="/board/:boardId" element={<BoardDetail></BoardDetail>}></Route>
         <Route path="/create" element={<Create></Create>}></Route>
+        <Route path="/community/:campId" element={<CampingCommunity></CampingCommunity>}></Route>
+
 
         {/* camping */}
         {/* 캠핑장 상세 링크 수정 */}

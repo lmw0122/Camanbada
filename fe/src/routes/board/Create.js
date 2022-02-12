@@ -10,41 +10,36 @@ import CampingSearch from '../../components/camping/CampingSearch';
 export default function Create() {
   const [campId, setCampId] = useState('')
   const [tag, setTag] = useState('')
-  const [campingName, setCampingName] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [clientId, setClientId] = useState(''); 
+  const [clientId, setClientId] = useState('');
   const [photo, setPhoto] = useState('');
+
+  const BOARD_CREATE_URL = 'http://i6c109.p.ssafy.io:8000/board';
+  const BOARD_LIST_URL = 'http://localhost:3000/community';
+  const accessToken = localStorage.getItem("accessToken");
   const HEADER = {
-    'Authorization': localStorage.getItem("accessToken")
+    headers:{
+    'Authorization': accessToken
   }
-  // const QuillRef = ReactQuill();
-  // const [contents, setContents] = useState("");
+  }
 
   const onSubmit = (e) => {
-    console.log(tag + " " + campingName + " " + title + " " + content + " " + clientId + " " + photo);
-    e.preventDefault();
-    console.log(e)
-    axios.post('http://i6c109.p.ssafy.io:8051/board', {
-      tag : tag,
-      campingName : campingName,
-      title : title,
-      content : content
-    })
+    axios.post(BOARD_CREATE_URL, {
+      "campId": campId,
+      "clientId": clientId,
+      "photo": photo,
+      "content": content,
+      "tag": tag,
+      "title": title
+    },HEADER)
     .then((res) => {
       console.log(res)
+      alert("게시판에 등록하였습니다!");
+      window.location.href = (BOARD_LIST_URL);
+    }).catch(() => {
+      alert("전송에 실패하였습니다");
     })
-    // axios.post('http://i6c109.p.ssafy.io:8051/board', {
-    //   "campId": "1",
-    //   "clientId": "작성자",
-    //   // "photo": "string",
-    //   "content": content,
-    //   "tag": tag,
-    //   "title": title
-    // },HEADER)
-    // .then((res) => {
-    //   console.log(res)
-    // })
   }
 
   //태그 받아오기
@@ -60,8 +55,8 @@ export default function Create() {
   
   //캠핑 데이터 받아오기
   const camping_data = (data) => {
-    console.log(data);
-    setCampingName(data);
+    console.log(data[0].id);
+    setCampId(data[0].id);
   }
   
   //제목 데이터 받아오기

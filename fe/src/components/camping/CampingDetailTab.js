@@ -15,6 +15,8 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { Link } from "react-router-dom";
+import Axios from "axios";
+import CampingImage from './CampingImage';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -65,32 +67,20 @@ export default function BasicTabs() {
   const [basics, setBasics] = React.useState([]);
   const [details, setDetails] = React.useState([]);
 
-  const getBasic = async () => {
-    const json = await (
-      await fetch (
-        `http://i6c109.p.ssafy.io:5555/camp/basic/one/${campId}`
-      )
-    ).json();
-    setBasics(json)
-  }
+  
   React.useEffect(() => {
-    getBasic();
+    Axios.get(`http://i6c109.p.ssafy.io:8092/camp/basic/one/${campId}`)
+      .then(res => setBasics(res.data))
   }, []);
 
-  const setDetail = async () => {
-    const json2 = await (
-      await fetch (
-        `http://i6c109.p.ssafy.io:5555/camp/detail/one/${campId}`
-      )
-    ).json();
-    setDetails(json2)
-  }
   React.useEffect(() => {
-    setDetail();
+    Axios.get(`http://i6c109.p.ssafy.io:8092/camp/detail/one/${campId}`)
+      .then(res => setDetails(res.data))   
   }, []);
 
   // 네이버 지도 api 부분
   function NaverMapAPI() {
+
     const navermaps = window.naver.maps;
     
     return (
@@ -101,7 +91,7 @@ export default function BasicTabs() {
           height: '60vh' // 네이버지도 세로 길이
         }}
         defaultCenter={{ lat: basics.mapY, lng: basics.mapX }} // 지도 초기 위치
-        defaultZoom={10} // 지도 초기 확대 배율
+        defaultZoom={7} // 지도 초기 확대 배율
       >
          <Marker
           key={1}
@@ -112,6 +102,7 @@ export default function BasicTabs() {
     );
   }
 
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -123,19 +114,7 @@ export default function BasicTabs() {
             maxWidth="sm"
           >
             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <CardMedia
-                component="img"
-                sx={{
-                  // 16:9
-                  // pt: '56.25%',
-                  pt: '0%',
-                }}
-                // width='30vw'
-                // height='45vw'
-                image={basics.firstImageUrl}
-                // image="https://gocamping.or.kr/upload/camp/866/thumb/thumb_720_0210doTpcD0QrJTQnYauD1V6.jpg"
-                alt={"CampingImage"}
-              />
+              <CampingImage basics={ basics }></CampingImage>
             </Card>
           </Container>
           <Container>
@@ -202,8 +181,7 @@ export default function BasicTabs() {
                 <Tab label="캠핑장 소개" {...a11yProps(0)} />
                 <Tab label="영업 정보" {...a11yProps(1)} />
                 <Tab label="위치" {...a11yProps(2)} />
-                <Tab label="후기" {...a11yProps(3)} />
-                
+                <Tab label="후기" {...a11yProps(3)} /> 
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>

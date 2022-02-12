@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -15,6 +14,9 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import Input from '@mui/material/Input';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios'
 
 const theme = createTheme();
 
@@ -28,6 +30,9 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 export default function BoardDetailMine() {
+
+  const { boardId } = useParams();
+
   const [comments, setComments] = React.useState([
     {
       id: 1,
@@ -42,6 +47,31 @@ export default function BoardDetailMine() {
       content: "저도 갈래요!"
     },
   ]);
+
+  const [dataList, setDataList] = useState([]);
+  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/one/${boardId}`;
+
+  const getBoards = async () => {
+    // const boardJson = await (
+    //   await fetch ('http://i6c109.p.ssafy.io:8051/board'
+    //   )
+    // ).json();
+    axios.get(BOARD_GET_URL,)
+      .then((response) => {
+        console.log(response.data);
+        setDataList(response.data);
+      }).catch((error) => {
+        //에러처리
+        alert("게시판이 비어있습니다");
+      });
+    // console.log(boardJson);
+  };
+
+  useEffect(() => {
+    getBoards()
+  }, [])
+
+  console.log(dataList)
   
   return (
     <ThemeProvider theme={theme}>
@@ -49,10 +79,10 @@ export default function BoardDetailMine() {
       <main>
         <Container sx={{ p:0, mt: 12, mb: 8}} maxWidth="md">
           <Typography sx={{ mb: 1 }}>
-            캠핑 소통-나눔
+            {dataList.tag}
           </Typography>
           <Typography variant="h4" sx={{ mb: 2 }}>
-            고기 나눔합니다. (게시글 제목)
+            {dataList.title}
           </Typography>
           <Stack
             direction="row"
@@ -67,19 +97,18 @@ export default function BoardDetailMine() {
             </Grid>
             <Grid>
               <Typography>
-                작성자 닉네임
+                {dataList.clientId}
               </Typography>
               <Typography>
-                2022.01.20 14:44
+                {dataList.date}
               </Typography>
             </Grid>
             <Grid>
-              좋아요 수
+              좋아요 {dataList.like}
             </Grid>
           </Stack>
           <Box sx={{ mb: 2, height: 400 }} >
-            게시글 내용을 어떻게 넣어서 보여줄까요 
-            스크롤 기능도 추가해아함
+            {dataList.content}
           </Box>
           <Divider sx={{ borderBottomWidth: 5, mb: 2 }} />
           <Stack
@@ -91,7 +120,7 @@ export default function BoardDetailMine() {
               <FavoriteBorderIcon />
             </Grid>
             <Grid>
-              좋아요 6
+              좋아요 {dataList.like}
             </Grid>
             <Grid>
               <ChatBubbleOutlineIcon />

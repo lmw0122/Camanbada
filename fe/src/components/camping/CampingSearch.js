@@ -6,6 +6,11 @@ import Autocomplete from '@mui/material/Autocomplete';
 export default function CampingSearch(props) {
   const [campings, setCampings] = React.useState([]);
   let campingList = [];
+  let campingFormatList = [];
+  
+  React.useEffect(() => {
+    getCampings()
+  }, []);
 
   const getCampings = async() => {
     const json = await (
@@ -13,28 +18,25 @@ export default function CampingSearch(props) {
         `http://i6c109.p.ssafy.io:8092/camp/basic/list`
       )
     ).json();
-    console.log(json)
     setCampings(json);
   };
 
-  for (let i=0; i < campings.length; i++){
-    campingList.push(campings[i].facltNm)};
-  
   function checkOnlyOneCamp(e) {
     const content = e.target;
-    props.func(content.innerText);
+    const campName = content.innerText;
+    let data = campingFormatList.filter(camp => camp.name == campName);
+    props.func(data);
   }
 
-  React.useEffect(() => {
-    getCampings()
-  }, []);
-
   for (let i = 0; i < campings.length; i++){
+    if (!campingList.includes(campings[i].facltNm)) {
+      campingList.push(campings[i].facltNm);
+    }
     const campData = {
       "id": campings[i].campId,
-      "name": campings[i].facltNm
+      "name": campings[i].facltNm.trim()
     };
-    campingList.push(campData);
+    campingFormatList.push(campData);
   }
 
   return (
