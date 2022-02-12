@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Container, CssBaseline, Typography, Grid, TextField, Stack, Box, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
@@ -10,9 +10,23 @@ const Input = styled('input')({
 });
 
 export default function Update() {
-    // const onEdit = () => {
-    
-    // }
+  const [ textLength, setTextLength ] = useState('0');
+  // const [ userId, setUserId ] = useState();
+  // const [ userEmail, setUserEmail ] = useState();
+  
+  const onKeyUp = (e) => {
+    const totalText = e.target.value;
+    const totalLength = totalText.length;
+    setTextLength(totalLength);
+  }
+
+  // 중복 체크
+  const onCheckDuplicate = (e) => {
+   console.log(e) 
+  }
+
+
+
   
   return (
     <div>
@@ -45,13 +59,13 @@ export default function Update() {
             </Stack>
             <Stack direction="row" sx={{ mt : 2}}>
               <Typography sx={{ mr : 2, width : 150 }}>소개글</Typography>
-              <TextField sx={{ width : '50ch' }} multiline />
-              <Typography sx={{ m : 2}}>0 / 150</Typography>
+              <TextField onKeyUp={onKeyUp} sx={{ width : '50ch' }} multiline />
+              <Typography sx={{ m : 2}}> {textLength} / 150</Typography>
             </Stack>
             <Stack direction="row" sx={{ mt : 2}}>
               <Typography sx={{ mr : 2, width : 150 }}>닉네임</Typography>
               <TextField sx={{ width : '50ch' }}/>
-              <Button variant="contained" sx={{ ml : 2, width : '16ch' }}>중복 확인</Button>
+              <Button variant="contained" onClick={onCheckDuplicate} sx={{ ml : 2, width : '16ch' }}>중복 확인</Button>
             </Stack>
             <Divider sx={{ borderBottomWidth: 2, my: 2 }} />
             <Stack direction="row" sx={{ mt : 2}}>
@@ -64,10 +78,10 @@ export default function Update() {
               <Button variant="contained" sx={{ ml : 2}}>비밀번호 수정</Button>
             </Stack>
           </Grid>
+          <Grid>
+            <Button variant="contained" >수정 완료</Button>
+          </Grid>
         </Grid>
-        <Box sx={{ justifyContent: "center" }}>
-          <Button variant="contained" >수정 완료</Button>
-        </Box>
       </Container>
     </div>
   )

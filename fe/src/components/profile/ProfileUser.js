@@ -17,7 +17,7 @@ class ProfileUser extends Component {
   render() {
     if (this.state.userE === true) {
       return (
-        <Link to={'/profile/update'} style={{textDecoration:'none'}}>
+        <Link to={'/create'} style={{textDecoration:'none'}}>
           <Button
             style={{
               border: "1px black solid",
