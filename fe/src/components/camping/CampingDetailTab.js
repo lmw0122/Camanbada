@@ -64,6 +64,7 @@ export default function BasicTabs() {
 
   // 캠핑장 api 부분
   const { campId } = useParams();
+  console.log(campId)
   const [basics, setBasics] = React.useState([]);
   const [details, setDetails] = React.useState([]);
 

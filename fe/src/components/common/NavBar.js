@@ -224,7 +224,7 @@ export default function PrimarySearchAppBar() {
               </Badge>
             </IconButton> */}
             {/* 프로필 */}
-            <Link to={'/profile'}>
+            <Link to={`/profile`}>
               <IconButton
                 size="large"
                 edge="end"

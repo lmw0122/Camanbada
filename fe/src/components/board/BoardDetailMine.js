@@ -17,6 +17,8 @@ import Paper from '@mui/material/Paper';
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const theme = createTheme();
 
@@ -167,7 +169,15 @@ export default function BoardDetailMine() {
   useEffect(() => {
     getBoards(); getComments(); getId();
   }, [])
+<<<<<<< HEAD
   
+=======
+
+  console.log(dataList)
+
+  const content = dataList.content
+  console.log(content)
+>>>>>>> NY0127
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -203,8 +213,17 @@ export default function BoardDetailMine() {
               <button onClick={(e)=>{boardOneLike(e, dataList.boardId)}}>❤</button>
             </Grid>
           </Stack>
+<<<<<<< HEAD
           <img id="userImage" width="850"></img>
           <Box sx={{ mb: 2, height: 400 }} id="boardcontent">
+=======
+          <Box sx={{ mb: 2, height: 400 }} >
+            <div dangerouslySetInnerHTML={{ __html: content }}></div>
+
+            {/* {dataList.content.innerText} */}
+            
+            
+>>>>>>> NY0127
           </Box>
           <Divider sx={{ borderBottomWidth: 5, mb: 2 }} />
           <Stack
@@ -216,7 +235,11 @@ export default function BoardDetailMine() {
               <FavoriteBorderIcon />
             </Grid>
             <Grid>
+<<<<<<< HEAD
               좋아요 0
+=======
+              {dataList.like}
+>>>>>>> NY0127
             </Grid>
             <Grid>
               <ChatBubbleOutlineIcon />
@@ -271,7 +294,6 @@ export default function BoardDetailMine() {
             sx={{
               mb: 2,
             }}
-
           >
             <Input
               placeholder="댓글을 남겨보세요."

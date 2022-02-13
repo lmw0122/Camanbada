@@ -22,6 +22,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Link } from "react-router-dom";
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import { useParams } from 'react-router-dom';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -64,6 +65,16 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
   // color: theme.palette.text.secondary,
 }));
+
+// const { nick } = useParams();
+// const [userInfo, setUserInfo] = React.useState('');
+
+// React.useEffect(() => {
+//   axios.get(`http://i6c109.p.ssafy.io:8050/user/${nick}`)
+//     .then(res => setUserInfo(res.data))
+// })
+
+// console.log(userInfo)
 
 export default function ProfileHead() {
   const [value, setValue] = React.useState(0);
