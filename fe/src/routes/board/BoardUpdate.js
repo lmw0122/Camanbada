@@ -21,7 +21,7 @@ export default function BoardUpdate() {
   const [dataList, setDataList] = useState([]);
 
   const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/one/${boardId}`;
-  const BOARD_UPDATE_URL = 'http://localhost:8051/board';
+  const BOARD_UPDATE_URL = 'http://i6c109.p.ssafy.io:8000/board';
   const HOME_TEST_URL = `http://localhost:3000/board/${boardId}`;
 
   const accessToken = localStorage.getItem("accessToken");

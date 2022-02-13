@@ -35,10 +35,10 @@ export default function BoardDetailMine() {
   const [comments, setComments] =  useState([]);
 
   const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/one/${boardId}`;
-  const BOARD_DELETE_URL = `http://localhost:8051/board/${boardId}`;
+  const BOARD_DELETE_URL = `http://i6c109.p.ssafy.io:8000/board/${boardId}`;
 
   const COMMENT_GET_URL = `http://i6c109.p.ssafy.io:8051/comment/${boardId}`;
-  const COMMENT_CREATE_URL = `http://localhost:8051/comment`;
+  const COMMENT_CREATE_URL = `http://i6c109.p.ssafy.io:8051/comment`;
   
   const HOME_TEST_URL = "http://localhost:3000/community";
 
@@ -78,7 +78,7 @@ export default function BoardDetailMine() {
 
   //게시판 지우기
   const deleteOneBoard = () => {
-    axios.delete(BOARD_DELETE_URL)
+    axios.delete(BOARD_DELETE_URL,HEADER)
       .then((response) => {
         window.location.href = (HOME_TEST_URL);
       }).catch((error) => {
