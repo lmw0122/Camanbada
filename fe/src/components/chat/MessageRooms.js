@@ -13,42 +13,49 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 import MessageRoom from './MessageRoom';
+import IfRoomId from './IfRoomId';
+
 
 export default function MessageRooms() {
   
 
   // 채팅 리스트 불러오기
 
-  // date, user, message
+  // date, user, message, chatroomId
   const [lists, setLists] = React.useState([]);
   // 유저 일단 B로 설정
   const [user, setUser] = React.useState('B');
-  const [roomId, setRoomId] = React.useState(2);
-
+  const [roomId, setRoomId] = React.useState(null);
+  let tmp = "";
 
   // 채팅 리스트를 클릭하면 해당 채팅방 내용을 어떻게 띄워줄지?????
   // 초기에 roomNum을 null이면 채팅방 내용X 
   // -> 채팅방 클릭시 해당 채팅방 내용 표시
-  const [roomNum, setRoomNum] = React.useState('');
 
 
-  const getLists = async() => {
-    const json = await (
-      await fetch (
+  const getLists = async () => {
+    await fetch(
         `http://i6c109.p.ssafy.io:8082/chat/list/${user}`
-      )
-    ).json();
-    setLists(json);
+    ).then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+    }).then(data => {
+      console.log(data);
+      setLists(data);
+    });
   };
   React.useEffect(() => {
     getLists()
+    console.log(lists);
   }, []);
-
-  
-  
-
  
+
+  const createMessageRoom = (chatroomId) => {
+    setRoomId(chatroomId);
+  };
   
+
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
       <CssBaseline />
@@ -57,8 +64,8 @@ export default function MessageRooms() {
         md={6}  
         align="center"
       >
-        {lists.map((list) => (
-          <Grid>
+        {lists.map((list , i) => (
+          <Grid onClick={() => { createMessageRoom(list.chatroomId); }}>
             <Typography sx={{ fontWeight: 'bold' }}>
               {list.user}
             </Typography>
@@ -67,7 +74,7 @@ export default function MessageRooms() {
             </Typography>
             <Typography>
               {list.message} 
-            </Typography>          
+            </Typography>
           </Grid>
         ))}
       </Grid>
@@ -76,11 +83,8 @@ export default function MessageRooms() {
         md={6}  
         align="center"
       >
-        <MessageRoom></MessageRoom>
+        <IfRoomId roomId={roomId}></IfRoomId>
       </Grid>
     </Grid>
-
   )
-  
 }
-

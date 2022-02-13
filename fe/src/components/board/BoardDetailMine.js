@@ -17,6 +17,8 @@ import Paper from '@mui/material/Paper';
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const theme = createTheme();
 
@@ -72,7 +74,9 @@ export default function BoardDetailMine() {
   }, [])
 
   console.log(dataList)
-  
+
+  const content = dataList.content
+  console.log(content)
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -108,7 +112,11 @@ export default function BoardDetailMine() {
             </Grid>
           </Stack>
           <Box sx={{ mb: 2, height: 400 }} >
-            {dataList.content}
+            <div dangerouslySetInnerHTML={{ __html: content }}></div>
+
+            {/* {dataList.content.innerText} */}
+            
+            
           </Box>
           <Divider sx={{ borderBottomWidth: 5, mb: 2 }} />
           <Stack
@@ -120,7 +128,7 @@ export default function BoardDetailMine() {
               <FavoriteBorderIcon />
             </Grid>
             <Grid>
-              좋아요 {dataList.like}
+              {dataList.like}
             </Grid>
             <Grid>
               <ChatBubbleOutlineIcon />
@@ -159,7 +167,6 @@ export default function BoardDetailMine() {
             sx={{
               mb: 2,
             }}
-
           >
             <Input
               placeholder="댓글을 남겨보세요."

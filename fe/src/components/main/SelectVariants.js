@@ -21,7 +21,6 @@ export default function SelectVariants() {
 
   const [sigungu, setSigungu] = React.useState('');
 
-  
   const handleChange1 = (event) => {
     setSido(event.target.value);
   };
@@ -35,6 +34,7 @@ export default function SelectVariants() {
   }
  
   var dropbox3 = [];
+
   var camps = [];
 
   const [campings, setCampings] = React.useState([]);
@@ -58,8 +58,6 @@ export default function SelectVariants() {
     if (sido !== '') {
       Axios.get(`http://i6c109.p.ssafy.io:8092/camp/basic/list/sigungu/${sido}`)
         .then(res => setSigungusjson(res.data)) 
-      console.log(sido)  
-      console.log(sigungusjson)
     }
   }, [sido]);
 
@@ -89,6 +87,15 @@ export default function SelectVariants() {
         }
       }
     } 
+  }
+  
+  function searchButton() {
+    if (sido !== '' && sigungu !== '' && camp !== '') {
+      window.location.href = `/camping/${finalc}`
+    } else if (sido !== '' && sigungu === '' && camp === '') {
+      window.location.href = `/search/${sido}`
+    }
+    
   }
   
   // 최종 선택된 캠핑장
@@ -179,7 +186,6 @@ export default function SelectVariants() {
             id="free-solo-2-demo"
             disableClearable
             options={dropbox3.map((db3) => db3)}
-            // value={camp}
             renderInput={(params) => (
               <TextField  
                 {...params}
@@ -191,19 +197,20 @@ export default function SelectVariants() {
               />
             )}
           />
-          <Link to={`/camping/${finalc}`}>
-            <Button
-                type="submit"
-                sx={{
-                  m: 1,
-                  minWidth: 100,
-                  height: '7ch'
-                }}
-                variant="contained"
-              >
-                검색
-            </Button> 
-          </Link>          
+          <Button
+              onClick={searchButton}
+              type="submit"
+              sx={{
+                m: 1,
+                minWidth: 100,
+                height: '7ch'
+              }}
+              variant="contained"
+            >
+              검색
+          </Button> 
+          {/* <Link to={`/camping/${finalc}`}>
+          </Link>           */}
         </Stack>
       </Container>  
     </Box>
