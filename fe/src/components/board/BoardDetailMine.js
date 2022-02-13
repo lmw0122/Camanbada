@@ -30,48 +30,81 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 export default function BoardDetailMine() {
-
   const { boardId } = useParams();
-
-  const [comments, setComments] = React.useState([
-    {
-      id: 1,
-      writer: "김싸피",
-      date: "2022-02-05",
-      content: "멋지네요."
-    },
-    {
-      id: 2,
-      writer: "이싸피",
-      date: "2022-02-07",
-      content: "저도 갈래요!"
-    },
-  ]);
-
   const [dataList, setDataList] = useState([]);
-  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/one/${boardId}`;
+  const [comments, setComments] =  useState([]);
 
+  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/one/${boardId}`;
+  const BOARD_DELETE_URL = `http://localhost:8051/board/${boardId}`;
+
+  const COMMENT_GET_URL = `http://i6c109.p.ssafy.io:8051/comment/${boardId}`;
+  const COMMENT_CREATE_URL = `http://localhost:8051/comment`;
+  
+  const HOME_TEST_URL = "http://localhost:3000/community";
+
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers:{
+    'Authorization': accessToken
+    }
+  }
+
+  //게시판 가져오기
   const getBoards = async () => {
-    // const boardJson = await (
-    //   await fetch ('http://i6c109.p.ssafy.io:8051/board'
-    //   )
-    // ).json();
-    axios.get(BOARD_GET_URL,)
+    axios.get(BOARD_GET_URL)
       .then((response) => {
-        console.log(response.data);
         setDataList(response.data);
+        const onePhoto = response.data.photo;
+        if(onePhoto != "")
+          document.getElementById('userImage').setAttribute("src",onePhoto);
+        const oneContent = response.data.content;
+        document.getElementById("boardcontent").innerHTML = oneContent;
       }).catch((error) => {
         //에러처리
         alert("게시판이 비어있습니다");
       });
-    // console.log(boardJson);
   };
+  //댓글 가져오기
+  const getComments = async () => {
+    axios.get(COMMENT_GET_URL)
+      .then((response) => {
+        setComments(response.data);
+      }).catch((error) => {
+        //에러처리
+        alert("댓글이 없습니다");
+      });
+  };
+  
+
+  //게시판 지우기
+  const deleteOneBoard = () => {
+    axios.delete(BOARD_DELETE_URL)
+      .then((response) => {
+        window.location.href = (HOME_TEST_URL);
+      }).catch((error) => {
+
+        alert("지울 수 없는 게시물입니다");
+      });
+  }
+
+  //댓글 작성하기
+  const createOneComment = () => {
+    const oneContent = document.getElementById("newComment");
+    axios.post(COMMENT_CREATE_URL, {
+      "boardId": boardId,
+      "clientId": "현재 로그인한 사용자",
+      "content": oneContent.value
+    })
+      .then((response) => {
+        getComments();
+      }).catch((error) => {
+        alert("댓글 작성에 실패하였습니다");
+      });
+  }
 
   useEffect(() => {
-    getBoards()
+    getBoards(); getComments();
   }, [])
-
-  console.log(dataList)
   
   return (
     <ThemeProvider theme={theme}>
@@ -107,8 +140,8 @@ export default function BoardDetailMine() {
               좋아요 {dataList.like}
             </Grid>
           </Stack>
-          <Box sx={{ mb: 2, height: 400 }} >
-            {dataList.content}
+          <img id="userImage" width="850"></img>
+          <Box sx={{ mb: 2, height: 400 }} id="boardcontent">
           </Box>
           <Divider sx={{ borderBottomWidth: 5, mb: 2 }} />
           <Stack
@@ -138,7 +171,7 @@ export default function BoardDetailMine() {
               <Grid item key={comment}>
                 <Grid>
                   <Typography sx={{ fontWeight: 'bold' }}>
-                    {comment.writer}
+                    {comment.clientId}
                   </Typography>
                 </Grid>
                 <Grid>
@@ -149,6 +182,11 @@ export default function BoardDetailMine() {
                 <Grid>
                   <Typography>
                     {comment.date}
+                  </Typography>
+                </Grid>
+                <Grid>
+                  <Typography>
+                    좋아요 수 : {comment.like}
                   </Typography>
                 </Grid>
               </Grid>
@@ -163,6 +201,7 @@ export default function BoardDetailMine() {
           >
             <Input
               placeholder="댓글을 남겨보세요."
+              id = "newComment"
             >
             </Input>
             <Button
@@ -173,6 +212,7 @@ export default function BoardDetailMine() {
                 height: '6ch'
               }}
               variant="contained"
+              onClick={ createOneComment }
             >
               등록
             </Button>
@@ -183,11 +223,8 @@ export default function BoardDetailMine() {
             justifyContent="right"
           >
             <Item>
-              <Link to={'/create'} style={{textDecoration:'none'}}>
+              <Link to={`/board/update/${boardId}`} style={{textDecoration:'none'}}>
                 <Button
-                  // style={{
-                  //   backgroundColor: "#009688"
-                  // }}
                   variant="contained"
                 >
                   게시글 수정
@@ -200,6 +237,7 @@ export default function BoardDetailMine() {
                   backgroundColor: "#f44336"
                 }}
                 variant="contained"
+                onClick={deleteOneBoard}
               >
                 게시글 삭제
               </Button>

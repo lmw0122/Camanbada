@@ -31,13 +31,8 @@ export default function BoardTable() {
   const BOARD_GET_URL = 'http://i6c109.p.ssafy.io:8051/board';
 
   const getBoards = async () => {
-    // const boardJson = await (
-    //   await fetch ('http://i6c109.p.ssafy.io:8051/board'
-    //   )
-    // ).json();
     axios.get(BOARD_GET_URL,)
       .then((response) => {
-        console.log(response.data);
         setDataList(response.data);
       }).catch((error) => {
         //에러처리
@@ -75,9 +70,11 @@ export default function BoardTable() {
                     {d.boardId}
                   </TableCell>
                   <TableCell align="center">{d.tag}</TableCell>
-                  <Link to={`/board/${d.boardId}`} >
-                    <TableCell align="center">{d.title}</TableCell>
-                  </Link>
+                    <TableCell align="center">
+                      <Link to={`/board/${d.boardId}`} style={{ textDecoration: 'none' }}>
+                      {d.title}
+                      </Link>
+                    </TableCell>
                   <TableCell align="center">{d.clientId}</TableCell>
                   <TableCell align="center">{d.date}</TableCell>
                 </TableRow>

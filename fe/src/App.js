@@ -39,7 +39,7 @@ function App() {
         
         {/* board */}
         {/* 게시글 상세 링크 수정 이게 맞나..?*/}
-        <Route path="/board/update" element={<BoardUpdate></BoardUpdate>}></Route>
+        <Route path="/board/update/:boardId" element={<BoardUpdate></BoardUpdate>}></Route>
         <Route path="/board/:boardId" element={<BoardDetail></BoardDetail>}></Route>
         <Route path="/create" element={<Create></Create>}></Route>
         <Route path="/community/:campId" element={<CampingCommunity></CampingCommunity>}></Route>

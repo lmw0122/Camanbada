@@ -214,7 +214,7 @@ return (
             />
           )}
         />   
-        <Link to={`/community/${finalc}`}>
+        <Link to={`/community/${finalc}`} style={{ textDecoration: 'none' }}>
           <Button
             type="submit"
             sx={{
@@ -277,7 +277,7 @@ return (
         >
           검색
         </Button>
-        <Link to={'/create'}>
+        <Link to={'/create'} style={{ textDecoration: 'none' }}>
           <Button 
             type="submit"
             sx={{
