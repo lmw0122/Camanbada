@@ -23,7 +23,6 @@ const theme = createTheme();
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
-  // padding: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
@@ -31,21 +30,28 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function BoardDetailMine() {
   const { boardId } = useParams();
+  const [clientId, setClientId] = useState([]);
   const [dataList, setDataList] = useState([]);
-  const [comments, setComments] =  useState([]);
+  const [comments, setComments] = useState([]);
+
+  const ID_GET_URL = 'http://i6c109.p.ssafy.io:8000/user'
 
   const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/one/${boardId}`;
   const BOARD_DELETE_URL = `http://i6c109.p.ssafy.io:8000/board/${boardId}`;
+  const BOARD_ONE_LIKE_URL = `http://i6c109.p.ssafy.io:8000/like/board/`
 
   const COMMENT_GET_URL = `http://i6c109.p.ssafy.io:8051/comment/${boardId}`;
-  const COMMENT_CREATE_URL = `http://i6c109.p.ssafy.io:8051/comment`;
+  const COMMENT_CREATE_URL = `http://i6c109.p.ssafy.io:8000/comment`;
+  const COMMENT_ONE_LIKE_URL = `http://i6c109.p.ssafy.io:8000/like/comment/`
   
+
   const HOME_TEST_URL = "http://localhost:3000/community";
+  const NOW_PAGE = `http://localhost:3000/board/${boardId}`;
 
   const accessToken = localStorage.getItem("accessToken");
   const HEADER = {
-    headers:{
-    'Authorization': accessToken
+    headers: {
+      'Authorization': accessToken
     }
   }
 
@@ -55,8 +61,8 @@ export default function BoardDetailMine() {
       .then((response) => {
         setDataList(response.data);
         const onePhoto = response.data.photo;
-        if(onePhoto != "")
-          document.getElementById('userImage').setAttribute("src",onePhoto);
+        if (onePhoto != "")
+          document.getElementById('userImage').setAttribute("src", onePhoto);
         const oneContent = response.data.content;
         document.getElementById("boardcontent").innerHTML = oneContent;
       }).catch((error) => {
@@ -74,11 +80,22 @@ export default function BoardDetailMine() {
         alert("댓글이 없습니다");
       });
   };
+
+  //현재 로그인한 사용자 아이디 가져오기
+  const getId = async () => {
+    axios.get(ID_GET_URL, HEADER)
+      .then((response) => {
+        setClientId(response.data);
+      }).catch((error) => {
+        //에러처리
+        alert("댓글이 없습니다");
+      });
+  }
   
 
   //게시판 지우기
   const deleteOneBoard = () => {
-    axios.delete(BOARD_DELETE_URL,HEADER)
+    axios.delete(BOARD_DELETE_URL, HEADER)
       .then((response) => {
         window.location.href = (HOME_TEST_URL);
       }).catch((error) => {
@@ -92,9 +109,9 @@ export default function BoardDetailMine() {
     const oneContent = document.getElementById("newComment");
     axios.post(COMMENT_CREATE_URL, {
       "boardId": boardId,
-      "clientId": "현재 로그인한 사용자",
+      "clientId": clientId,
       "content": oneContent.value
-    })
+    }, HEADER)
       .then((response) => {
         getComments();
       }).catch((error) => {
@@ -102,8 +119,53 @@ export default function BoardDetailMine() {
       });
   }
 
+  //댓글 좋아요와 싫어요
+  const commentOneLike= (e, commentId) =>{{
+    const URL = COMMENT_ONE_LIKE_URL + commentId;
+    axios.get(URL,HEADER)
+      .then((response) => {
+        if (response.status == 204) {
+          axios.delete(URL, HEADER)
+            .then((response) => {
+              window.location.href = NOW_PAGE;
+          }).catch((error) => {
+            alert("싫어요에 실패하였습니다");
+          });
+        }
+        else {//좋아요 성공
+          window.location.href = NOW_PAGE;
+        }
+      }).catch((error) => {
+        alert("좋아요에 실패하였습니다");
+      });
+  };
+}
+
+  //게시판 좋아요와 싫어요
+  const boardOneLike = (e, boardId) => {{
+    const URL = BOARD_ONE_LIKE_URL + boardId;
+    //console.log(URL)
+    axios.get(URL,HEADER)
+      .then((response) => {
+        if (response.status == 204) {
+          axios.delete(URL, HEADER)
+            .then((response) => {
+              window.location.href = NOW_PAGE;
+          }).catch((error) => {
+            alert("싫어요에 실패하였습니다");
+          });
+        }
+        else {//좋아요 성공
+          window.location.href = NOW_PAGE;
+        }
+      }).catch((error) => {
+        alert("좋아요에 실패하였습니다");
+      });
+  };
+}
+  
   useEffect(() => {
-    getBoards(); getComments();
+    getBoards(); getComments(); getId();
   }, [])
   
   return (
@@ -137,7 +199,8 @@ export default function BoardDetailMine() {
               </Typography>
             </Grid>
             <Grid>
-              좋아요 {dataList.like}
+            좋아요 {dataList.like}
+              <button onClick={(e)=>{boardOneLike(e, dataList.boardId)}}>❤</button>
             </Grid>
           </Stack>
           <img id="userImage" width="850"></img>
@@ -153,7 +216,7 @@ export default function BoardDetailMine() {
               <FavoriteBorderIcon />
             </Grid>
             <Grid>
-              좋아요 {dataList.like}
+              좋아요 0
             </Grid>
             <Grid>
               <ChatBubbleOutlineIcon />
@@ -187,7 +250,18 @@ export default function BoardDetailMine() {
                 <Grid>
                   <Typography>
                     좋아요 수 : {comment.like}
+                    <button onClick={(e)=>{commentOneLike(e, comment.commentId)}}>❤</button>
                   </Typography>
+                </Grid>
+                <Grid>
+                {clientId == comment.clientId &&
+                  <Button variant="contained">
+                      수정
+                </Button>}
+                {clientId == comment.clientId &&
+                  <Button variant="contained"  style={{backgroundColor: "#f44336"}}>
+                  삭제
+                </Button>}
                 </Grid>
               </Grid>
             ))}           
