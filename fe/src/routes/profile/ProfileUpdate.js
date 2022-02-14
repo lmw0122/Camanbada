@@ -32,7 +32,7 @@ export default function Update() {
   const [nicknameMessage, setNicknameMessage] = useState('')
   const [isNickname, setIsNickname] = useState(false)
   
-  const onChange = (e) => {
+  const onChangeNickname = (e) => {
     setUserNickname(e.target.value);
     setNickname(e.target.value);
     if (nickname.length < 2 || nickname.length > 15) {
@@ -58,20 +58,28 @@ export default function Update() {
   
   //비밀번호 수정 버튼
   const [ changePassword, setChangePassword] = useState();
+  const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
+
+  const [passwordMessage, setPasswordMessage] = useState('')
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('')
+
+  const [isPassword, setIsPassword] = useState(false)
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
+
   // const userId = userInfo[0].id;
   
   const onChangePassword = (e) => {
-    setChangePassword(e.target.value)
-  }
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
+    const passwordCurrent = e.target.value
+    setPassword(passwordCurrent)
 
-  // console.log(userInfo)
-  const onSubmitPassword = (e) => {
-    const currentId = userInfo[0].id;
-    if (changePassword !== userInfo[0].password) {
-      axios.put(`http://i6c109.p.ssafy.io:8050/user/${currentId}`, {
-        "password" : changePassword,
-      })
-      .then(console.log(changePassword))
+    if (!passwordRegex.test(passwordCurrent)) {
+      setPasswordMessage('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!')
+      setIsPassword(false)
+    } else {
+      setPasswordMessage('안전한 비밀번호에요 :)')
+      setIsPassword(true)
     }
   }
 
@@ -79,23 +87,71 @@ export default function Update() {
   const { nick } = useParams();
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = React.useState('');
+  
+  const onChangePasswordConfirm = (e) => {
+    const passwordConfirmCurrent = e.target.value
+      setPasswordConfirm(passwordConfirmCurrent)
+
+      if (password === passwordConfirmCurrent) {
+        setPasswordConfirmMessage('비밀번호를 똑같이 입력했어요 :)')
+        setIsPasswordConfirm(true)
+      } else {
+        setPasswordConfirmMessage('비밀번호가 틀려요. 다시 확인해주세요')
+        setIsPasswordConfirm(false)
+      }
+  }
+  // 아이디, 이메일 정보 얻어오기
+  const { nick } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [userInfo, setUserInfo] = useState('');
+
+  const [ changeInfo, setChangeInfo ] = useState();
+  const [ userIntro, setUserIntro ] = useState();
+  const [ intro, setIntro ] = useState();
 
   React.useEffect(() => {
-    axios.get(`http://i6c109.p.ssafy.io:8050/user/${nick}`)
+    axios.get(`http://i6c109.p.ssafy.io:8000/user/${nick}`)
       .then(res => {
         setUserInfo(res.data);
         setLoading(false);
+        setUserIntro(res.data[0].intro);
       })
   }, []);
-  
-  
 
+  // console.log(userInfo)
+  const onSubmitPassword = (e) => {
+    // console.log(userInfo)
+    const currentId = userInfo[0].id;
+      axios.put(`http://i6c109.p.ssafy.io:8000/user/${currentId}`, {
+        "id" : userInfo[0].id,
+        "password" : password,
+        "email" : userInfo[0].email,
+        "intro" : "안녕!",
+        "nickname" : userInfo[0].nickname
+      })  
+      .then(console.log(userInfo))
+  }
+
+  // console.log(userInfo)
+  
+  // 수정 버튼
+  const onChangeIntro = (e) => {
+    setIntro(e.target.value)
+  }
+  console.log(userInfo)
+  const onChangeInfo = () => {
+    const currentId = userInfo[0].id;
+    axios.put(`http://i6c109.p.ssafy.io:8000/user/${currentId}`, {
+      "id" : userInfo[0].id,
+      "nickname" : nickname,
+      "intro" : intro
+    })
+  }
+  // console.log(nickname, intro)
 
   return (
     <div>
-      {loading ? (
-        null
-      ) : (
+      {loading ? null : (
         <div>
           <NavBar></NavBar>
           <CssBaseline />
@@ -132,6 +188,7 @@ export default function Update() {
                 <Stack direction="row" sx={{ mt: 2 }}>
                   <Typography sx={{ mr: 2, width: 150 }}>소개글</Typography>
                   <TextField
+                    onChange={onChangeIntro}
                     onKeyUp={onKeyUp}
                     sx={{ width: "50ch" }}
                     multiline
@@ -142,9 +199,11 @@ export default function Update() {
                   <Typography sx={{ mr: 2, width: 150 }}>닉네임</Typography>
                   <Stack>
                     <TextField
-                      onChange={onChange}
+                      onChange={onChangeNickname}
                       sx={{ width: "50ch" }}
-                    ></TextField>
+                    >
+                      {userInfo[0].nickname}
+                    </TextField>
                     <div style={spanStyle}>
                       {nickname.length > 0 && (
                         <span
@@ -166,30 +225,65 @@ export default function Update() {
                   </Button>
                 </Stack>
                 <Divider sx={{ borderBottomWidth: 2, my: 2 }} />
-                <Stack direction="row" sx={{ mt: 2 }}>
-                  <Typography sx={{ mr: 2, width: 150 }}>비밀번호</Typography>
-                  <TextField
-                    onChange={onChangePassword}
-                    sx={{ width: "50ch" }}
-                    placeholder="비밀번호 수정을 원할 시에만 입력하세요."
-                  />
-                </Stack>
-                <Stack direction="row" sx={{ mt: 2 }}>
-                  <Typography sx={{ mr: 2, width: 150 }}>
-                    비밀번호 확인
-                  </Typography>
-                  <TextField sx={{ width: "50ch" }} />
-                  <Button
-                    variant="contained"
-                    sx={{ ml: 2 }}
-                    onClick={onSubmitPassword}
-                  >
-                    비밀번호 수정
-                  </Button>
-                </Stack>
+                <Box>
+
+                  <Stack direction="row" sx={{ mt: 2 }}>
+                    <Typography sx={{ mr: 2, width: 150 }}>비밀번호</Typography>
+                    <Stack>
+                      <TextField
+                        onChange={onChangePassword}
+                        sx={{ width: "50ch" }}
+                        placeholder="비밀번호 수정을 원할 시에만 입력하세요."
+                        type="password"
+                      />
+                      <div style={spanStyle}>
+                        {password.length > 0 && (
+                          <span
+                            className={`message ${
+                              isPassword ? "success" : "error"
+                            }`}
+                          >
+                            {passwordMessage}
+                          </span>
+                        )}
+                      </div>
+                    </Stack>
+                  </Stack>
+                  <Stack direction="row" sx={{ mt: 2 }}>
+                    <Typography sx={{ mr: 2, width: 150 }}>
+                      비밀번호 확인
+                    </Typography>
+                    <Stack>
+                      <TextField
+                        sx={{ width: "50ch" }}
+                        onChange={onChangePasswordConfirm}
+                        type="password"
+                      />
+                      <div style={spanStyle}>
+                        {passwordConfirm.length > 0 && (
+                          <span
+                            className={`message ${
+                              isPasswordConfirm ? "success" : "error"
+                            }`}
+                          >
+                            {passwordConfirmMessage}
+                          </span>
+                        )}
+                      </div>
+                    </Stack>
+                    <Button
+                      variant="contained"
+                      sx={{ ml: 2 }}
+                      onClick={onSubmitPassword}
+                    >
+                      비밀번호 수정
+                    </Button>
+                  </Stack>
+                </Box>
               </Grid>
               <Grid item xs={12}>
                 <Button
+                  onClick={onChangeInfo}
                   variant="contained"
                   sx={{ width: 200, mt: 3 }}
                   color="success"
