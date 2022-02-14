@@ -200,18 +200,12 @@ export default function BoardDetailMine() {
   useEffect(() => {
     getBoards(); getComments(); getId();
   }, [])
-<<<<<<< HEAD
-
-  const content = dataList.content
-
-=======
   
 
   
 
   const content = dataList.content
   
->>>>>>> 9966c6534357ed1766ee9344dc10da8b26216eb1
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import React, { Component } from "react";
 import PersonIcon from '@mui/icons-material/Person';
 import CheckIcon from '@mui/icons-material/Check';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 // import PersonIcon from '@mui/icons-material/Person';
 
 class IsFollow extends Component {
@@ -13,7 +13,7 @@ class IsFollow extends Component {
     this.state = {
       isfollowed: false,
       userE: true,
-    //   userE: false,
+      //   userE: false,
     }
     
   }
@@ -30,16 +30,17 @@ class IsFollow extends Component {
     });
   }
 
+  
   render() {
     if (this.state.isfollowed === true && this.state.userE === false) {
       return (
         <Button
-          onClick={this.unFollow}
-          style={{
-            border: "1px black solid",
-            color: "black"
-          }}
-          variant="outlined"
+        onClick={this.unFollow}
+        style={{
+          border: "1px black solid",
+          color: "black"
+        }}
+        variant="outlined"
         >
           <PersonIcon />
           <CheckIcon />
@@ -60,15 +61,21 @@ class IsFollow extends Component {
       )
     } else {
       return (
-        // <Link to={`/profile/update/${nickname}`} style={{textDecoration:'none'}}>
+        // <Link to={`/profile/update/${nick}`} style={{textDecoration:'none'}}>
+        <div>
           <Button 
             style={{
               color: "white",
               backgroundColor: "#1e88e5"
             }}
+            onClick={(e)=> {
+              const {nick} = useParams();
+              window.location.href = `/profile/${nick}`
+            }}
           >
             프로필 편집
           </Button>
+        </div>
         // </Link>
       )
     }

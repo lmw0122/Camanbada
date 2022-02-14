@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, Button } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -182,6 +182,8 @@ export default function PrimarySearchAppBar() {
     window.location.href = '/'
   }
 
+  const { nick } = useParams();  
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" color="">
@@ -268,7 +270,7 @@ export default function PrimarySearchAppBar() {
               </Badge>
             </IconButton> */}
             {/* 프로필 */}
-            <Link to={`/profile`}>
+            <Link to={`/profile/${nick}`}>
               <IconButton
                 size="large"
                 edge="end"

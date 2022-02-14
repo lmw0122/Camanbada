@@ -26,7 +26,7 @@ export default function Update() {
   }
   
   // 닉네임 중복 체크 & 유효성 체크
-  const [ userNickname, setUserNickname ] = useState();
+  const [ userNickname, setUserNickname ] = useState('');
 
   const [nickname, setNickname] = useState('')
   const [nicknameMessage, setNicknameMessage] = useState('')
@@ -57,7 +57,6 @@ export default function Update() {
   }
   
   //비밀번호 수정 버튼
-  const [ changePassword, setChangePassword] = useState();
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
 
@@ -96,51 +95,48 @@ export default function Update() {
       }
   }
   // 아이디, 이메일 정보 얻어오기
-  const { nick } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [userInfo, setUserInfo] = useState('');
+  const { nick } = useParams('');
+  const [ loading, setLoading ] = useState(true);
+  const [ userInfo, setUserInfo ] = useState([]);
+ 
+  const [ userIntro, setUserIntro ] = useState('');
+  const [ userId, setUserId ] = useState('');
+  const [ userEmail, setUserEmail ] = useState('');
 
-  const [ changeInfo, setChangeInfo ] = useState();
-  const [ userIntro, setUserIntro ] = useState();
-  const [ intro, setIntro ] = useState();
+  const [ intro, setIntro ] = useState('');
 
-  React.useEffect(() => {
+  // console.log(userInfo)
+
+  useEffect(() => {
     axios.get(`http://i6c109.p.ssafy.io:8000/user/${nick}`)
       .then(res => {
         setUserInfo(res.data);
         setLoading(false);
         setUserIntro(res.data[0].intro);
+        setUserId(res.data[0].id)
+        setUserEmail(res.data[0].email)
       })
   }, []);
-
-  // console.log(userInfo)
-  const onSubmitPassword = (e) => {
-    // console.log(userInfo)
-    const currentId = userInfo[0].id;
-      axios.put(`http://i6c109.p.ssafy.io:8000/user/${currentId}`, {
-        "id" : userInfo[0].id,
-        "password" : password,
-        "email" : userInfo[0].email,
-        "intro" : "안녕!",
-        "nickname" : userInfo[0].nickname
-      })  
-      .then(console.log(userInfo))
-  }
-
-  // console.log(userInfo)
   
   // 수정 버튼
   const onChangeIntro = (e) => {
     setIntro(e.target.value)
   }
-  console.log(userInfo)
-  const onChangeInfo = () => {
+  // console.log(userInfo)
+  const onChangeInfo = (res) => {
     const currentId = userInfo[0].id;
     axios.put(`http://i6c109.p.ssafy.io:8000/user/${currentId}`, {
       "id" : userInfo[0].id,
+      "password" : password,
+      "email" : userInfo[0].email,
       "nickname" : nickname,
       "intro" : intro
     })
+    .then(res => {
+      if (res.status === 200) {
+      alert('수정이 완료되었습니다.')
+      window.location.href = `/profile`
+    }})
   }
   // console.log(nickname, intro)
 
@@ -171,13 +167,13 @@ export default function Update() {
                 <Stack direction="row" sx={{ mt: 2 }}>
                   <Typography>아이디</Typography>
                   <Typography sx={{ ml: "13ch", fontWeight: "bold", mb: 2 }}>
-                    {userInfo[0].id}
+                    {userId}
                   </Typography>
                 </Stack>
                 <Stack direction="row" sx={{ mt: 2 }}>
                   <Typography>이메일</Typography>
                   <Typography sx={{ ml: "13ch", fontWeight: "bold", mb: 2 }}>
-                    {userInfo[0].email}
+                    {userEmail}
                   </Typography>
                 </Stack>
                 <Stack direction="row" sx={{ mt: 2 }}>
@@ -187,6 +183,7 @@ export default function Update() {
                     onKeyUp={onKeyUp}
                     sx={{ width: "50ch" }}
                     multiline
+                    defaultValue={userIntro}
                   />
                   <Typography sx={{ m: 2 }}> {textLength} / 150</Typography>
                 </Stack>
@@ -196,8 +193,8 @@ export default function Update() {
                     <TextField
                       onChange={onChangeNickname}
                       sx={{ width: "50ch" }}
+                      defaultValue={userNickname}
                     >
-                      {userInfo[0].nickname}
                     </TextField>
                     <div style={spanStyle}>
                       {nickname.length > 0 && (
@@ -266,13 +263,6 @@ export default function Update() {
                         )}
                       </div>
                     </Stack>
-                    <Button
-                      variant="contained"
-                      sx={{ ml: 2 }}
-                      onClick={onSubmitPassword}
-                    >
-                      비밀번호 수정
-                    </Button>
                   </Stack>
                 </Box>
               </Grid>

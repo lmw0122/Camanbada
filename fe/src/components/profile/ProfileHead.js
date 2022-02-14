@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams } from "react-router-dom";
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -87,19 +87,39 @@ export default function ProfileHead() {
   };
 
   // 유저 정보 얻어오기
-  const { nick } = useParams();  
+  const { nick } = useParams('');  
   const [loading, setLoading] = useState(true);
-  const [userInfo, setUserInfo] = React.useState('');
+  const [userInfo, setUserInfo] = useState('');
 
-  React.useEffect(() => {
-    axios.get(`http://i6c109.p.ssafy.io:8050/user/${nick}`)
-      .then(res => {
-        setUserInfo(res.data);
-        setLoading(false);
-      })
-  }, []);
+  const [ userIntro, setUserIntro ] = useState('');
+  const [ userNickname, setUserNickname ] = useState('');
   
-  console.log(userInfo)
+  // useEffect(() => {
+  //   axios.get(`http://i6c109.p.ssafy.io:8000/user/${nick}`)
+  //     .then(res => {
+  //       setUserInfo(res.data);
+  //       setLoading(false);
+  //       setUserNickname(res.data[0].nickname)
+  //       setUserIntro(res.data[0].intro)
+  //     })
+  // }, []);
+  
+  const getUsers = async () => {
+    await axios.get(`http://i6c109.p.ssafy.io:8050/user/${nick}`)
+    .then(res => {
+      console.log(res)
+      setUserInfo(res.data);
+      setLoading(false);
+      setUserNickname(res.data[0].nickname)
+      setUserIntro(res.data[0].intro)
+    })
+  }
+  // 유저 닉네임, 소개글 얻어오기
+  useEffect(() => {
+    getUsers()
+  }, [])
+
+  // console.log(userInfo)
 
   return (
     <div>
@@ -126,7 +146,7 @@ export default function ProfileHead() {
               {/* 닉네임 */}
               <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
                 <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-                  {userInfo[0].nickname}
+                  {userNickname}
                 </Typography>
                 <ProfileUser />
                 {/* <Link to={'/message'} style={{textDecoration:'none'}}>
@@ -172,7 +192,7 @@ export default function ProfileHead() {
               {/* 자기 소개 부분 */}
               <Stack>
                 {/* 150자 예시 */}
-                {userInfo[0].intro}
+                {userIntro}
               </Stack>
             </Grid>
             {/* <Stack
