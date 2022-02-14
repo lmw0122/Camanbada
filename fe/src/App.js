@@ -18,6 +18,8 @@ import SearchUser from "./routes/search/SearchUser";
 import SearchCommunity from "./routes/search/SearchCommunity";
 import Test from "./routes/test.js"
 import CampingCommunity from "./routes/camping/CampingCommunity";
+import SearchCampingSigungu from "./routes/search/SearchCampingSigungu";
+
 
 
 
@@ -60,9 +62,10 @@ function App() {
         <Route path="/profile/update/:nick" element={<Update></Update>}></Route>
 
         {/* search */}
-        <Route path="/search" element={<Search></Search>}></Route>
+        <Route path="/searchall/:keyword" element={<Search></Search>}></Route>
         {/* 메인에서 캠핑장 검색 */}
         <Route path="/search/:campkeyword" element={<SearchCamping></SearchCamping>}></Route>
+        <Route path="/search/:campkeyword/:campkeyword2" element={<SearchCampingSigungu></SearchCampingSigungu>}></Route>
         <Route path="/search/user" element={<SearchUser></SearchUser>}></Route>
         <Route path="/search/community" element={<SearchCommunity></SearchCommunity>}></Route>
         

@@ -201,6 +201,11 @@ export default function BoardDetailMine() {
     getBoards(); getComments(); getId();
   }, [])
   
+
+  
+
+  const content = dataList.content
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -236,8 +241,12 @@ export default function BoardDetailMine() {
               <button onClick={(e)=>{boardOneLike(e, dataList.boardId)}}>❤</button>
             </Grid>
           </Stack>
-          <img id="userImage" width="850"></img>
-          <Box sx={{ mb: 2, height: 400 }} id="boardcontent">
+          <Box sx={{ mb: 2, height: 400 }} >
+            <div dangerouslySetInnerHTML={{ __html: content }}></div>
+
+            {/* {dataList.content.innerText} */}
+            
+            
           </Box>
           <Divider sx={{ borderBottomWidth: 5, mb: 2 }} />
           <Stack
@@ -249,7 +258,7 @@ export default function BoardDetailMine() {
               <FavoriteBorderIcon />
             </Grid>
             <Grid>
-              좋아요 {allCommentLike}
+              {dataList.like}
             </Grid>
             <Grid>
               <ChatBubbleOutlineIcon />
