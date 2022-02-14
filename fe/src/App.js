@@ -54,7 +54,7 @@ function App() {
 
         {/* profile */}
         {/* 프로필 편집 링크 수정 */}
-        <Route path="/profile/:nick" element={<Profile></Profile>}></Route>
+        <Route path="/profile" element={<Profile></Profile>}></Route>
         <Route path="/profile/update/:nick" element={<Update></Update>}></Route>
 
         {/* search */}
