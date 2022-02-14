@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { Link, useParams } from "react-router-dom";
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import IsFollow from "./IsFollow";
 import ProfileUser from "./ProfileUser";
@@ -19,7 +21,6 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
-import { Link } from "react-router-dom";
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import { useParams } from 'react-router-dom';
@@ -85,7 +86,26 @@ export default function ProfileHead() {
     setValue(newValue);
   };
 
+  // 유저 정보 얻어오기
+  const { nick } = useParams();  
+  const [loading, setLoading] = useState(true);
+  const [userInfo, setUserInfo] = React.useState('');
+
+  React.useEffect(() => {
+    axios.get(`http://i6c109.p.ssafy.io:8050/user/${nick}`)
+      .then(res => {
+        setUserInfo(res.data);
+        setLoading(false);
+      })
+  }, []);
+  
+  console.log(userInfo)
+
   return (
+    <div>
+      {loading ? (
+        null
+      ) : (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
@@ -106,7 +126,7 @@ export default function ProfileHead() {
               {/* 닉네임 */}
               <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
                 <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-                  싸피lee2022
+                  {userInfo[0].nickname}
                 </Typography>
                 <ProfileUser />
                 {/* <Link to={'/message'} style={{textDecoration:'none'}}>
@@ -152,14 +172,7 @@ export default function ProfileHead() {
               {/* 자기 소개 부분 */}
               <Stack>
                 {/* 150자 예시 */}
-                모든 게 마음먹기 달렸어
-                어떤 게 행복한 삶인가요
-                사는 게 힘이 들다 하지만
-                쉽게만 살아가면 재미없어 bingo! (bingo!)
-                거룩한 인생 고귀한 삶을 살며
-                부끄럼 없는 투명한 마음으로
-                이내 삶이 끝날 그 마지막 순간에
-                나 웃어보리라 나 바라는 대로 (bingo!)
+                {userInfo[0].intro}
               </Stack>
             </Grid>
             {/* <Stack
@@ -268,6 +281,8 @@ export default function ProfileHead() {
         </Container>
       </main>
     </ThemeProvider>
+      )}
+  </div>
 
   );
 }

@@ -20,7 +20,7 @@ export default function SignUp() {
 
   //오류메시지 상태저장
   const [idMessage, setIdMessage] = useState('')
-  const [nicknameMessage, setnNicknameMessage] = useState('')
+  const [nicknameMessage, setNicknameMessage] = useState('')
   const [emailMessage, setEmailMessage] = useState('')
   const [passwordMessage, setPasswordMessage] = useState('')
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('')
@@ -31,6 +31,10 @@ export default function SignUp() {
   const [isEmail, setIsEmail] = useState(false)
   const [isPassword, setIsPassword] = useState(false)
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
+
+  // 중복 검사
+  const [ userNickname, setUserNickname ] = useState();
+  const [ userId, setUserId ] = useState();
   // const handleSubmit = (event) => {
   //   event.preventDefault();
   //   const data = new FormData(event.currentTarget);
@@ -94,7 +98,7 @@ export default function SignUp() {
       console.log(response);
       alert("회원가입에 성공하셨습니다!")
       if (response.status === 200) {
-        <Link to="/signup"></Link>
+        <Link to="/main"></Link>
       }
     } catch (error) {
       console.error(error);
@@ -130,6 +134,7 @@ export default function SignUp() {
 
   // 아이디
   const onChangeName = useCallback((e) => {
+    setUserId(e.target.value)
     setId(e.target.value)
     if (e.target.value.length < 5 || e.target.value.length > 15) {
       setIdMessage('5글자 이상 15글자 미만으로 입력해주세요.')
@@ -140,17 +145,45 @@ export default function SignUp() {
     }
   }, [])
 
+  // 아이디 중복 검사
+  const onCheckId = (e) => {
+    axios.get(`http://i6c109.p.ssafy.io:8050/user/valid/${userId}`)
+    .then(res=> {
+      if ( res.data === 'OK' && (5 < userId.length && userId.length < 15)) {
+        alert('사용할 수 있는 아이디입니다.')
+      } if (userId.length < 5 || userId.length > 15) {
+        alert('5글자 이상 15글자 미만으로 입력해주세요.')
+      } 
+    })
+  }
+
    // 닉네임
    const onChangeNickname = useCallback((e) => {
+    setUserNickname(e.target.value);
     setNickname(e.target.value)
     if (e.target.value.length < 2 || e.target.value.length > 15) {
-      setnNicknameMessage('2글자 이상 15글자 미만으로 입력해주세요.')
+      setNicknameMessage('2글자 이상 15글자 미만으로 입력해주세요.')
       setIsNickname(false)
     } else {
-      setnNicknameMessage('올바른 이름 형식입니다 :)')
+      setNicknameMessage('올바른 닉네임 형식입니다 :)')
       setIsNickname(true)
     }
   }, [])
+
+  // 닉네임 중복 검사
+  const onCheckNickname = (e) => {
+    axios.get(`http://i6c109.p.ssafy.io:8050/user/${userNickname}`)
+    .then(res => {
+      // console.log(res.data[0])
+      if (res.data[0] !== undefined ) {
+        alert('다른 사용자가 사용하고 있는 닉네임입니다.')
+      } if ( userNickname.length < 2 || userNickname.length > 15) {
+        alert('2글자 이상 15글자 미만으로 입력해주세요.')
+      } else {
+        alert('사용하실 수 있는 닉네임입니다.')
+      }
+    })
+  }
 
    // 이메일
    const onChangeEmail = useCallback((e) => {
@@ -205,23 +238,23 @@ export default function SignUp() {
       <Container component="main" maxWidth="sm">
         <CssBaseline />
         <Box
-              component="img"
-              sx={{ height: 100, mt : 3, ml : 5 }}
-              alt="logo"
-              src={Logo}      
+          component="img"
+          sx={{ height: 100, mt: 3, ml: 5 }}
+          alt="logo"
+          src={Logo}
         ></Box>
         <Box
           sx={{
             marginTop: 5,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar xs={{ m: 2, bgcolor: 'secondary.main' }}>
+          <Avatar xs={{ m: 2, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5" sx={{mb: 6, mt : 2}}>
+          <Typography component="h1" variant="h5" sx={{ mb: 6, mt: 2 }}>
             Sign up
           </Typography>
           <Box component="form" noValidate xs={{ mt: 3 }} onSubmit={handleJoin}>
@@ -237,10 +270,21 @@ export default function SignUp() {
                   label="아이디"
                   autoFocus
                 />
-                {id.length > 0 && <span className={`message ${isId ? 'success' : 'error'}`}>{idMessage}</span>}
+                {id.length > 0 && (
+                  <span className={`message ${isId ? "success" : "error"}`}>
+                    {idMessage}
+                  </span>
+                )}
               </Grid>
               <Grid item xs={3}>
-                <Button variant="contained" size="large" sx={{ width : 126, height : 55 }}>중복 확인</Button>
+                <Button
+                  onClick={onCheckId}
+                  variant="contained"
+                  size="large"
+                  sx={{ width: 126, height: 55 }}
+                >
+                  중복 확인
+                </Button>
               </Grid>
               <Grid item xs={9}>
                 <TextField
@@ -253,7 +297,13 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                 />
-                {password.length > 0 && (<span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>)}
+                {password.length > 0 && (
+                  <span
+                    className={`message ${isPassword ? "success" : "error"}`}
+                  >
+                    {passwordMessage}
+                  </span>
+                )}
               </Grid>
               <Grid item xs={9}>
                 <TextField
@@ -266,7 +316,15 @@ export default function SignUp() {
                   id="password-Confirmation"
                   autoComplete="new-password"
                 />
-                {passwordConfirm.length > 0 && (<span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>)}
+                {passwordConfirm.length > 0 && (
+                  <span
+                    className={`message ${
+                      isPasswordConfirm ? "success" : "error"
+                    }`}
+                  >
+                    {passwordConfirmMessage}
+                  </span>
+                )}
               </Grid>
               <Grid item xs={9}>
                 <TextField
@@ -278,14 +336,27 @@ export default function SignUp() {
                   name="nickname"
                   autoComplete="email"
                 />
-                {nickname.length > 0 && <span className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</span>}
+                {nickname.length > 0 && (
+                  <span
+                    className={`message ${isNickname ? "success" : "error"}`}
+                  >
+                    {nicknameMessage}
+                  </span>
+                )}
               </Grid>
-              <Grid item xs={3} >
-                <Button variant="contained" size="large" sx={{ width : 126, height: 55 }}>중복 확인</Button>
+              <Grid item xs={3}>
+                <Button
+                  onClick={onCheckNickname}
+                  variant="contained"
+                  size="large"
+                  sx={{ width: 126, height: 55 }}
+                >
+                  중복 확인
+                </Button>
               </Grid>
               <Grid item xs={9}>
                 <TextField
-                  onChange={onChangeEmail}  
+                  onChange={onChangeEmail}
                   required
                   fullWidth
                   id="email"
@@ -293,10 +364,20 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                 />
-                {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
+                {email.length > 0 && (
+                  <span className={`message ${isEmail ? "success" : "error"}`}>
+                    {emailMessage}
+                  </span>
+                )}
               </Grid>
-              <Grid item xs={3} >
-                <Button variant="contained" size="large" sx={{ width : 126, height: 55 }}>이메일 인증</Button>
+              <Grid item xs={3}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  sx={{ width: 126, height: 55 }}
+                >
+                  이메일 인증
+                </Button>
               </Grid>
             </Grid>
             {/* 위의 유효성 검사가 성립된다면 버튼 활성화 */}
@@ -305,7 +386,7 @@ export default function SignUp() {
               disabled={!(isId && isEmail && isPassword && isPasswordConfirm)}
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 1, height : 55 }}
+              sx={{ mt: 3, mb: 1, height: 55 }}
             >
               Sign Up
             </Button>

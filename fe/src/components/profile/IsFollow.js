@@ -60,7 +60,11 @@ class IsFollow extends Component {
       )
     } else {
       return (
+<<<<<<< HEAD
+        <Link to={`/profile/update/`} style={{textDecoration:'none'}}>
+=======
         // <Link to={`/profile/update/${nickname}`} style={{textDecoration:'none'}}>
+>>>>>>> 567fa0fca289ccc8ef633c8b7cf415c22332e580
           <Button 
             style={{
               color: "white",
