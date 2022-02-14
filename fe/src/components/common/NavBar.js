@@ -159,12 +159,18 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
 
+  // 로그아웃
+  const onLogout = () => {
+    localStorage.removeItem("accessToken")
+    window.location.href = '/'
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" color="">
         <Toolbar>
           {/* 로고 */}
-          <Link to={'/'}>
+          <Link to={'/main'}>
             <Box
               component="img"
               sx={{ height: 30 }}
@@ -237,7 +243,9 @@ export default function PrimarySearchAppBar() {
                 <AccountCircle />
               </IconButton>
             </Link>
+            {/* 로그아웃 */}
             <IconButton
+              onClick={onLogout}
               size="large"
               edge="end"
               aria-label="logout"

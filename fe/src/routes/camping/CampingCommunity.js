@@ -1,6 +1,6 @@
 import * as React from 'react';
 import NavBar from '../../components/common/NavBar'
-import SelectVariantsBoard from '../../components/board/SelectVariantsBoard';
+import SelectVariantsCamping from '../../components/board/SelectVariantsCamping';
 import BoardTable from '../../components/board/BoardTable';
 import Button from '@mui/material/Button';
 import { Container, CssBaseline, Grid, Typography } from '@mui/material';
@@ -37,13 +37,8 @@ function CampingCommunity() {
             <Typography display="inline" component="h1" variant="h4" align="center" sx={{m: 2}}> 
               {basics.facltNm}
             </Typography>
-            <Link to={'/create'} style={{textDecoration:'none'}}>
-              <Button variant="contained">
-                게시글 작성
-              </Button>
-            </Link>
           </Grid>
-          <SelectVariantsBoard />
+          <SelectVariantsCamping />
         </Grid>
       <BoardTable />  
     </Grid>
