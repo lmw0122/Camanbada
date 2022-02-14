@@ -91,6 +91,7 @@ export default function SignUp() {
           id: id,
           password: password,
           nickname: nickname,
+          email: email,
       });
       console.log(id)
       console.log(password)
@@ -370,15 +371,7 @@ export default function SignUp() {
                   </span>
                 )}
               </Grid>
-              <Grid item xs={3}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  sx={{ width: 126, height: 55 }}
-                >
-                  이메일 인증
-                </Button>
-              </Grid>
+
             </Grid>
             {/* 위의 유효성 검사가 성립된다면 버튼 활성화 */}
             <Button
