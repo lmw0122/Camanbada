@@ -11,6 +11,7 @@ import Select from '@mui/material/Select';
 import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
+import CampingSearch2 from '../camping/CampingSearch2';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -49,6 +50,8 @@ export default function SelectVariants() {
 
   const [tag, setTag] = React.useState('');
 
+  const [isAll, setIsAll] = React.useState(false);
+
   const handleChange = (event) => {
     setTag(event.target.value);
   };
@@ -71,9 +74,22 @@ export default function SelectVariants() {
   const [campings, setCampings] = React.useState([]);
 
   React.useEffect(() => {
-    Axios.get('http://i6c109.p.ssafy.io:8092/camp/basic/list')
-      .then(res => setCampings(res.data))   
+    getCampings()
   }, []);
+
+  const getCampings = async() => {
+    const json = await (
+      await fetch (
+        `http://i6c109.p.ssafy.io:8092/camp/basic/list`
+      )
+    ).json();
+    setCampings(json);
+  };
+
+  // React.useEffect(() => {
+  //   Axios.get('http://i6c109.p.ssafy.io:8092/camp/basic/list')
+  //     .then(res => setCampings(res.data))   
+  // }, []);
 
   const [sidosjson, setSidosjson] = React.useState('');
 
@@ -128,6 +144,42 @@ export default function SelectVariants() {
     }
   }
 
+  
+  React.useEffect(() => {
+    if (sido === '' && sigungu === '') {
+      setIsAll(true);
+    } else {
+      setIsAll(false);
+    };
+  }, [sido]);
+  
+  
+  var campnames = [];
+  // const [campnames, setCampnames] = React.useState([]);
+  
+  React.useEffect(() => {
+    for (var i; i<campings.length; i++) {
+      campnames.push(campings[i].facltNm);
+    };
+
+  },[]);
+  
+  const [campId, setCampId] = React.useState('')
+  
+  const camping_data = (data) => {
+    console.log(data[0].id);
+    setCampId(data[0].id);
+  }
+  
+  function clickButton() {
+    if (finalc !== '') {
+      window.location.href = `/community/${finalc}`;
+    } else if (campId !== '') {
+      window.location.href = `/community/${campId}`;
+    } else {
+    alert('캠핑장을 선택해주세요!');
+    }
+  }
 
   const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list';
 
@@ -195,38 +247,42 @@ return (
             ))}
           </Select>
         </FormControl>
-        <Autocomplete
-          onChange={handleChange3}
-          sx={{ minWidth: 300, m: 1 }}
-          freeSolo
-          id="free-solo-2-demo"
-          disableClearable
-          options={dropbox3.map((db3) => db3)}
-          // options={top100Films.map((option) => option.title)}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="캠핑장 이름을 입력하세요."
-              InputProps={{
-                ...params.InputProps,
-                type: 'search',
-              }}
-            />
-          )}
-        />   
-        <Link to={`/community/${finalc}`} style={{ textDecoration: 'none' }}>
-          <Button
-            type="submit"
-            sx={{
-              m: 1,
-              minWidth: 100,
-              height: "7ch",
-            }}
-            variant="contained"
-          >
-            이동
-          </Button>
-        </Link>
+        { isAll ? (
+            <CampingSearch2 func={camping_data}></CampingSearch2>
+          ) : (
+            <Autocomplete
+              onChange={handleChange3}
+              sx={{ minWidth: 300, m: 1 }}
+              freeSolo
+              id="free-solo-2-demo"
+              disableClearable
+              options={dropbox3.map((db3) => db3)}
+              // options={top100Films.map((option) => option.title)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="캠핑장 이름을 입력하세요."
+                  InputProps={{
+                    ...params.InputProps,
+                    type: 'search',
+                  }}
+                />
+              )}
+            />   
+          )
+        }
+        <Button
+          type="submit"
+          sx={{
+            m: 1,
+            minWidth: 100,
+            height: "7ch",
+          }}
+          variant="contained"
+          onClick={clickButton}
+        >
+          이동
+        </Button>
       </Stack>
       <Stack
         sx={{ 
@@ -237,35 +293,33 @@ return (
         justifyContent="center"
       >
         <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel htmlFor="tag-select">말머리</InputLabel>
-            <Select
-              id="tag-select"
-              defaultValue=""
-              // value={tag}
-              label="말머리"
-              onChange={handleChange}
-            >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <ListSubheader sx={{ fontWeight: 'bold' }}>캠핑 소통</ListSubheader>
-              <MenuItem value={1}>나눔</MenuItem>
-              <MenuItem value={2}>거래</MenuItem>
-              <MenuItem value={3}>후기</MenuItem>
-              <MenuItem value={4}>자유</MenuItem>
-            <ListSubheader sx={{ fontWeight: 'bold' }}>자유 소통</ListSubheader>
-              <MenuItem value={5}>장비 후기</MenuItem>
-              <MenuItem value={6}>자유</MenuItem>
-            </Select>
+          <InputLabel htmlFor="tag-select">말머리</InputLabel>
+          <Select
+            
+            id="tag-select"
+            defaultValue=""
+            // value={tag}
+            label="말머리"
+            onChange={handleChange}
+          >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <ListSubheader sx={{ fontWeight: 'bold' }}>캠핑 소통</ListSubheader>
+            <MenuItem value={1}>나눔</MenuItem>
+            <MenuItem value={2}>거래</MenuItem>
+            <MenuItem value={3}>후기</MenuItem>
+            <MenuItem value={4}>자유</MenuItem>
+          <ListSubheader sx={{ fontWeight: 'bold' }}>자유 소통</ListSubheader>
+            <MenuItem value={5}>장비 후기</MenuItem>
+            <MenuItem value={6}>자유</MenuItem>
+          </Select>
         </FormControl>
-        <FormControl variant="filled" sx={{ my: 1, minWidth: 300 }}>
-          <Search>
-            <StyledInputBase
-              placeholder="검색어를 입력하세요."
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-        </FormControl>
+        <TextField 
+          label="검색어를 입력하세요." 
+          type="search" 
+          sx={{ m: 1, }}
+        />
         <Button
           type="submit"
           sx={{
@@ -279,20 +333,22 @@ return (
         </Button>
         <Link to={'/create'} style={{ textDecoration: 'none' }}>
           <Button 
+            style={{
+              color: "white",
+              backgroundColor: "#4caf50"
+            }}
             type="submit"
             sx={{
               m: 1,
               minWidth: 100,
               height: "7ch",
             }}
-            color="error"
+            
             variant="contained"
           >
             게시글 작성
           </Button>
         </Link>
-        {/* <Link href="/create" style={{textDecoration:'none'}}>
-        </Link> */}
       </Stack>
     </Container>
   </Box>
