@@ -94,8 +94,11 @@ export default function SelectVariants() {
       window.location.href = `/camping/${finalc}`
     } else if (sido !== '' && sigungu === '' && camp === '') {
       window.location.href = `/search/${sido}`
+    } else if (sido !== '' && sigungu !== '' && camp === '') {
+      window.location.href = `/search/${sido}/${sigungu}`
+    } else if (sido === '' && sigungu === '' && camp === '') {
+      alert('검색어를 입력해주세요!')
     }
-    
   }
   
   // 최종 선택된 캠핑장
@@ -198,19 +201,17 @@ export default function SelectVariants() {
             )}
           />
           <Button
-              onClick={searchButton}
-              type="submit"
-              sx={{
-                m: 1,
-                minWidth: 100,
-                height: '7ch'
-              }}
-              variant="contained"
-            >
-              검색
+            onClick={searchButton}
+            type="submit"
+            sx={{
+              m: 1,
+              minWidth: 100,
+              height: '7ch'
+            }}
+            variant="contained"
+          >
+            검색
           </Button> 
-          {/* <Link to={`/camping/${finalc}`}>
-          </Link>           */}
         </Stack>
       </Container>  
     </Box>
