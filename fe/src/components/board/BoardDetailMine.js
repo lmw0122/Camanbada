@@ -63,10 +63,10 @@ export default function BoardDetailMine() {
       .then((response) => {
         setDataList(response.data);
         const onePhoto = response.data.photo;
-        if (onePhoto != "")
+        if (onePhoto != "") {
           document.getElementById('userImage').setAttribute("src", onePhoto);
+        }
         const oneContent = response.data.content;
-        document.getElementById("boardcontent").innerHTML = oneContent;
       }).catch((error) => {
         //에러처리
         alert("게시판이 비어있습니다");
@@ -241,11 +241,10 @@ export default function BoardDetailMine() {
               <button onClick={(e)=>{boardOneLike(e, dataList.boardId)}}>❤</button>
             </Grid>
           </Stack>
-          <Box sx={{ mb: 2, height: 400 }} >
+            <img id="userImage" width="850" />
+          <Box sx={{ mb: 2 }} >
             <div dangerouslySetInnerHTML={{ __html: content }}></div>
-
             {/* {dataList.content.innerText} */}
-            
             
           </Box>
           <Divider sx={{ borderBottomWidth: 5, mb: 2 }} />
@@ -280,7 +279,7 @@ export default function BoardDetailMine() {
                   </Typography>
                 </Grid>
                 <Grid>
-                  <Typography>
+                  <Typography id="boardcontent">
                     {comment.content}
                   </Typography>
                 </Grid>
