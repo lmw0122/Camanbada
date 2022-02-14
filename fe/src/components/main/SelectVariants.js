@@ -21,6 +21,8 @@ export default function SelectVariants() {
 
   const [sigungu, setSigungu] = React.useState('');
 
+  const [keyword, setKeyword] = React.useState('');
+
   const handleChange1 = (event) => {
     setSido(event.target.value);
   };
@@ -30,7 +32,11 @@ export default function SelectVariants() {
   };
 
   const handleChange3 = (event, value) => {
-    setCamp(value)
+    setCamp(value);
+  };
+
+  const getKeyword = (event) => {
+    setKeyword(event.target.value);
   }
  
   var dropbox3 = [];
@@ -96,11 +102,17 @@ export default function SelectVariants() {
       window.location.href = `/search/${sido}`
     } else if (sido !== '' && sigungu !== '' && camp === '') {
       window.location.href = `/search/${sido}/${sigungu}`
-    } else if (sido === '' && sigungu === '' && camp === '') {
+    } else if (sido === '' && sigungu === '' && keyword === '' && camp === '') {
       alert('검색어를 입력해주세요!')
+    } else if (sido === '' && sigungu === '' && keyword !== '') {
+      window.location.href = `/search/camp/${keyword}`
     }
   }
   
+  
+
+  
+
   // 최종 선택된 캠핑장
   var finalc = '';
   for (var i=0; i<camps.length; i++) {
@@ -191,6 +203,7 @@ export default function SelectVariants() {
             options={dropbox3.map((db3) => db3)}
             renderInput={(params) => (
               <TextField  
+                onChange={getKeyword}
                 {...params}
                 label="캠핑장 이름을 입력하세요."
                 InputProps={{

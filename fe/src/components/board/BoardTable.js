@@ -13,19 +13,6 @@ import { Link } from "react-router-dom";
 
 const theme = createTheme();
 
-// function createData(num, tag, title, writer, created_at) {
-//   return { num, tag, title, writer, created_at };
-// }
-
-// const rows = [
-//   createData(1, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
-//   createData(2, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
-//   createData(3, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
-//   createData(4, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
-//   createData(5, '나눔', '고기 나눔합니다!', 'LEE', '2022-01-27'),
-// ];
-
-
 export default function BoardTable() {
   const [dataList, setDataList] = useState([]);
   const BOARD_GET_URL = 'http://i6c109.p.ssafy.io:8051/board';
@@ -76,7 +63,7 @@ export default function BoardTable() {
                       </Link>
                     </TableCell>
                   <TableCell align="center">{d.clientId}</TableCell>
-                  <TableCell align="center">{d.date}</TableCell>
+                  <TableCell align="center">{Date(d.date)}</TableCell>
                 </TableRow>
               )) : ''}
             </TableBody>

@@ -20,15 +20,23 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useParams } from 'react-router-dom';
+import Axios from "axios";
 
-const campingCards = [1, 2, 3, 4];
 const userCards = [1, 2, 3, 4];
-const communityCards = [1, 2, 3, 4];
 
 const theme = createTheme();
 
 export default function SearchAll() {
+  // /user/search/{word}
   const { keyword } = useParams();
+
+  // daye, 하눅, nana
+  const [userList, setUserList] = React.useState([]);
+
+  React.useEffect(() => {
+    Axios.get(`http://i6c109.p.ssafy.io:8050/user/search/${keyword}`)
+      .then(res => setUserList(res.data))
+  }, []);
 
 
   return (
@@ -62,49 +70,6 @@ export default function SearchAll() {
           <Grid container alignItems="center" >
             <Grid>
               <Typography variant="h4">
-                캠핑장
-              </Typography>
-            </Grid>
-            <Link to={'/search/camping'} style={{textDecoration:'none'}}>
-              <Grid>
-                <Typography variant="h6">
-                  더보기
-                </Typography>
-              </Grid>
-            </Link>
-          </Grid>
-          <Grid container spacing={4} sx={{mb: 8, mt: 1}}>
-            {campingCards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={3}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                  align="center"
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      // 16:9
-                      // pt: '56.25%',
-                      pt: '0%',
-                    }}
-                    image="https://images.unsplash.com/photo-1641157141085-8454fbc33f3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0MzExNTc1NQ&ixlib=rb-1.2.1&q=80&w=1080"
-                    alt="CampingImage"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      $캠핑장 이름
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">상세정보</Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-          <Grid container alignItems="center" >
-            <Grid>
-              <Typography variant="h4">
                 사용자
               </Typography>
             </Grid>
@@ -117,11 +82,15 @@ export default function SearchAll() {
             </Link>
           </Grid>
           <Grid container spacing={4} sx={{mb: 8, mt: 1}}>
-            {userCards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={3}>
+            {userList.map((user) => (
+              <Grid item key={user} xs={12} sm={6} md={3}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                   align="center"
+                  onClick = {(e) => {
+                    e.preventDefault();
+                    window.location.href = `/profile/${user.nickname}`;
+                  }}
                 >
                   <CardMedia
                     // component="img"
@@ -137,65 +106,10 @@ export default function SearchAll() {
                   </CardMedia>
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      $사용자 이름
+                      {user.nickname}
                     </Typography>
                   </CardContent>
                 </Card>
-              </Grid>
-            ))}
-          </Grid>
-          <Grid container alignItems="center" >
-            <Grid>
-              <Typography variant="h4">
-                게시글
-              </Typography>
-            </Grid>
-            <Link to={'/search/community'} style={{textDecoration:'none'}}>
-              <Grid>
-                <Typography variant="h6">
-                  더보기
-                </Typography>
-              </Grid>
-            </Link>
-          </Grid>
-          <Grid container spacing={4} sx={{mb: 8, mt: 1}}>
-            {communityCards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={3}>
-                <Card sx={{ maxWidth: 345 }}>
-                  <CardHeader
-                    avatar={
-                      <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        U
-                      </Avatar>
-                    }
-                    action={
-                      <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                      </IconButton>
-                    }
-                    title="제목"
-                    subheader="날짜?"
-                  />
-                  <CardMedia
-                    component="img"
-                    height="194"
-                    image="https://images.unsplash.com/photo-1641157141085-8454fbc33f3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0MzExNTc1NQ&ixlib=rb-1.2.1&q=80&w=1080"
-                    alt="BoardImage"
-                  />
-                  <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                      게시글 내용
-                    </Typography>
-                  </CardContent>
-                  <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                      <FavoriteIcon />
-                    </IconButton>
-                    <IconButton aria-label="share">
-                      <ShareIcon />
-                    </IconButton>
-                  </CardActions>
-                </Card>  
               </Grid>
             ))}
           </Grid>

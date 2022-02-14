@@ -24,7 +24,6 @@ import ShareIcon from '@mui/icons-material/Share';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 

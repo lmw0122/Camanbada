@@ -23,24 +23,15 @@ const theme = createTheme();
 
 
 export default function SearchCampingAlbum() {
-  const { campkeyword } = useParams();
+  const { searchkeyword } = useParams();
 
   const [campings, setCampings] = React.useState([]);
-
+ 
 
   React.useEffect(() => {
-    Axios.get('http://i6c109.p.ssafy.io:8092/camp/basic/list')
-      .then(res => setCampings(res.data))   
+    Axios.get(`http://i6c109.p.ssafy.io:8092/camp/basic/list/keyword/${searchkeyword}`)
+      .then(res => setCampings(res.data))
   }, []);
-
-
-  const searchList = [];
-
-  for (var i=0; i<campings.length; i++) {
-    if (campkeyword === campings[i].doNm) {
-      searchList.push(campings[i])
-    }
-  }
 
 
   return (
@@ -65,7 +56,7 @@ export default function SearchCampingAlbum() {
               color="text.primary"
               gutterBottom
             >
-              '{campkeyword}' 검색 결과
+              '{searchkeyword}' 검색 결과
             </Typography>
           </Container>
           <Container maxWidth="lg">
@@ -78,15 +69,16 @@ export default function SearchCampingAlbum() {
               color="text.primary"
               gutterBottom
             >
-              총 {searchList.length}개 캠핑장이 검색되었습니다.
+              총 {campings.length}개 캠핑장이 검색되었습니다.
             </Typography>
           </Container>
         </Box>
         <Container sx={{ py: 0 }} maxWidth="lg">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {searchList.map((camp) => (
+            {campings.map((camp) => (
               <Grid item key={camp.campId} xs={12} sm={6} md={3}>
+                
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                   align="center"
@@ -94,7 +86,7 @@ export default function SearchCampingAlbum() {
                     e.preventDefault();
                     window.location.href = `/camping/${camp.campId}`;
                   }}
-                >
+                  >
                   <CampingImage basics={ camp }></CampingImage>
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="subtitle1" >
@@ -111,6 +103,7 @@ export default function SearchCampingAlbum() {
                     <Button size="small">상세정보</Button>
                   </CardActions> */}
                 </Card>
+            
               </Grid>
             ))}
           </Grid>

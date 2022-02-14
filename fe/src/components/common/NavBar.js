@@ -18,6 +18,11 @@ import FeedIcon from '@mui/icons-material/Feed';
 import LogoutIcon from '@mui/icons-material/Logout';
 import FormControl from '@mui/material/FormControl';
 import Logo from "../../img/logo.png";
+import Login from "../../img/login.png";
+import Logout from "../../img/logout.png";
+import Message from "../../img/message.png";
+import Community from "../../img/community.png";
+import Profile from "../../img/profile.png";
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 
@@ -217,8 +222,7 @@ export default function PrimarySearchAppBar() {
             >
               <InputBase
                 sx={{ ml: 1, flex: 1 }}
-                placeholder="검색어를 입력하세요."
-                inputProps={{ 'aria-label': 'search google maps' }}
+                placeholder="유저를 입력하세요."
                 onChange={getKeyword}
               />
               <IconButton 
@@ -229,36 +233,32 @@ export default function PrimarySearchAppBar() {
               >
                 <SearchIcon />
               </IconButton>
-            </Paper>
-            {/* <Button
-              type="submit"
-              sx={{
-                my: 1,
-                mr: 3,
-                minWidth: 40,
-                height: '5ch'
-              }}
-              variant="contained"
-            >
-              <SearchIcon />
-            </Button> */}
-            {/* 커뮤니티 이동 */}
-            
+            </Paper>            
             <Link to={'/community'}>
-              <IconButton size="large" aria-label="go to community" color="primary">
+              <Box
+                component="img"
+                sx={{ height: 25, m:1 }}
+                alt="logo"
+                src={Community}      
+              >
+              </Box>
+              {/* <IconButton size="large" aria-label="go to community" color="primary">
                 <FeedIcon />
-              </IconButton>
+              </IconButton> */}
             </Link>
-
-            
-            {/* 메시지 이동 */}
             <Link to={'/message'}>
-              <IconButton size="large" aria-label="show 4 new mails" color="primary">
+              <Box
+                component="img"
+                sx={{ height: 25, m:1 }}
+                alt="logo"
+                src={Message}      
+              >
+              </Box>
+              {/* <IconButton size="large" aria-label="show 4 new mails" color="primary">
                 <MailIcon />
-                {/* <Badge badgeContent={4} color="error">
-                </Badge> */}
-              </IconButton>
+              </IconButton> */}
             </Link>
+<<<<<<< HEAD
             {/* 알림창 */}
             {/* <IconButton
               size="large"
@@ -272,6 +272,17 @@ export default function PrimarySearchAppBar() {
             {/* 프로필 */}
             <Link to={`/profile/${nick}`}>
               <IconButton
+=======
+            <Link to={`/profile`}>
+              <Box
+                component="img"
+                sx={{ height: 25, m:1 }}
+                alt="logo"
+                src={Profile}      
+              >
+              </Box>
+              {/* <IconButton
+>>>>>>> 1e7d569c3f33985fd05f2f081c573a2a678bf481
                 size="large"
                 edge="end"
                 aria-label="account of current user"
@@ -281,18 +292,23 @@ export default function PrimarySearchAppBar() {
                 color="primary"
               >
                 <AccountCircle />
-              </IconButton>
+              </IconButton> */}
             </Link>
-            {/* 로그아웃 */}
-            <IconButton
-              onClick={onLogout}
+            <Box
+              component="img"
+              sx={{ height: 25, m:1 }}
+              alt="logo"
+              src={Logout}      
+            >
+            </Box>
+            {/* <IconButton
               size="large"
               edge="end"
               aria-label="logout"
               color="error"
             >
               <LogoutIcon />
-            </IconButton>
+            </IconButton> */}
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
