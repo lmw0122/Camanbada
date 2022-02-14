@@ -18,7 +18,8 @@ import FeedIcon from '@mui/icons-material/Feed';
 import LogoutIcon from '@mui/icons-material/Logout';
 import FormControl from '@mui/material/FormControl';
 import Logo from "../../img/logo.png";
-
+import TextField from '@mui/material/TextField';
+import Paper from '@mui/material/Paper';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -62,6 +63,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
+  const [keyword, setKeyword] = React.useState('');
+  // const keyword = '';
+  
+  const getKeyword = (e) => {
+    setKeyword(e.target.value);
+  };
+
+  function searchButton(e) {
+    e.preventDefault();
+    if (keyword === '') {
+      alert('검색어를 입력하세요!');
+    } else {
+      window.location.href = `/searchall/${keyword}`;
+    }
+  };
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -176,26 +193,47 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             {/* 검색창 */}
-            <FormControl variant="filled" sx={{ my: 1, minWidth: 300 }}>
+            {/* <FormControl variant="filled" sx={{ my: 1, minWidth: 300 }}>
               <Search>
                 <StyledInputBase
+                  value={keyword}
                   placeholder="검색어를 입력하세요."
                   inputProps={{ 'aria-label': 'search' }}
                 />
               </Search>
-            </FormControl>
-            <Button
-                type="submit"
-                sx={{
-                  my: 1,
-                  mr: 3,
-                  minWidth: 40,
-                  height: '5ch'
-                }}
-                variant="contained"
+            </FormControl> */}
+            {/* <TextField sx={{ height: '3ch'}} id="filled-basic" label="검색어를 입력하세요." variant="filled" /> */}
+            <Paper
+              component="form"
+              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 250 }}
+            >
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="검색어를 입력하세요."
+                inputProps={{ 'aria-label': 'search google maps' }}
+                onChange={getKeyword}
+              />
+              <IconButton 
+                type="submit" 
+                sx={{ p: '10px' }} 
+                aria-label="search"
+                onClick={searchButton}
               >
                 <SearchIcon />
-            </Button>
+              </IconButton>
+            </Paper>
+            {/* <Button
+              type="submit"
+              sx={{
+                my: 1,
+                mr: 3,
+                minWidth: 40,
+                height: '5ch'
+              }}
+              variant="contained"
+            >
+              <SearchIcon />
+            </Button> */}
             {/* 커뮤니티 이동 */}
             
             <Link to={'/community'}>

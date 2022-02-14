@@ -169,15 +169,12 @@ export default function BoardDetailMine() {
   useEffect(() => {
     getBoards(); getComments(); getId();
   }, [])
-<<<<<<< HEAD
   
-=======
 
   console.log(dataList)
 
   const content = dataList.content
   console.log(content)
->>>>>>> NY0127
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -213,17 +210,12 @@ export default function BoardDetailMine() {
               <button onClick={(e)=>{boardOneLike(e, dataList.boardId)}}>❤</button>
             </Grid>
           </Stack>
-<<<<<<< HEAD
-          <img id="userImage" width="850"></img>
-          <Box sx={{ mb: 2, height: 400 }} id="boardcontent">
-=======
           <Box sx={{ mb: 2, height: 400 }} >
             <div dangerouslySetInnerHTML={{ __html: content }}></div>
 
             {/* {dataList.content.innerText} */}
             
             
->>>>>>> NY0127
           </Box>
           <Divider sx={{ borderBottomWidth: 5, mb: 2 }} />
           <Stack
@@ -235,11 +227,7 @@ export default function BoardDetailMine() {
               <FavoriteBorderIcon />
             </Grid>
             <Grid>
-<<<<<<< HEAD
-              좋아요 0
-=======
               {dataList.like}
->>>>>>> NY0127
             </Grid>
             <Grid>
               <ChatBubbleOutlineIcon />
