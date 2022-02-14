@@ -40,28 +40,23 @@ export default function SignInSide() {
     const id = data.get('id');
     const password = data.get('password');
 
-    console.log({
-      "id": id,
-      "password": password,
-    });
-
-    axios.post(AUTH_URL, {
-      "id": id,
-      "password": password,
-    })
-      .then((response) => {
-        const token = response.headers.authorization;
-        localStorage.removeItem("accessToken");
-        localStorage.setItem("accessToken", token);
-        window.location.href = (HOME_TEST_URL);
-      }).catch((error) => {
-        //에러처리
-        alert("아이디와 비밀번호를 확인해주세요");
+      axios.post(AUTH_URL, {
+        "id": id,
+        "password": password,
       })
-      ;
-  };
-
-
+        .then((response) => {
+          const token = response.headers.authorization;
+          localStorage.removeItem("accessToken");
+          localStorage.setItem("accessToken", token);
+        
+          window.location.href = (HOME_TEST_URL);
+        }).catch((error) => {
+          //에러처리
+          alert("아이디와 비밀번호를 확인해주세요");
+        })
+        ;
+    };
+  
   //테스트용
   // const kakaoLogin = ()=>{
   //   axios.get('http://i6c109.p.ssafy.io:8000/oauth/getKakao', )
@@ -78,10 +73,13 @@ export default function SignInSide() {
   const kakaoLogin = ()=>{
     axios.get(KAKAO_AUTH_URL)
       .then((response) => {
+        const token = response.headers.authorization;
+        localStorage.removeItem("accessToken");
+        localStorage.setItem("accessToken", token);
         const url = response.data;
         window.location.href = (url);
-    }).catch((error) => {
-      //에러처리
+      }).catch((error) => {
+        //에러처리
       alert("아이디와 비밀번호를 확인해주세요");
     });
   } 
@@ -161,7 +159,7 @@ export default function SignInSide() {
                 <Button
                   type="submit"
                   // fullWidth
-                  variant="contained" 
+                  variant="contained"
                   sx={{ mt: 3, mb: 2, width: 222, height: 54, }}
                 >
                   LOGIN

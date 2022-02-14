@@ -23,8 +23,8 @@ const theme = createTheme();
 
 
 export default function SearchCampingAlbum() {
-  const { campkeyword } = useParams();
-
+  const { campkeyword, campkeyword2 } = useParams();
+  
   const [campings, setCampings] = React.useState([]);
 
 
@@ -37,7 +37,7 @@ export default function SearchCampingAlbum() {
   const searchList = [];
 
   for (var i=0; i<campings.length; i++) {
-    if (campkeyword === campings[i].doNm) {
+    if (campkeyword === campings[i].doNm && campings[i].sigunguNm === campkeyword2) {
       searchList.push(campings[i])
     }
   }
@@ -65,7 +65,7 @@ export default function SearchCampingAlbum() {
               color="text.primary"
               gutterBottom
             >
-              '{campkeyword}' 검색 결과
+              '{campkeyword} {campkeyword2}' 검색 결과
             </Typography>
           </Container>
           <Container maxWidth="lg">

@@ -12,7 +12,7 @@ function Paging() {
   return (
     <Pagination 
       activePage={page}
-      itemsCountPerPage={10}
+      itemsCountPerPage={2}
       totalItemsCount={450}
       pageRangeDisplayed={5}
       prevPageText={"<"}

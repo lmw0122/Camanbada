@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Container, TextField, Box, CssBaseline, Typography, Stack, Button } from '@mui/material';
 import NavBar from '../../components/common/NavBar'
@@ -17,6 +17,7 @@ export default function Create() {
 
   const BOARD_CREATE_URL = 'http://i6c109.p.ssafy.io:8000/board';
   const BOARD_LIST_URL = 'http://localhost:3000/community';
+  const ID_GET_URL = 'http://i6c109.p.ssafy.io:8000/user'
   const accessToken = localStorage.getItem("accessToken");
   const HEADER = {
     headers:{
@@ -46,6 +47,17 @@ export default function Create() {
     }
   }
 
+  //현재 로그인한 사용자 아이디 가져오기
+  const getId = async () => {
+    axios.get(ID_GET_URL, HEADER)
+      .then((response) => {
+        setClientId(response.data);
+      }).catch((error) => {
+        //에러처리
+        alert("댓글이 없습니다");
+      });
+  }
+
   //태그 받아오기
   const tag_camp_data = (data) => {
     console.log(data);
@@ -69,12 +81,6 @@ export default function Create() {
     setTitle(data.target.value);
   }
 
-  //작성자 이름 데이터 받아오기
-  const name_data = (data) => {
-    console.log(data.target.value);
-    setClientId(data.target.value);
-  }
-
   //내용 받아오기
   const content_data = (data) => {
     console.log(data);
@@ -85,6 +91,10 @@ export default function Create() {
     console.log(data);
     setPhoto(data);
   }
+
+  useEffect(() => {
+    getId();
+  }, [])
 
   return (
     <div>
@@ -98,6 +108,9 @@ export default function Create() {
               func2={tag_commnunity_data}
             ></RadioButtonCamping>
           </Stack>
+          <Box sx={{ width: 500, maxWidth: "100%", mt : 2}}>
+          사용자 아이디: {clientId}
+          </Box>
           <CampingSearch
           func={camping_data}
           ></CampingSearch>
@@ -109,27 +122,10 @@ export default function Create() {
               label="제목을 입력해주세요"
             />
           </Box>
-          <Box sx={{ width: 500, maxWidth: "100%", mt : 2}}>
-            <TextField 
-              onChange={name_data}
-              fullWidth
-              required
-              label="작성자 이름을 입력해주세요"
-            />
-          </Box>
           <Editor
             func1={content_data}
             func2={ image_data }
           ></Editor>
-          {/* <Box sx={{ width : 500, maxwidth: "100%", mt : 2 }}>
-            <TextField
-              label="내용을 입력해주세요."
-              required
-              fullWidth
-              multiline
-              minRows={7}
-            />
-          </Box> */}
           <Typography align="right" sx={{ mr : 3}}>
             <Button
               onClick={onSubmit}

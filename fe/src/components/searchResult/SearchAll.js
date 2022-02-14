@@ -19,6 +19,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useParams } from 'react-router-dom';
 
 const campingCards = [1, 2, 3, 4];
 const userCards = [1, 2, 3, 4];
@@ -27,6 +28,9 @@ const communityCards = [1, 2, 3, 4];
 const theme = createTheme();
 
 export default function SearchAll() {
+  const { keyword } = useParams();
+
+
   return (
     <ThemeProvider theme={theme}>    
       <CssBaseline />
@@ -50,7 +54,7 @@ export default function SearchAll() {
               color="text.primary"
               gutterBottom
             >
-              '@@@' 검색 결과
+              '{keyword}' 검색 결과
             </Typography>
           </Container>
         </Box>
