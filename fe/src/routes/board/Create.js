@@ -25,21 +25,25 @@ export default function Create() {
   }
 
   const onSubmit = (e) => {
-    axios.post(BOARD_CREATE_URL, {
-      "campId": campId,
-      "clientId": clientId,
-      "photo": photo,
-      "content": content,
-      "tag": tag,
-      "title": title
-    },HEADER)
-    .then((res) => {
-      console.log(res)
-      alert("게시판에 등록하였습니다!");
-      window.location.href = (BOARD_LIST_URL);
-    }).catch(() => {
-      alert("전송에 실패하였습니다");
-    })
+    if (campId == "" || content == "" || tag == "" || title == "" || clientId == "")
+      alert("게시판에 등록할 목록을 모두 작성해 주세요");
+    else {
+      axios.post(BOARD_CREATE_URL, {
+        "campId": campId,
+        "clientId": clientId,
+        "photo": photo,
+        "content": content,
+        "tag": tag,
+        "title": title
+      }, HEADER)
+        .then((res) => {
+          console.log(res)
+          alert("게시판에 등록하였습니다!");
+          window.location.href = (BOARD_LIST_URL);
+        }).catch(() => {
+          alert("전송에 실패하였습니다");
+        })
+    }
   }
 
   //태그 받아오기

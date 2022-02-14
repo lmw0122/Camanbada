@@ -35,11 +35,10 @@ function App() {
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/community" element={<Community></Community>}></Route>
         <Route path="/message" element={<Message></Message>}></Route>
-        <Route path="/search" element={<Search></Search>}></Route>
         
         {/* board */}
         {/* 게시글 상세 링크 수정 이게 맞나..?*/}
-        <Route path="/board/update" element={<BoardUpdate></BoardUpdate>}></Route>
+        <Route path="/board/update/:boardId" element={<BoardUpdate></BoardUpdate>}></Route>
         <Route path="/board/:boardId" element={<BoardDetail></BoardDetail>}></Route>
         <Route path="/create" element={<Create></Create>}></Route>
         <Route path="/community/:campId" element={<CampingCommunity></CampingCommunity>}></Route>
@@ -53,15 +52,20 @@ function App() {
 
         {/* profile */}
         {/* 프로필 편집 링크 수정 */}
+<<<<<<< HEAD
         <Route path="/profile/:nick" element={<Profile></Profile>}></Route>
+=======
+        <Route path="/profile" element={<Profile></Profile>}></Route>
+>>>>>>> 567fa0fca289ccc8ef633c8b7cf415c22332e580
         <Route path="/profile/update/:nick" element={<Update></Update>}></Route>
 
         {/* search */}
-        <Route path="/search/camping" element={<SearchCamping></SearchCamping>}></Route>
+        <Route path="/search" element={<Search></Search>}></Route>
+        {/* 메인에서 캠핑장 검색 */}
+        <Route path="/search/:campkeyword" element={<SearchCamping></SearchCamping>}></Route>
         <Route path="/search/user" element={<SearchUser></SearchUser>}></Route>
         <Route path="/search/community" element={<SearchCommunity></SearchCommunity>}></Route>
         
-        <Route path="/test" element={<Test></Test>}></Route>
       </Routes>
     </Router>
   )
