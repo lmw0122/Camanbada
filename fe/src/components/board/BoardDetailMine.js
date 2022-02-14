@@ -228,7 +228,7 @@ export default function BoardDetailMine() {
                 {dataList.clientId}
               </Typography>
               <Typography>
-                {dataList.date}
+                {Date(dataList.date)}
               </Typography>
             </Grid>
             <Grid>
@@ -277,7 +277,7 @@ export default function BoardDetailMine() {
                 </Grid>
                 <Grid>
                   <Typography>
-                    {comment.date}
+                    {Date(comment.date)}
                   </Typography>
                 </Grid>
                 <Grid>
