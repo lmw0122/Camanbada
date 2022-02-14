@@ -17,8 +17,6 @@ import Paper from '@mui/material/Paper';
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 
 const theme = createTheme();
 
@@ -32,6 +30,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function BoardDetailMine() {
   const { boardId } = useParams();
+
+  const [allCommentLike, setAllCommentLike] = useState([]);
   const [clientId, setClientId] = useState([]);
   const [dataList, setDataList] = useState([]);
   const [comments, setComments] = useState([]);
@@ -44,11 +44,11 @@ export default function BoardDetailMine() {
 
   const COMMENT_GET_URL = `http://i6c109.p.ssafy.io:8051/comment/${boardId}`;
   const COMMENT_CREATE_URL = `http://i6c109.p.ssafy.io:8000/comment`;
+  const COMMENT_DELETE_URL = `http://i6c109.p.ssafy.io:8000/comment/`;
   const COMMENT_ONE_LIKE_URL = `http://i6c109.p.ssafy.io:8000/like/comment/`
   
 
   const HOME_TEST_URL = "http://localhost:3000/community";
-  const NOW_PAGE = `http://localhost:3000/board/${boardId}`;
 
   const accessToken = localStorage.getItem("accessToken");
   const HEADER = {
@@ -76,7 +76,12 @@ export default function BoardDetailMine() {
   const getComments = async () => {
     axios.get(COMMENT_GET_URL)
       .then((response) => {
+        let allLike = 0;
+        response.data.forEach(oneComment => {
+          allLike += oneComment.like;
+        });
         setComments(response.data);
+        setAllCommentLike(allLike);
       }).catch((error) => {
         //에러처리
         alert("댓글이 없습니다");
@@ -120,6 +125,33 @@ export default function BoardDetailMine() {
         alert("댓글 작성에 실패하였습니다");
       });
   }
+  
+  //댓글 지우기
+  const deleteOneComment = (e, comment) => {
+    const URL = COMMENT_DELETE_URL + comment.commentId;
+    axios.delete(URL, HEADER)
+      .then((response) => {
+        getComments();
+      }).catch((error) => {
+        alert("댓글 제거에 실패하였습니다");
+      });
+  }
+
+  //  //댓글 수정하기
+  //  const updateOneComment = (e, comment) => {
+  //    axios.put(COMMENT_CREATE_URL, {
+  //     "boardId": 0,
+  //     "clientId": "string",
+  //     "commentId": 0,
+  //     "content": "string",       
+  //    }, HEADER)
+  //     .then((response) => {
+        
+  //     }).catch((error) => {
+  //       alert("댓글 수정에 실패하였습니다");
+  //     });
+  // }
+
 
   //댓글 좋아요와 싫어요
   const commentOneLike= (e, commentId) =>{{
@@ -129,13 +161,13 @@ export default function BoardDetailMine() {
         if (response.status == 204) {
           axios.delete(URL, HEADER)
             .then((response) => {
-              window.location.href = NOW_PAGE;
+              getComments();
           }).catch((error) => {
             alert("싫어요에 실패하였습니다");
           });
         }
         else {//좋아요 성공
-          window.location.href = NOW_PAGE;
+          getComments();
         }
       }).catch((error) => {
         alert("좋아요에 실패하였습니다");
@@ -146,19 +178,18 @@ export default function BoardDetailMine() {
   //게시판 좋아요와 싫어요
   const boardOneLike = (e, boardId) => {{
     const URL = BOARD_ONE_LIKE_URL + boardId;
-    //console.log(URL)
     axios.get(URL,HEADER)
       .then((response) => {
         if (response.status == 204) {
           axios.delete(URL, HEADER)
             .then((response) => {
-              window.location.href = NOW_PAGE;
+              getBoards();
           }).catch((error) => {
             alert("싫어요에 실패하였습니다");
           });
         }
         else {//좋아요 성공
-          window.location.href = NOW_PAGE;
+          getBoards();
         }
       }).catch((error) => {
         alert("좋아요에 실패하였습니다");
@@ -169,15 +200,7 @@ export default function BoardDetailMine() {
   useEffect(() => {
     getBoards(); getComments(); getId();
   }, [])
-<<<<<<< HEAD
   
-=======
-
-  console.log(dataList)
-
-  const content = dataList.content
-  console.log(content)
->>>>>>> NY0127
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -213,17 +236,8 @@ export default function BoardDetailMine() {
               <button onClick={(e)=>{boardOneLike(e, dataList.boardId)}}>❤</button>
             </Grid>
           </Stack>
-<<<<<<< HEAD
           <img id="userImage" width="850"></img>
           <Box sx={{ mb: 2, height: 400 }} id="boardcontent">
-=======
-          <Box sx={{ mb: 2, height: 400 }} >
-            <div dangerouslySetInnerHTML={{ __html: content }}></div>
-
-            {/* {dataList.content.innerText} */}
-            
-            
->>>>>>> NY0127
           </Box>
           <Divider sx={{ borderBottomWidth: 5, mb: 2 }} />
           <Stack
@@ -235,11 +249,7 @@ export default function BoardDetailMine() {
               <FavoriteBorderIcon />
             </Grid>
             <Grid>
-<<<<<<< HEAD
-              좋아요 0
-=======
-              {dataList.like}
->>>>>>> NY0127
+              좋아요 {allCommentLike}
             </Grid>
             <Grid>
               <ChatBubbleOutlineIcon />
@@ -278,11 +288,9 @@ export default function BoardDetailMine() {
                 </Grid>
                 <Grid>
                 {clientId == comment.clientId &&
-                  <Button variant="contained">
-                      수정
-                </Button>}
-                {clientId == comment.clientId &&
-                  <Button variant="contained"  style={{backgroundColor: "#f44336"}}>
+                    <Button variant="contained" style={{ backgroundColor: "#f44336" }}
+                      onClick={(e)=>{deleteOneComment(e, comment)}}
+                    >
                   삭제
                 </Button>}
                 </Grid>
@@ -313,33 +321,34 @@ export default function BoardDetailMine() {
               등록
             </Button>
           </Stack>
-          <Stack
-            direction="row"
-            spacing={2}
-            justifyContent="right"
-          >
-            <Item>
-              <Link to={`/board/update/${boardId}`} style={{textDecoration:'none'}}>
+          {clientId == dataList.clientId &&
+            <Stack
+              direction="row"
+              spacing={2}
+              justifyContent="right"
+            >
+              <Item>
+                <Link to={`/board/update/${boardId}`} style={{ textDecoration: 'none' }}>
+                  <Button
+                    variant="contained"
+                  >
+                    게시글 수정
+                  </Button>
+                </Link>
+              </Item>
+              <Item>
                 <Button
+                  style={{
+                    backgroundColor: "#f44336"
+                  }}
                   variant="contained"
+                  onClick={deleteOneBoard}
                 >
-                  게시글 수정
+                  게시글 삭제
                 </Button>
-              </Link>
-            </Item>
-            <Item>
-              <Button 
-                style={{
-                  backgroundColor: "#f44336"
-                }}
-                variant="contained"
-                onClick={deleteOneBoard}
-              >
-                게시글 삭제
-              </Button>
-            </Item>
-          </Stack>
-        
+              </Item>
+            </Stack>
+          }
           
         </Container>
       </main>
