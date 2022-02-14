@@ -23,7 +23,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
-import { useParams } from 'react-router-dom';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
