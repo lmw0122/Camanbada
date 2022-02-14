@@ -29,13 +29,17 @@ export default function NoLogin () {
               >
               </Box>
               <Button
-                variant="contained"
+                // variant="contained"
                 href="/signup"
                 sx={{ height: 45, m: 1 }}
               >
                 회원가입
               </Button>
-              <Button variant="contained" href="/login" sx={{ height: 45, m: 1 }}>
+              <Button 
+                // variant="contained" 
+                href="/login" 
+                sx={{ height: 45, m: 1 }}
+              >
                 로그인
               </Button>
             </Stack>
