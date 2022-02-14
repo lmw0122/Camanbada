@@ -100,10 +100,6 @@ export default function Update() {
         setIsPasswordConfirm(false)
       }
   }
-  // 아이디, 이메일 정보 얻어오기
-  const { nick } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [userInfo, setUserInfo] = useState('');
 
   const [ changeInfo, setChangeInfo ] = useState();
   const [ userIntro, setUserIntro ] = useState();
