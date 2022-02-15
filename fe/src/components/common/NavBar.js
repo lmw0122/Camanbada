@@ -258,21 +258,6 @@ export default function PrimarySearchAppBar() {
                 <MailIcon />
               </IconButton> */}
             </Link>
-<<<<<<< HEAD
-            {/* 알림창 */}
-            {/* <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
-            {/* 프로필 */}
-            <Link to={`/profile/${nick}`}>
-              <IconButton
-=======
             <Link to={`/profile`}>
               <Box
                 component="img"
@@ -282,7 +267,6 @@ export default function PrimarySearchAppBar() {
               >
               </Box>
               {/* <IconButton
->>>>>>> 1e7d569c3f33985fd05f2f081c573a2a678bf481
                 size="large"
                 edge="end"
                 aria-label="account of current user"
@@ -299,6 +283,7 @@ export default function PrimarySearchAppBar() {
               sx={{ height: 25, m:1 }}
               alt="logo"
               src={Logout}      
+              onClick={onLogout}
             >
             </Box>
             {/* <IconButton

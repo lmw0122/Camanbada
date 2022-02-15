@@ -4,6 +4,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Container, CssBaseline, Grid, Typography, Box, Link, Stack, Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import NavbarIndex from '../components/common/NavBarIndex'
+import Carousel from '../components/common/Carousel'
 
 const theme = createTheme();
 
@@ -18,34 +20,9 @@ export default function NoLogin () {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box>
-        <Container maxWidth="lg">
-          <Stack direction="row">
-              <Box
-                component="img"
-                alt="logo"
-                src={require("../img/logo.png")}
-                sx={{ height: 45, width: 210 }}
-              >
-              </Box>
-              <Button
-                // variant="contained"
-                href="/signup"
-                sx={{ height: 45, m: 1 }}
-              >
-                회원가입
-              </Button>
-              <Button 
-                // variant="contained" 
-                href="/login" 
-                sx={{ height: 45, m: 1 }}
-              >
-                로그인
-              </Button>
-            </Stack>
-        </Container>
-      </Box>
-      <Box sx={{ backgroundSize: "cover" }}>
+      <NavbarIndex />
+      <Carousel />
+      {/* <Box sx={{ backgroundSize: "cover" }}>
         <Container sx={{ backgroundSize: "cover" }}>
         <Grid 
           // item xs={12} 
@@ -87,7 +64,7 @@ export default function NoLogin () {
           </Slider>
         </Grid>
         </Container>
-      </Box>
+      </Box> */}
       {/* <Grid container sx={{ m: 2, height: "100vh" }} direction="column">
         <Grid sx={{ mb: 4 }}>
           <Stack direction="row">
