@@ -8,6 +8,8 @@ export default function CampingSearch(props) {
   let campingList = [];
   let campingFormatList = [];
   
+  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list';
+
   React.useEffect(() => {
     getCampings()
   }, []);
@@ -15,7 +17,7 @@ export default function CampingSearch(props) {
   const getCampings = async() => {
     const json = await (
       await fetch (
-        `http://i6c109.p.ssafy.io:8092/camp/basic/list`
+        CAMP_GET_URL
       )
     ).json();
     setCampings(json);

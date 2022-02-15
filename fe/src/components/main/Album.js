@@ -17,8 +17,10 @@ export default function Album() {
   const [loading, setLoading] = React.useState(true);
   const [basics, setBasics] = React.useState([]);
 
+  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list';
+
   React.useEffect(() => {
-    Axios.get(`http://i6c109.p.ssafy.io:8092/camp/basic/list`)
+    Axios.get(CAMP_GET_URL)
       .then(res => {
         setBasics(res.data);
         setLoading(false);

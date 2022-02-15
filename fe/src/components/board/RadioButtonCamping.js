@@ -35,15 +35,15 @@ export default function RadioButtonsGroup(props) {
 			>
 				{/* 추후에 반응형 웹할 때 조절해야함!.. 임의로 조절함 */}
 				<Grid md={12}>
-					<FormControlLabel value="share"  control={<Radio />} label="나눔" />
-					<FormControlLabel value="deal" control={<Radio />} label="거래" />
-					<FormControlLabel value="review" control={<Radio />} label="후기" />
-					<FormControlLabel value="camping-free" control={<Radio />} label="자유" />
+					<FormControlLabel value="나눔"  control={<Radio />} label="나눔" />
+					<FormControlLabel value="거래" control={<Radio />} label="거래" />
+					<FormControlLabel value="후기" control={<Radio />} label="후기" />
+					<FormControlLabel value="캠핑소통-자유" control={<Radio />} label="자유" />
 				</Grid>
 					<FormLabel id="radio-button" sx={{ fontWeight : 'bold', fontSize : 18, mt : 1 }}>&lt;자유 소통&gt;</FormLabel>
 				<Grid md={12}>
-					<FormControlLabel value="equipment-review" control={<Radio />} label="장비 후기" />
-					<FormControlLabel value="equipment-free" control={<Radio />} label="자유" />
+					<FormControlLabel value="장비 후기" control={<Radio />} label="장비 후기" />
+					<FormControlLabel value="자유소통-자유" control={<Radio />} label="자유" />
 				</Grid>
 			</RadioGroup>
 			{/* <RadioGroup
