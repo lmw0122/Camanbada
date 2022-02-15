@@ -10,7 +10,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { Link } from "react-router-dom";
 import Axios from "axios";
 
 export default function SelectVariants() {
@@ -22,6 +21,16 @@ export default function SelectVariants() {
   const [sigungu, setSigungu] = React.useState('');
 
   const [keyword, setKeyword] = React.useState('');
+
+  var dropbox3 = [];
+
+  var camps = [];
+
+  const [campings, setCampings] = React.useState([]);
+
+  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list';
+  const SIDO_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list/sido';
+  const SIGUNGU_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/basic/list/sigungu/${sido}`;
 
   const handleChange1 = (event) => {
     setSido(event.target.value);
@@ -39,21 +48,15 @@ export default function SelectVariants() {
     setKeyword(event.target.value);
   }
  
-  var dropbox3 = [];
-
-  var camps = [];
-
-  const [campings, setCampings] = React.useState([]);
-
   React.useEffect(() => {
-    Axios.get('http://i6c109.p.ssafy.io:8092/camp/basic/list')
+    Axios.get(CAMP_GET_URL)
       .then(res => setCampings(res.data))   
   }, []);
 
   const [sidosjson, setSidosjson] = React.useState('');
 
   React.useEffect(() => {
-    Axios.get('http://i6c109.p.ssafy.io:8092/camp/basic/list/sido')
+    Axios.get(SIDO_GET_URL)
       .then(res => setSidosjson(res.data))   
   }, []);
 
@@ -62,7 +65,7 @@ export default function SelectVariants() {
   // sido 값이 변화할 때만 api 호출!
   React.useEffect(() => {
     if (sido !== '') {
-      Axios.get(`http://i6c109.p.ssafy.io:8092/camp/basic/list/sigungu/${sido}`)
+      Axios.get(SIGUNGU_GET_URL)
         .then(res => setSigungusjson(res.data)) 
     }
   }, [sido]);
@@ -108,10 +111,6 @@ export default function SelectVariants() {
       window.location.href = `/search/camp/${keyword}`
     }
   }
-  
-  
-
-  
 
   // 최종 선택된 캠핑장
   var finalc = '';

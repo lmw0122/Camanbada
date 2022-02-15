@@ -22,7 +22,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useParams } from 'react-router-dom';
 import Axios from "axios";
 
-const userCards = [1, 2, 3, 4];
 
 const theme = createTheme();
 
@@ -33,8 +32,10 @@ export default function SearchAll() {
   // daye, 하눅, nana
   const [userList, setUserList] = React.useState([]);
 
+  const KEYWORD_GET_URL = `http://i6c109.p.ssafy.io:8050/user/search/${keyword}`
+
   React.useEffect(() => {
-    Axios.get(`http://i6c109.p.ssafy.io:8050/user/search/${keyword}`)
+    Axios.get(KEYWORD_GET_URL)
       .then(res => setUserList(res.data))
   }, []);
 
