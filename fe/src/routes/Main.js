@@ -2,6 +2,8 @@ import NavBar from "../components/common/NavBar";
 import Album from "../components/main/Album";
 import SelectVariants from "../components/main/SelectVariants";
 import NewsFeed from "../components/main/NewsFeed";
+import StickyFooter from '../components/common/Footer';
+// import footerCss from '../styles/footerCss.css'
 
 
 // 현재 인기 캠핑장 순위
@@ -18,11 +20,16 @@ function Main() {
   }
 
   return (
-    <div> 
-      <NavBar></NavBar>
-      <SelectVariants></SelectVariants>
-      <Album></Album>
-      <NewsFeed></NewsFeed>
+    <div>
+
+        <NavBar></NavBar>
+        <SelectVariants></SelectVariants>
+        <Album></Album>
+        <NewsFeed></NewsFeed>
+
+
+        <StickyFooter></StickyFooter>
+
     </div>
 
   )

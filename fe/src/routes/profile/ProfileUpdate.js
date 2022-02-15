@@ -6,6 +6,7 @@ import Divider from '@mui/material/Divider';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NavBar from '../../components/common/NavBar'
 import { useParams } from 'react-router-dom';
+import StickyFooter from '../../components/common/Footer';
 
 const Input = styled('input')({
   display: 'none',
@@ -283,6 +284,7 @@ export default function Update() {
           </Container>
         </div>
       )}
+      <StickyFooter></StickyFooter>
     </div>
   );
 }
