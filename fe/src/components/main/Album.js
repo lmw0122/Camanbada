@@ -30,9 +30,7 @@ export default function Album() {
   const topCamps = [];
 
   // 전체 캠핑장 좋아요 순 정렬
-  // componentWillMount() {
-    
-  // }
+  
   
   for (var i=0; i<basics.length; i++) {
     basics.sort(function(a,b) {
@@ -101,6 +99,10 @@ export default function Album() {
                   <Card
                     sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                     align="center"
+                    onClick = {(e) => {
+                      e.preventDefault();
+                      window.location.href = `/camping/${item.campId}`;
+                    }}
                   >
                     <CampingImage basics={ item }></CampingImage>
                     <CardContent sx={{ flexGrow: 1 }}>
@@ -108,11 +110,11 @@ export default function Album() {
                         {item.facltNm}
                       </Typography>
                     </CardContent>
-                    <Link to={'/campingdetail'} >
+                    {/* <Link to={'/campingdetail'} >
                       <CardActions >
                         <Button size="small" >상세정보</Button>
                       </CardActions>
-                    </Link>
+                    </Link> */}
                   </Card>
                 </Grid>
                 ))}

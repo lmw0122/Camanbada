@@ -41,6 +41,7 @@ export default function PrimarySearchAppBar() {
     } else {
       window.location.href = `/searchall/${keyword}`;
     }
+    setKeyword('');
   };
 
   const [anchorEl, setAnchorEl] = React.useState(null);

@@ -96,6 +96,7 @@ export default function SearchCampingAlbum() {
                     e.preventDefault();
                     window.location.href = `/camping/${camp.campId}`;
                   }}
+                  
                 >
                   <CampingImage basics={ camp }></CampingImage>
                   <CardContent sx={{ flexGrow: 1 }}>
