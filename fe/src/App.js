@@ -55,11 +55,7 @@ function App() {
 
         {/* profile */}
         {/* 프로필 편집 링크 수정 */}
-<<<<<<< HEAD
         <Route path="/profile/:nick" element={<Profile></Profile>}></Route>
-=======
-        <Route path="/profile/:nickname" element={<Profile></Profile>}></Route>
->>>>>>> 1e7d569c3f33985fd05f2f081c573a2a678bf481
         <Route path="/profile/update/:nick" element={<Update></Update>}></Route>
 
         {/* 내브바 검색 */}
