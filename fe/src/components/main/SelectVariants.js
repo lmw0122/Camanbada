@@ -112,6 +112,12 @@ export default function SelectVariants() {
     }
   }
 
+  const onCheckEnter = (e) => {
+    if (e.key === 'Enter') {
+      searchButton();
+    };
+  };
+
   // 최종 선택된 캠핑장
   var finalc = '';
   for (var i=0; i<camps.length; i++) {
@@ -195,6 +201,7 @@ export default function SelectVariants() {
           </FormControl>
           <Autocomplete
             onChange={handleChange3}
+            onKeyPress={onCheckEnter} 
             sx={{ minWidth: 300, m: 1 }}
             freeSolo
             id="free-solo-2-demo"
