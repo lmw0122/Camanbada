@@ -26,10 +26,12 @@ export default function SearchCampingAlbum() {
   const { searchkeyword } = useParams();
 
   const [campings, setCampings] = React.useState([]);
+
+  const SEARCHKEYWORD_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/basic/list/keyword/${searchkeyword}`
  
 
   React.useEffect(() => {
-    Axios.get(`http://i6c109.p.ssafy.io:8092/camp/basic/list/keyword/${searchkeyword}`)
+    Axios.get(SEARCHKEYWORD_GET_URL)
       .then(res => setCampings(res.data))
   }, []);
 

@@ -68,14 +68,19 @@ export default function BasicTabs() {
   const [basics, setBasics] = React.useState([]);
   const [details, setDetails] = React.useState([]);
 
+  const BASIC_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/basic/one/${campId}`
+  const DETAIL_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/detail/one/${campId}`
+
+  
+
   
   React.useEffect(() => {
-    Axios.get(`http://i6c109.p.ssafy.io:8092/camp/basic/one/${campId}`)
+    Axios.get(BASIC_GET_URL)
       .then(res => setBasics(res.data))
   }, []);
 
   React.useEffect(() => {
-    Axios.get(`http://i6c109.p.ssafy.io:8092/camp/detail/one/${campId}`)
+    Axios.get(DETAIL_GET_URL)
       .then(res => setDetails(res.data))   
   }, []);
 
