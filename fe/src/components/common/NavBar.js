@@ -241,13 +241,8 @@ export default function PrimarySearchAppBar() {
               component="img"
               sx={{ height: 25, m:1 }}
               alt="logo"
-<<<<<<< HEAD
-              src={Logout}      
-              onClick={onLogout}
-=======
               src={Logout}     
               onClick={onLogout} 
->>>>>>> af58dd0361f56bd5e588294149671bca6b767c9a
             >
             </Box>
             {/* <IconButton

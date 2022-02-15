@@ -100,11 +100,8 @@ export default function Update() {
       }
   }
   // 아이디, 이메일 정보 얻어오기
-<<<<<<< HEAD
-=======
   
  
->>>>>>> af58dd0361f56bd5e588294149671bca6b767c9a
   const [ userIntro, setUserIntro ] = useState('');
   const [ userId, setUserId ] = useState('');
   const [ userEmail, setUserEmail ] = useState('');

@@ -6,7 +6,6 @@ import image10 from "../../img/campingImg/camping10.png"
 export default class LazyLoad extends Component {
   render() {
     const settings = {
-      dots: true,
       lazyLoad: true,
       infinite: true,
       speed: 2000,
@@ -49,9 +48,6 @@ export default class LazyLoad extends Component {
             <h3>6</h3>
           </div>
         </Slider>
-        <Grid>
-
-        </Grid>
       </div>
     );
   }

@@ -33,7 +33,8 @@ const palette = {
      '#EB0000',
      '#FF3232',
      '#CD1039', 
-  ]
+  ],
+
 };
 
 export default palette;
