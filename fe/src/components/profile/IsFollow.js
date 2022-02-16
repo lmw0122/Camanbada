@@ -9,8 +9,9 @@ class IsFollow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isfollowed: this.props.setFollow,
-      userE: false,
+      isfollowed: false,
+      userE: true,
+        // userE: false,
     }
   }
 
