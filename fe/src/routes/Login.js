@@ -162,6 +162,7 @@ export default function SignInSide() {
                   // fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2, width: 222, height: 54, }}
+                  style={{ backgroundColor: "#1b5e20" }}
                 >
                   LOGIN
                 </Button>
@@ -194,12 +195,12 @@ export default function SignInSide() {
                   </Link>
                 </Grid> */}
                 <Grid item>
-                  <Link href="/Signup" variant="body2">
+                  <Link href="/Signup" variant="body2" underline='none' style={{color : '#1b5e20'}}>
                     아이디가 없으신가요? 회원가입하러 가기!
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
+              {/* <Copyright sx={{ mt: 5 }} /> */}
             </Box>
           </Box>
         </Grid>

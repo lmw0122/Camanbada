@@ -107,13 +107,7 @@ export default function Update() {
   const [ userIntro, setUserIntro ] = useState('');
   const [ userId, setUserId ] = useState('');
   const [ userEmail, setUserEmail ] = useState('');
-  const [intro, setIntro] = useState('');
-  const accessToken = localStorage.getItem("accessToken");
-  const HEADER = {
-    headers: {
-      'Authorization': accessToken
-    }
-  }
+  const [ intro, setIntro ] = useState('');
 
   // console.log(userInfo)
 
@@ -160,7 +154,9 @@ export default function Update() {
   let inputRef;
   
   const saveImage = (e) => {
+    e.preventDefault();
     const fileReader = new FileReader();
+
     if(e.target.files[0]) {
       setLoaded("loading")
       fileReader.readAsDataURL(e.target.files[0])
@@ -176,7 +172,6 @@ export default function Update() {
   
   const sendImageToServer = async () => {
     if (image.image_file) {
-<<<<<<< HEAD
       const reader = new FileReader();
       console.log(reader.readAsDataURL(image.image_file))
       const formData = new FormData ()
@@ -189,26 +184,6 @@ export default function Update() {
         preview_URL : "../img/dog.png",
       })
       setLoaded(false);
-=======
-      const formData = new FormData()
-      formData.append('file', image.image_file);
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(image.image_file);
-
-      fileReader.onload = function () {
-        const fileImage = fileReader.result;
-        console.log(fileImage)
-        axios
-          .put(`http://i6c109.p.ssafy.io:8000/user/${userId}`,
-            { "photo": fileImage },HEADER)
-          .then(res => {
-            console.log(res);
-            alert("등록 완료했습니다.")
-          });
-        setLoaded(false);
-   		};
-
->>>>>>> ab7b159cac137d92ec41a120a31c4dbe7d073cb6
     } else {
       alert("사진을 등록하세요!")
     }

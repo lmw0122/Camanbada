@@ -17,10 +17,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paging from '../common/Pagination';
-
+import { green, lightGreen, lime, blueGrey } from '@mui/material/colors';
 
 export default function SelectVariants() {
-
   const [camp, setCamp] = React.useState('');
 
   const [sido, setSido] = React.useState('');
@@ -231,10 +230,11 @@ export default function SelectVariants() {
     console.log("numPerPage : " + numPerPage);
     console.log("offset : " + offset);
   });
+
 return (
   <Box
     sx={{
-      bgcolor: 'background.paper',
+      // bgcolor: second,
       pt: 3,
       pb: 0,
     }}
@@ -316,6 +316,7 @@ return (
           }}
           variant="contained"
           onClick={clickButton}
+          style={{ backgroundColor : '#1b5e20'}}
         >
           이동
         </Button>
@@ -390,18 +391,18 @@ return (
         </Link> */}
       </Stack>
       <Stack>
-        <TableContainer align="center">
-          <Table sx={{ m : 2, width: 700 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
+        <TableContainer align="center" >
+          <Table sx={{ m : 2, width: 900 }} aria-label="simple table">
+            <TableHead >
+              <TableRow sx={{ border : '1px solid black', bgcolor : '#1b5e20' }}>
                 {/* <TableCell>번호</TableCell> */}
-                <TableCell align="center">말머리</TableCell>
-                <TableCell align="center">제목</TableCell>
-                <TableCell align="center">작성자</TableCell>
-                <TableCell align="center">작성날짜</TableCell>
+                <TableCell align="center" sx={{ fontWeight: 'bold',color : '#ffffff', fontSize: '18px' }}>말머리</TableCell>
+                <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>제목</TableCell>
+                <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>작성자</TableCell>
+                <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>작성날짜</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody> 
+            <TableBody sx={{ border : '1px solid black'}}> 
               {selectedTag ? selectedTag.slice(offset, offset+numPerPage).map((d) => (
                 <TableRow
                   key={d.boardId}
@@ -410,15 +411,19 @@ return (
                   {/* <TableCell component="th" scope="row">
                     {d.boardId}
                   </TableCell> */}
-                  <TableCell align="center">{d.tag}</TableCell>
-                    <TableCell align="center">
-                      <Link to={`/board/${d.boardId}`} style={{ textDecoration: 'none' }}>
+                  <TableCell align="center" sx={{ fontSize: '15px'}}>{d.tag}</TableCell>
+                    <TableCell align="center" sx={{ fontSize: '15px'}}>
+                      <Link to={`/board/${d.boardId}`} style={{ textDecoration: 'none', color : '#1b5e20'}}>
                       {d.title}
                       </Link>
                     </TableCell>
-                  <TableCell align="center">{d.clientId}</TableCell>
+                  <TableCell align="center" sx={{ fontSize: '15px'}}>
+                    <Link to={`/profile/${d.clientId}`} style={{ textDecoration: 'none', color : '#1b5e20'}}>
+                      {d.clientId}
+                    </Link>
+                    </TableCell>
                   {/* <TableCell align="center">{Date(d.date)}</TableCell> */}
-                  <TableCell align="center">{(d.date)}</TableCell>
+                  <TableCell align="center" sx={{ fontSize: '15px'}}>{(d.date)}</TableCell>
                 </TableRow>
               )) : ''}
             </TableBody>

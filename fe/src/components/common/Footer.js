@@ -26,6 +26,7 @@ export default function StickyFooter() {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '1vh',
+        width : '100%',
       }}
     >
       <CssBaseline />
@@ -42,7 +43,7 @@ export default function StickyFooter() {
         }}
         textAlign="center"
       >
-        <Container maxWidth="sm">
+        <Container maxWidth="xl">
           <Box
             component="img"
             sx={{ height: 25, m:1 }}
