@@ -1,28 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import axios from 'axios';
-import PropTypes from 'prop-types';
+import axios from "axios";
+import PropTypes from "prop-types";
 import IsFollow from "./IsFollow";
 import ProfileUser from "./ProfileUser";
-import { Container, CssBaseline, Typography, Grid, Stack, Box } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Button from '@mui/material/Button';
-import CardHeader from '@mui/material/CardHeader';
-import Avatar from '@mui/material/Avatar';
-import { red } from '@mui/material/colors';
-import IconButton from '@mui/material/IconButton';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
+import {
+  Container,
+  CssBaseline,
+  Typography,
+  Grid,
+  Stack,
+  Box,
+} from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Button from "@mui/material/Button";
+import CardHeader from "@mui/material/CardHeader";
+import Avatar from "@mui/material/Avatar";
+import { red } from "@mui/material/colors";
+import IconButton from "@mui/material/IconButton";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
+import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,7 +60,7 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
@@ -62,93 +69,93 @@ const theme = createTheme();
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   // padding: theme.spacing(1),
-  textAlign: 'center',
+  textAlign: "center",
   // color: theme.palette.text.secondary,
 }));
 
-// const { nick } = useParams();
-// const [userInfo, setUserInfo] = React.useState('');
-
-// React.useEffect(() => {
-//   axios.get(`http://i6c109.p.ssafy.io:8050/user/${nick}`)
-//     .then(res => setUserInfo(res.data))
-// })
-
-// console.log(userInfo)
 
 export default function ProfileHead() {
   const [value, setValue] = React.useState(0);
 
-  const [isfollowed, setIsfollowed] = React.useState('false');
+  // LocalStroage에서 accessToken을 가져와서 header에 Authorization 값으로 담아주기
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
+
+  // const [isfollowed, setIsfollowed] = React.useState('false');
+
+  const { nick } = useParams('');
+  const [userInfo, setUserInfo] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [userIntro, setUserIntro] = useState("");
+
+  const [ followerList, setFollowerList ] = useState("");
+  const [ followingList, setFollowingList ] = useState("");
+  
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   // 유저 정보 얻어오기
-  const { nick } = useParams('');  
-  const [loading, setLoading] = useState(true);
-  const [userInfo, setUserInfo] = useState('');
+  // nick은 한글이라 인코딩
+  const uri = `http://i6c109.p.ssafy.io:8000/user/${nick}`;
+  const encoded = encodeURI(uri);
 
-  const [ userIntro, setUserIntro ] = useState('');
-  const [ userNickname, setUserNickname ] = useState('');
-  
-  // useEffect(() => {
-  //   axios.get(`http://i6c109.p.ssafy.io:8000/user/${nick}`)
-  //     .then(res => {
-  //       setUserInfo(res.data);
-  //       setLoading(false);
-  //       setUserNickname(res.data[0].nickname)
-  //       setUserIntro(res.data[0].intro)
-  //     })
-  // }, []);
-  
-  const getUsers = async () => {
-    await axios.get(`http://i6c109.p.ssafy.io:8050/user/${nick}`)
-    .then(res => {
-      console.log(res)
-      setUserInfo(res.data);
-      setLoading(false);
-      setUserNickname(res.data[0].nickname)
-      setUserIntro(res.data[0].intro)
-    })
-  }
-  // 유저 닉네임, 소개글 얻어오기
-  useEffect(() => {
-    getUsers()
-  }, [])
+  React.useEffect(() => {
+    axios
+      .get(encoded)
+      .then((res) => {
+        setUserInfo(res.data);
+        setLoading(false);
+        setUserIntro(res.data[0].intro);
+      });
+  }, []);
 
-  // console.log(userInfo)
+  //
+  React.useEffect(() => {
+    axios.get(`http://i6c109.p.ssafy.io:8000/follow/follower`)
+      .then(res => setFollowerList(res.data))
+  }, []);
+
+  React.useEffect(() => {
+    axios.get(`http://i6c109.p.ssafy.io:8000/follow/following`)
+      .then(res => setFollowingList(res.data))
+  }, []);
+  
+  console.log(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+  console.log(followerList);
 
   return (
     <div>
-      {loading ? (
-        null
-      ) : (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <main>
-        <Container sx={{ py:0, mt: 12, mb: 8}} maxWidth="md">
-          <Grid 
-            container
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            sx={{
-              mb: 5
-            }}
-          >
-            <Grid item align="center" md={2.4} sx={{ mr: 4 }}>
-              <AccountCircleIcon  sx={{ fontSize: 150 }} />
-            </Grid>
-            <Grid item md={7.2}>
-              {/* 닉네임 */}
-              <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
-                <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-                  {userNickname}
-                </Typography>
-                <ProfileUser />
-                {/* <Link to={'/message'} style={{textDecoration:'none'}}>
+      {loading ? null : (
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <main>
+            <Container sx={{ py: 0, mt: 12, mb: 8 }} maxWidth="md">
+              <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                sx={{
+                  mb: 5,
+                }}
+              >
+                <Grid item align="center" md={2.4} sx={{ mr: 4 }}>
+                  <AccountCircleIcon sx={{ fontSize: 150 }} />
+                </Grid>
+                <Grid item md={7.2}>
+                  {/* 닉네임 */}
+                  <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
+                    <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                      {nick}
+                    </Typography>
+                    <ProfileUser />
+                    {/* <Link to={'/message'} style={{textDecoration:'none'}}>
                   <Button
                     style={{
                       border: "1px black solid",
@@ -159,42 +166,36 @@ export default function ProfileHead() {
                     메시지 보내기
                   </Button>
                 </Link>                */}
-                <IsFollow />
-              </Stack>
-              {/* 게시물, 팔로워, 팔로우 부분 */}
-              <Stack direction="row" spacing={4} sx={{ mb: 2 }}>
-                <Stack direction="row" spacing={1}>
-                  <Typography sx={{ fontSize: 20 }}>
-                    게시물
-                  </Typography>
-                  <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>
-                    4
-                  </Typography>
-                </Stack>
-                <Stack direction="row" spacing={1}>
-                  <Typography sx={{ fontSize: 20 }}>
-                    팔로워
-                  </Typography>
-                  <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>
-                    16
-                  </Typography>
-                </Stack>
-                <Stack direction="row" spacing={1}>
-                  <Typography sx={{ fontSize: 20 }}>
-                    팔로우
-                  </Typography>
-                  <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>
-                    20
-                  </Typography>
-                </Stack>
-              </Stack>
-              {/* 자기 소개 부분 */}
-              <Stack>
-                {/* 150자 예시 */}
-                {userIntro}
-              </Stack>
-            </Grid>
-            {/* <Stack
+                    <IsFollow />
+                  </Stack>
+                  {/* 게시물, 팔로워, 팔로우 부분 */}
+                  <Stack direction="row" spacing={4} sx={{ mb: 2 }}>
+                    <Stack direction="row" spacing={1}>
+                      <Typography sx={{ fontSize: 20 }}>게시물</Typography>
+                      <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
+                        4
+                      </Typography>
+                    </Stack>
+                    <Stack direction="row" spacing={1}>
+                      <Typography sx={{ fontSize: 20 }}>팔로워</Typography>
+                      <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
+                        {followerList}1억
+                      </Typography>
+                    </Stack>
+                    <Stack direction="row" spacing={1}>
+                      <Typography sx={{ fontSize: 20 }}>팔로우</Typography>
+                      <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
+                        20
+                      </Typography>
+                    </Stack>
+                  </Stack>
+                  {/* 자기 소개 부분 */}
+                  <Stack>
+                    {/* 150자 예시 */}
+                    {userIntro}
+                  </Stack>
+                </Grid>
+                {/* <Stack
               direction="column"
               spacing={2}
             >
@@ -218,90 +219,94 @@ export default function ProfileHead() {
                 </Link>
               </Item>
             </Stack> */}
-          </Grid>
-          
-          <Box sx={{ width: '100%' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
-                <Tab label="올린 게시물" {...a11yProps(0)} />
-                <Tab label="좋아요한 캠핑장" {...a11yProps(1)} />
-              </Tabs>
-            </Box>
-            <TabPanel value={value} index={0} align="center">
-              <Card sx={{ maxWidth: 345 }}>
-                <CardHeader
-                  avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                      U
-                    </Avatar>
-                  }
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title="제목"
-                  subheader="날짜?"
-                />
-                <CardMedia
-                  component="img"
-                  height="194"
-                  image="https://images.unsplash.com/photo-1641157141085-8454fbc33f3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0MzExNTc1NQ&ixlib=rb-1.2.1&q=80&w=1080"
-                  alt="BoardImage"
-                />
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary">
-                    게시글 내용
-                  </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                  </IconButton>
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
-                </CardActions>
-              </Card> 
-            </TabPanel>
-            <TabPanel value={value} index={1} align="center">
-              <Card
-                // sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                sx={{ maxWidth: 345 }}
-              >
-                <CardMedia
-                  component="img"
-                  sx={{
-                    // 16:9
-                    // pt: '56.25%',
-                    pt: '0%',
-                  }}
-                  image="https://images.unsplash.com/photo-1641157141085-8454fbc33f3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0MzExNTc1NQ&ixlib=rb-1.2.1&q=80&w=1080"
-                  alt="CampingImage"
-                />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    $캠핑장 이름
-                  </Typography>
-                  {/* <Typography>
+              </Grid>
+
+              <Box sx={{ width: "100%" }}>
+                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                  <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="basic tabs example"
+                    centered
+                  >
+                    <Tab label="올린 게시물" {...a11yProps(0)} />
+                    <Tab label="좋아요한 캠핑장" {...a11yProps(1)} />
+                  </Tabs>
+                </Box>
+                <TabPanel value={value} index={0} align="center">
+                  <Card sx={{ maxWidth: 345 }}>
+                    <CardHeader
+                      avatar={
+                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                          U
+                        </Avatar>
+                      }
+                      action={
+                        <IconButton aria-label="settings">
+                          <MoreVertIcon />
+                        </IconButton>
+                      }
+                      title="제목"
+                      subheader="날짜?"
+                    />
+                    <CardMedia
+                      component="img"
+                      height="194"
+                      image="https://images.unsplash.com/photo-1641157141085-8454fbc33f3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0MzExNTc1NQ&ixlib=rb-1.2.1&q=80&w=1080"
+                      alt="BoardImage"
+                    />
+                    <CardContent>
+                      <Typography variant="body2" color="text.secondary">
+                        게시글 내용
+                      </Typography>
+                    </CardContent>
+                    <CardActions disableSpacing>
+                      <IconButton aria-label="add to favorites">
+                        <FavoriteIcon />
+                      </IconButton>
+                      <IconButton aria-label="share">
+                        <ShareIcon />
+                      </IconButton>
+                    </CardActions>
+                  </Card>
+                </TabPanel>
+                <TabPanel value={value} index={1} align="center">
+                  <Card
+                    // sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                    sx={{ maxWidth: 345 }}
+                  >
+                    <CardMedia
+                      component="img"
+                      sx={{
+                        // 16:9
+                        // pt: '56.25%',
+                        pt: "0%",
+                      }}
+                      image="https://images.unsplash.com/photo-1641157141085-8454fbc33f3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0MzExNTc1NQ&ixlib=rb-1.2.1&q=80&w=1080"
+                      alt="CampingImage"
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        $캠핑장 이름
+                      </Typography>
+                      {/* <Typography>
                     This is a media card. You can use this section to describe the
                     content.
                   </Typography> */}
-                </CardContent>
-                {/* 캠핑장 상세 정보 링크 걸기 */}
-                <Link to={'/campingdetail'}>
-                  <CardActions>
-                    <Button size="small">상세정보</Button>
-                  </CardActions>
-                </Link>
-              </Card>
-            </TabPanel>
-          </Box>
-        </Container>
-      </main>
-    </ThemeProvider>
+                    </CardContent>
+                    {/* 캠핑장 상세 정보 링크 걸기 */}
+                    <Link to={"/campingdetail"}>
+                      <CardActions>
+                        <Button size="small">상세정보</Button>
+                      </CardActions>
+                    </Link>
+                  </Card>
+                </TabPanel>
+              </Box>
+            </Container>
+          </main>
+        </ThemeProvider>
       )}
-  </div>
-
+    </div>
   );
 }

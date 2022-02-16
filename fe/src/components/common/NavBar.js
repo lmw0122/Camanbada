@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import Axios from "axios";
 import { Box, Button } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import { Link, useParams } from "react-router-dom";
@@ -71,6 +74,23 @@ export default function PrimarySearchAppBar() {
   const [keyword, setKeyword] = React.useState('');
   // const keyword = '';
   
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      'Authorization': accessToken
+    }
+  }
+  const [ nick, setUserNick ] = useState('');
+
+  React.useEffect(() => {
+    Axios.get(`http://i6c109.p.ssafy.io:8000/user/nickname`, HEADER)
+      .then(res => {
+        setUserNick(res.data);
+      })
+  }, []);
+
+  console.log(nick);
+
   const getKeyword = (e) => {
     setKeyword(e.target.value);
   };
@@ -187,7 +207,7 @@ export default function PrimarySearchAppBar() {
     window.location.href = '/'
   }
 
-  const { nick } = useParams();  
+  // const { nick } = useParams();  
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -258,22 +278,7 @@ export default function PrimarySearchAppBar() {
                 <MailIcon />
               </IconButton> */}
             </Link>
-<<<<<<< HEAD
-            {/* 알림창 */}
-            {/* <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
-            {/* 프로필 */}
             <Link to={`/profile/${nick}`}>
-              <IconButton
-=======
-            <Link to={`/profile`}>
               <Box
                 component="img"
                 sx={{ height: 25, m:1 }}
@@ -282,7 +287,6 @@ export default function PrimarySearchAppBar() {
               >
               </Box>
               {/* <IconButton
->>>>>>> 1e7d569c3f33985fd05f2f081c573a2a678bf481
                 size="large"
                 edge="end"
                 aria-label="account of current user"
