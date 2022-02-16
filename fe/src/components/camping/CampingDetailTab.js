@@ -12,6 +12,7 @@ import CardMedia from '@mui/material/CardMedia';
 import { useParams } from 'react-router-dom';
 import { RenderAfterNavermapsLoaded, NaverMap, Marker } from 'react-naver-maps';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { Link } from "react-router-dom";
@@ -70,6 +71,7 @@ export default function BasicTabs() {
   
   const [basics, setBasics] = React.useState([]);
   const [details, setDetails] = React.useState([]);
+  const [ like, setLike ] = React.useState(false);
   
 
   const BASIC_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/basic/one/${campId}`
@@ -109,16 +111,18 @@ export default function BasicTabs() {
       .then((response) => {
         console.log(response);
         console.log(response.status);
-        if (response.status == 204) {
+        if (response.status === 204) {
           axios.delete(URL, HEADER)
             .then((response) => {
               getCamping();
+              setLike(false)
           }).catch((error) => {
             alert("싫어요에 실패하였습니다");
           });
         }
         else {//좋아요 성공
           getCamping();
+          setLike(true)
         }
       }).catch((error) => {
         alert("좋아요에 실패하였습니다");
@@ -235,7 +239,8 @@ export default function BasicTabs() {
                 variant="outlined"
                 onClick={(e)=>{campingLike(e, campId)}}
               >
-                <ThumbUpOffAltIcon />
+                { like ? <ThumbUpIcon color='primary'/> : <ThumbUpOffAltIcon />}
+                {/* <ThumbUpOffAltIcon /> */}
               </Button>
               <Typography
                 sx={{
@@ -269,18 +274,18 @@ export default function BasicTabs() {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
                 <Tab label="영업 정보" {...a11yProps(0)} />
-                <Tab label="캠핑장 소개" {...a11yProps(1)} />
-                <Tab label="위치" {...a11yProps(2)} />
-                <Tab label="후기" {...a11yProps(3)} /> 
+                {/* <Tab label="캠핑장 소개" {...a11yProps(1)} /> */}
+                <Tab label="위치" {...a11yProps(1)} />
+                <Tab label="후기" {...a11yProps(2)} /> 
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
               <Info details={ details }></Info>
             </TabPanel>
-            <TabPanel value={value} index={1}>
+            {/* <TabPanel value={value} index={1}>
               {details.intro}
-            </TabPanel>
-            <TabPanel value={value} index={2}>
+            </TabPanel> */}
+            <TabPanel value={value} index={1}>
               <Stack direction="row">
                 <Typography sx={{ fontWeight: 'bold', width: '10ch', mb: 1 }}>
                   주소
@@ -298,7 +303,7 @@ export default function BasicTabs() {
                 <NaverMapAPI />
               </RenderAfterNavermapsLoaded>
             </TabPanel>
-            <TabPanel value={value} index={3}>
+            <TabPanel value={value} index={2}>
               후기 내용
             </TabPanel>
           </Box>
