@@ -19,20 +19,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import axios from 'axios'
 import { Link } from "react-router-dom";
 
-
-// const ExpandMore = styled((props) => {
-//   const { expand, ...other } = props;
-//   return <IconButton {...other} />;
-// })(({ theme, expand }) => ({
-//   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-//   marginLeft: 'auto',
-//   transition: theme.transitions.create('transform', {
-//     duration: theme.transitions.duration.shortest,
-//   }),
-// }));
-
-const cards = [1, 2, 3];
-
 const theme = createTheme();
 
 export default function NewsFeed() {
@@ -57,7 +43,7 @@ export default function NewsFeed() {
   const getId = async () => {
     axios.get(ID_GET_URL, HEADER)
       .then((response) => {
-        getFollower(response.data);
+        getFollower();
       }).catch((err) => {
         console.log(err);
         alert("로그인이 필요합니다");
@@ -75,8 +61,8 @@ export default function NewsFeed() {
   }
 
   //팔로워 불러오기
-  function getFollower(clientId) {
-    const URL = FOLLOW_USER_URL + clientId + "/follower";
+  function getFollower() {
+    const URL = FOLLOW_USER_URL + "follower";
     axios.get(URL, HEADER)
       .then((response) => {
         getFollowBoards(response.data);

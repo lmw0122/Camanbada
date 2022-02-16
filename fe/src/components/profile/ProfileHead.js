@@ -117,13 +117,15 @@ export default function ProfileHead() {
 
   //
   React.useEffect(() => {
-    axios.get(`http://i6c109.p.ssafy.io:8000/follow/follower`)
-      .then(res => setFollowerList(res.data))
+    axios.get(`http://i6c109.p.ssafy.io:8000/follow/follower`,HEADER)
+      .then(res => {
+        setFollowerList(JSON.stringify(res.data))
+      })
   }, []);
 
   React.useEffect(() => {
-    axios.get(`http://i6c109.p.ssafy.io:8000/follow/following`)
-      .then(res => setFollowingList(res.data))
+    axios.get(`http://i6c109.p.ssafy.io:8000/follow/following`,HEADER)
+      .then(res => setFollowingList(JSON.stringify(res.data)))
   }, []);
   
   console.log(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
@@ -179,7 +181,7 @@ export default function ProfileHead() {
                     <Stack direction="row" spacing={1}>
                       <Typography sx={{ fontSize: 20 }}>팔로워</Typography>
                       <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
-                        {followerList}1억
+                        {followerList.length}
                       </Typography>
                     </Stack>
                     <Stack direction="row" spacing={1}>
