@@ -1,45 +1,26 @@
 import * as React from 'react';
 import Axios from 'axios'
-import { Container, Typography, Box, Stack, TextField } from '@mui/material';
-import { styled, alpha } from '@mui/material/styles';
+import { Container, Box, Stack, TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import ListSubheader from '@mui/material/ListSubheader';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.black, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.black, 0.25),
-  },
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
-  },
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    height: '4.5ch',
-  },
-}));
-
+import CampingSearch2 from '../camping/CampingSearch2';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paging from '../common/Pagination';
+import { useParams } from 'react-router-dom';
 
 export default function SelectVariants() {
+  const {campId} = useParams();
 
   const [camp, setCamp] = React.useState('');
 
@@ -49,9 +30,39 @@ export default function SelectVariants() {
 
   const [tag, setTag] = React.useState('');
 
+  const [isAll, setIsAll] = React.useState(false);
+  
+  const [dataList, setDataList] = React.useState([]);
+  
+  const [titleKeyword, setTitleKeyword] = React.useState('');
+  
+  const [targetList, setTargetList] = React.useState('');
+  
+  const [campings, setCampings] = React.useState([]);
+  
+  const [sidosjson, setSidosjson] = React.useState('');
+
+  const [sigungusjson, setSigungusjson] = React.useState('');
+
+  const [pageNum, setPageNum] = React.useState(1);
+
+  const [numPerPage, setNumPerPage] = React.useState(10);
+
+  const sidos = [];
+  const sigungus = [];
+  var dropbox3 = [];
+  var camps = [];
+  var temp = [];
+
   const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list';
-  const SIDO_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list/sido';
   const SIGUNGU_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/basic/list/sigungu/${sido}`;
+  const SIDO_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list/sido';
+  const KEYWORD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/search/${titleKeyword}`;
+  const CAMP_BOARD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/camp/${campId}`;
+
+  const getTitleKeyword = (e) => {
+    setTitleKeyword(e.target.value);
+  }
 
   const handleChange = (event) => {
     setTag(event.target.value);
@@ -69,24 +80,25 @@ export default function SelectVariants() {
     setCamp(value)
   }
   
-  var dropbox3 = [];
-  var camps = [];
-
-  const [campings, setCampings] = React.useState([]);
-
   React.useEffect(() => {
-    Axios.get(CAMP_GET_URL)
-      .then(res => setCampings(res.data))   
+    getCampings()
   }, []);
 
-  const [sidosjson, setSidosjson] = React.useState('');
+  const getCampings = async() => {
+    const json = await (
+      await fetch (
+        CAMP_GET_URL
+      )
+    ).json();
+    setCampings(json);
+  };
+
 
   React.useEffect(() => {
     Axios.get(SIDO_GET_URL)
       .then(res => setSidosjson(res.data))   
   }, []);
 
-  const [sigungusjson, setSigungusjson] = React.useState('');
 
   // sido 값이 변화할 때만 api 호출!
   React.useEffect(() => {
@@ -95,10 +107,6 @@ export default function SelectVariants() {
         .then(res => setSigungusjson(res.data)) 
     }
   }, [sido]);
-
-  const sidos = [];
-
-  const sigungus = [];
 
   for (var i=0; i<sidosjson.length; i++) {
     sidos.push(sidosjson[i].doNm)
@@ -132,20 +140,104 @@ export default function SelectVariants() {
     }
   }
 
-
+  React.useEffect(() => {
+    if (sido === '' && sigungu === '') {
+      setIsAll(true);
+    } else {
+      setIsAll(false);
+    };
+  }, [sido]);
   
+  var campnames = [];
+  
+  React.useEffect(() => {
+    for (var i; i<campings.length; i++) {
+      campnames.push(campings[i].facltNm);
+    };
 
-  // const getCampings = () => {
-  //   axios.get(CAMP_GET_URL,)
-  //     .then((response) => {
-  //       setCampings(response.data);
-  //     }).catch((error) => {
-  //       //에러처리
-  //       alert("캠핑장이 없습니다");
-  //     });
-  // };
+  },[]);
+  
+  const [campId2, setCampId2] = React.useState('')
+  
+  const camping_data = (data) => {
+    console.log('data가 뭐지', data)
+    console.log('campId는???', data[0].id);
+    setCampId2(data[0].id);
+  }
+  
+  function clickButton() {
+    if (finalc !== '') {
+      window.location.href = `/community/${finalc}`;
+    } else if (campId2 !== '') {
+      window.location.href = `/community/${campId2}`;
+    } else {
+    alert('캠핑장을 선택해주세요!');
+    }
+  }
 
+  const getBoards = async () => {
+    Axios.get(CAMP_BOARD_GET_URL)
+      .then((response) => {
+        setDataList(response.data);
+      }).catch((error) => {
+        alert("게시판이 비어있습니다");
+      });
+  };
 
+  React.useEffect(() => {
+    getBoards()
+  }, [])
+
+  console.log(tag)
+
+  var selectedTag = [];
+
+  // const [selectedTag, setSelectedTag] = React.useState('');
+ 
+  if (tag === '' && titleKeyword === '') {
+    for (var i=0; i<dataList.length; i++) {
+      selectedTag.push(dataList[i]);
+    }
+  } else if (tag !== '' && titleKeyword === '') {
+    for (var i=0; i<dataList.length; i++) {
+      if (tag === dataList[i].tag) {
+        selectedTag.push(dataList[i]);
+      }
+    };
+  } else if (tag !== '' && titleKeyword !== '') {
+      // for (var i=0; i<dataList.length; i++) {
+      //   if (tag === dataList[i].tag) {
+      //     temp.push(dataList[i]);
+      //   };
+      // }
+      Axios.get(KEYWORD_GET_URL)
+        .then(res => setTargetList(res.data))
+      for (var i=0; i<targetList.length; i++) {
+        if (tag === targetList[i].tag) {
+          selectedTag.push(targetList[i]);
+          console.log(targetList[i].campId)
+        };
+      };
+  } else  {
+    Axios.get(KEYWORD_GET_URL)
+        .then(res => setTargetList(res.data))
+    for (var i=0; i<targetList.length; i++) {
+      if (dataList[0].campId === targetList[i].campId) {
+        selectedTag.push(targetList[i]);
+
+      }
+    };
+  }
+
+  let totalListCount = selectedTag.length;
+  let offset = (pageNum - 1) * numPerPage;
+  React.useEffect(() => {
+    console.log('///////');
+    console.log("totalListCount : " + totalListCount);
+    console.log("pageNum : " + pageNum);
+    console.log("numPerPage : " + numPerPage);
+    console.log("offset : " + offset);
+  });
 return (
   <Box
     sx={{
@@ -164,35 +256,64 @@ return (
         justifyContent="center"
       >
         <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel htmlFor="tag-select">말머리</InputLabel>
-            <Select
-              id="tag-select"
-              defaultValue=""
-              // value={tag}
-              label="말머리"
-              onChange={handleChange}
-            >
+          <InputLabel id="demo-simple-select-filled-label">전체/도</InputLabel>
+          <Select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            value={sido}
+            onChange={handleChange1}
+          >
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <ListSubheader sx={{ fontWeight: 'bold' }}>캠핑 소통</ListSubheader>
-              <MenuItem value={1}>나눔</MenuItem>
-              <MenuItem value={2}>거래</MenuItem>
-              <MenuItem value={3}>후기</MenuItem>
-              <MenuItem value={4}>자유</MenuItem>
-            <ListSubheader sx={{ fontWeight: 'bold' }}>자유 소통</ListSubheader>
-              <MenuItem value={5}>장비 후기</MenuItem>
-              <MenuItem value={6}>자유</MenuItem>
-            </Select>
+            {sidos.map((sido) => (
+              <MenuItem key={sido} value={sido}>
+                {sido}
+              </MenuItem>           
+            ))}
+          </Select>
         </FormControl>
-        <FormControl variant="filled" sx={{ my: 1, minWidth: 300 }}>
-          <Search>
-            <StyledInputBase
-              placeholder="검색어를 입력하세요."
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="demo-simple-select-filled-label">시군구</InputLabel>
+          <Select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            value={sigungu}
+            onChange={handleChange2}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {sigungus.map((sigungu) => (
+              <MenuItem key={sigungu} value={sigungu}>
+                {sigungu}
+              </MenuItem>           
+            ))}
+          </Select>
         </FormControl>
+        { isAll ? (
+            <CampingSearch2 func={camping_data}></CampingSearch2>
+          ) : (
+            <Autocomplete
+              onChange={handleChange3}
+              sx={{ minWidth: 300, m: 1 }}
+              freeSolo
+              id="free-solo-2-demo"
+              disableClearable
+              options={dropbox3.map((db3) => db3)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="캠핑장 이름을 입력하세요."
+                  InputProps={{
+                    ...params.InputProps,
+                    type: 'search',
+                  }}
+                />
+              )}
+            />   
+          )
+        }
         <Button
           type="submit"
           sx={{
@@ -201,11 +322,87 @@ return (
             height: "7ch",
           }}
           variant="contained"
+          onClick={clickButton}
         >
-          검색
+          이동
         </Button>
-        {/* <Link href="/create" style={{textDecoration:'none'}}>
-        </Link> */}
+      </Stack>
+      <Stack
+        sx={{ 
+          pt: 0,
+          pb: 0, 
+          ml: 2.7,
+        }}
+        direction="row"
+        justifyContent="center"
+      >
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel htmlFor="tag-select">말머리</InputLabel>
+          <Select
+            value={tag}
+            id="tag-select"
+            defaultValue=""
+            // value={tag}
+            label="말머리"
+            onChange={handleChange}
+          >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <ListSubheader sx={{ fontWeight: 'bold' }}>캠핑 소통</ListSubheader>
+            <MenuItem value="나눔">나눔</MenuItem>
+            <MenuItem value="거래">거래</MenuItem>
+            <MenuItem value="후기">후기</MenuItem>
+            <MenuItem value="캠핑소통-자유">자유</MenuItem>
+          <ListSubheader sx={{ fontWeight: 'bold' }}>자유 소통</ListSubheader>
+            <MenuItem value="장비 후기" >장비 후기</MenuItem>
+            <MenuItem value="자유소통-자유">자유</MenuItem>
+          </Select>
+        </FormControl>
+        <TextField 
+          onChange={getTitleKeyword}
+          label="검색어를 입력하세요." 
+          type="search" 
+          width="8ch"
+          sx={{ width: 300, m:1 }}
+        />
+      </Stack>
+      <Stack>
+        <TableContainer align="center">
+          <Table sx={{ m : 2, width: 700 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                {/* <TableCell>번호</TableCell> */}
+                <TableCell align="center">말머리</TableCell>
+                <TableCell align="center">제목</TableCell>
+                <TableCell align="center">작성자</TableCell>
+                <TableCell align="center">작성날짜</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody> 
+              {selectedTag ? selectedTag.slice(offset, offset+numPerPage).map((d) => (
+                <TableRow
+                  key={d.boardId}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  {/* <TableCell component="th" scope="row">
+                    {d.boardId}
+                  </TableCell> */}
+                  <TableCell align="center">{d.tag}</TableCell>
+                    <TableCell align="center">
+                      <Link to={`/board/${d.boardId}`} style={{ textDecoration: 'none' }}>
+                      {d.title}
+                      </Link>
+                    </TableCell>
+                  <TableCell align="center">{d.clientId}</TableCell>
+                  {/* <TableCell align="center">{Date(d.date)}</TableCell> */}
+                  <TableCell align="center">{(d.date)}</TableCell>
+                </TableRow>
+              )) : ''}
+            </TableBody>
+          </Table>
+          <Paging pageNum={pageNum} setPageNum={setPageNum} numPerPage={numPerPage} totalListCount={totalListCount}></Paging>
+        </TableContainer>
       </Stack>
     </Container>
   </Box>
