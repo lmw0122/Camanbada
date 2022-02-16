@@ -238,11 +238,7 @@ export default function PrimarySearchAppBar() {
                 <MailIcon />
               </IconButton> */}
             </Link>
-<<<<<<< HEAD
             <Link to={`/profile/${nick}`}>
-=======
-            <Link to={`/profile`}>
->>>>>>> 8c03ac77db43b66a3399a3f3b224810a2103d5c1
               <Box
                 component="img"
                 sx={{ height: 25, m:1 }}
