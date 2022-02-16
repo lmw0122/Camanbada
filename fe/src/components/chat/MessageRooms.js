@@ -8,12 +8,17 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 import MessageRoom from './MessageRoom';
 import IfRoomId from './IfRoomId';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import NavBar from '../../components/common/NavBar';
+
+const theme = createTheme();
 
 export default function MessageRooms() {
   
@@ -76,35 +81,93 @@ export default function MessageRooms() {
  
   
   return (
-    <Grid container component="main" sx={{ height: '100vh' }}>
+
+    <Grid container component="main" sx={{ mt: 15}}>
       <CssBaseline />
       <Grid
         item
-        md={6}  
+        md={6}
         align="center"
       >
         {lists.map((list , i) => (
-          <Grid onClick={() => { createMessageRoom(list.chatroomId); }}>
-            <Typography sx={{ fontWeight: 'bold' }}>
-              {list.user}
-            </Typography>
-            <Typography>
-              {list.date} 
-            </Typography>
-            <Typography>
-              {list.message} 
-            </Typography>
+          <Grid 
+            onClick={() => { createMessageRoom(list.chatroomId); }}
+            justifyContent="center"
+            alignItems="center"
+            md={6}
+            direction="row"
+          >
+            <Stack direction="row" alignItems="center">
+              <Grid item align="center" sx={{ mr:1 }}>
+                <AccountCircleIcon sx={{ fontSize: 50 }} />
+              </Grid>
+              <Grid>
+                <Stack direction="row" spacing={2}>
+                  <Typography sx={{ fontWeight: 'bold' }}>
+                    {list.user}님
+                  </Typography>
+                  <Typography align="right">
+                    {list.date} 
+                  </Typography>
+                </Stack>
+                <Stack>
+                  <Typography align="left">
+                    {list.message} 
+                  </Typography>
+                </Stack>
+              </Grid>
+            </Stack>
           </Grid>
         ))}
       </Grid>
-      <Grid 
+      <Grid
         item
-        md={6}  
+        md={6}
         align="center"
       >
         <IfRoomId roomId={roomId}></IfRoomId>
-       </Grid>
+      </Grid>
+
     </Grid>
+
+    // <Container>
+    //   <Grid direction="row">
+    //     {lists.map((list , i) => (
+    //       <Grid 
+    //         onClick={() => { createMessageRoom(list.chatroomId); }}
+    //         justifyContent="center"
+    //         alignItems="center"
+    //         md={6}
+    //       >
+    //         <Grid item align="center" md={2.4} sx={{ mr: 4 }}>
+    //           <AccountCircleIcon sx={{ fontSize: 50 }} />
+    //         </Grid>
+    //         <Stack direction="row">
+    //           <Stack direction="row">
+    //             <Typography sx={{ fontWeight: 'bold' }}>
+    //               {list.user}
+    //             </Typography>
+    //             <Typography>
+    //               {list.date} 
+    //             </Typography>
+    //           </Stack>
+    //         </Stack>
+    //         <Typography>
+    //           {list.message} 
+    //         </Typography>
+    //       </Grid>
+    //     ))}
+    //     <Grid 
+    //       item
+    //       md={6}  
+    //       align="center"
+    //     >
+    //       <IfRoomId roomId={roomId}></IfRoomId>
+    //     </Grid>
+    //   </Grid>
+    // </Container>
+ 
+    
 
   )
   

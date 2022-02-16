@@ -50,12 +50,8 @@ const MessageListContainer = () => {
                 <InputButton />            
             </Header>
             <ListBox>
-                {
-                    dummyData.map((item, i) => {
-                        return <MessageCard item={ item } 
-                                            i={ i }
-                               />
-                    })
+                {dummyData.map((item, i) => {
+                    return <MessageCard item={ item } i={ i }/>})
                 }
             </ListBox>
         </Wrap>
