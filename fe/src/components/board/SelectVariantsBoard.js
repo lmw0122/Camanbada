@@ -175,7 +175,16 @@ export default function SelectVariants() {
   const getBoards = async () => {
     Axios.get(BOARD_GET_URL,)
       .then((response) => {
-        setDataList(response.data);
+        let boardList = response.data;
+        boardList.sort(function (a, b) {
+          if(a.date > b.date)
+            return -1;
+          else if(a.date == b.date)
+            return 0;
+          else
+            return 1;
+        })
+        setDataList(boardList);
       }).catch((error) => {
         alert("게시판이 비어있습니다");
       });
@@ -221,8 +230,10 @@ export default function SelectVariants() {
       selectedTag.push(targetList[i]);
     };
   }
+
   let totalListCount = selectedTag.length;
   let offset = (pageNum - 1) * numPerPage;
+
   React.useEffect(() => {
     console.log('///////');
     console.log("totalListCount : " + totalListCount);

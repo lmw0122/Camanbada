@@ -15,18 +15,24 @@ const theme = createTheme();
 
 export default function BoardTable() {
   const [dataList, setDataList] = useState([]);
-  const BOARD_GET_URL = 'http://i6c109.p.ssafy.io:8051/board';
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
+  const BOARD_GET_URL = 'http://i6c109.p.ssafy.io:8000/board';
 
   const getBoards = async () => {
-    axios.get(BOARD_GET_URL,)
+    axios.get(BOARD_GET_URL,HEADER)
       .then((response) => {
         setDataList(response.data);
       }).catch((error) => {
         //에러처리
         alert("게시판이 비어있습니다");
       });
-    // console.log(boardJson);
   };
+  
 
   useEffect(() => {
     getBoards()

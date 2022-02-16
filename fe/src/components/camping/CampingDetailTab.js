@@ -20,6 +20,7 @@ import Axios from "axios";
 import CampingImage from './CampingImage';
 import Subs from './Subs';
 import Info from './Info';
+import Review from './Review';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -65,29 +66,41 @@ export default function BasicTabs() {
     setValue(newValue);
   };
 
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
+
   // 캠핑장 api 부분
   const { campId } = useParams();
   
   const [basics, setBasics] = React.useState([]);
   const [details, setDetails] = React.useState([]);
-  
+
+  const [reviews, setReviews] = React.useState([]);
 
   const BASIC_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/basic/one/${campId}`
   const DETAIL_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/detail/one/${campId}`
 
-  
+  const REVIEW_GET_CAMP_URL = `http://i6c109.p.ssafy.io:8000/board/camp/${campId}`
 
   const NOW_PAGE = `http://localhost:3000/camping/${campId}`;
   
   // const CAMPING_LIKE_URL = `http://i6c109.p.ssafy.io:8092/camp/like/`
   const CAMPING_LIKE_URL = `http://i6c109.p.ssafy.io:8092/camp/like/`
 
-  const accessToken = localStorage.getItem("accessToken");
-  const HEADER = {
-    headers: {
-      'Authorization': accessToken
-    }
-  }
+  //캠핑후기 가져오기
+  const getCampingReview = async () => {
+    axios.get(REVIEW_GET_CAMP_URL,HEADER)
+      .then((response) => {
+        console.log(response.data);
+        setReviews(response.data);
+      }).catch((error) => {
+        setReviews("후기가 존재하지 않습니다");
+      });
+  };
 
   //캠핑 가져오기
   const getCamping = async () => {
@@ -95,8 +108,8 @@ export default function BasicTabs() {
       .then((response) => {
           setBasics(response.data);
       }).catch((error) => {
-        //에러처리
-        alert("가져올 캠핑장 데이터가 없습니다.");
+          //에러처리
+          alert("가져올 캠핑장 데이터가 없습니다.");
       });
   };
   
@@ -126,6 +139,7 @@ export default function BasicTabs() {
   };}
   
   React.useEffect(() => {
+    getCampingReview();
     Axios.get(BASIC_GET_URL)
       .then(res => setBasics(res.data))
   }, []);
@@ -134,17 +148,7 @@ export default function BasicTabs() {
     Axios.get(DETAIL_GET_URL)
       .then(res => setDetails(res.data))   
   }, []);
-
-  // React.useEffect(() => {
-  //   setSubs(details.sbrsCl); 
-  // }, []);
-  // // setSubs(details.sbrsCl); 
-  console.log(details.sbrsCl);
-
-
-  
-
-  
+ 
 
   // 네이버 지도 api 부분
   function NaverMapAPI() {
@@ -159,7 +163,7 @@ export default function BasicTabs() {
           height: '60vh' // 네이버지도 세로 길이
         }}
         defaultCenter={{ lat: basics.mapY, lng: basics.mapX }} // 지도 초기 위치
-        defaultZoom={7} // 지도 초기 확대 배율
+        defaultZoom={14} // 지도 초기 확대 배율
       >
          <Marker
           key={1}
@@ -299,7 +303,7 @@ export default function BasicTabs() {
               </RenderAfterNavermapsLoaded>
             </TabPanel>
             <TabPanel value={value} index={3}>
-              후기 내용
+              <Review details={ reviews }></Review>
             </TabPanel>
           </Box>
 
