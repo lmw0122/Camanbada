@@ -147,7 +147,7 @@ export default function MessageRooms() {
       >
         {lists.map((list , i) => (
           <Grid 
-            onClick={() => { createMessageRoom(list.chatroomId); }}
+            onClick={() => { createMessageRoom(list.chatroomId, list.user, list.nickname); }}
             justifyContent="center"
             alignItems="center"
             md={6}

@@ -16,13 +16,17 @@ import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
-
+import Paging from '../common/Pagination';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const theme = createTheme();
 
 export default function SearchCommunityAlbum() {
+  const [pageNum, setPageNum] = React.useState(1);
+  const [numPerPage, setNumPerPage] = React.useState(8);
+  let totalListCount = cards.length;
+  let offset = (pageNum - 1) * numPerPage;
   return (
     <ThemeProvider theme={theme}>    
       <CssBaseline />
@@ -53,7 +57,7 @@ export default function SearchCommunityAlbum() {
         <Container sx={{ py: 0 }} maxWidth="lg">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
+            {cards.slice(offset, offset+numPerPage).map((card) => (
               <Grid item key={card} xs={12} sm={6} md={3}>
                 <Card sx={{ maxWidth: 345 }}>
                   <CardHeader
@@ -94,6 +98,8 @@ export default function SearchCommunityAlbum() {
             ))}
           </Grid>
         </Container>
+        
+        <Paging pageNum={pageNum} setPageNum={setPageNum} numPerPage={numPerPage} totalListCount={totalListCount}></Paging>
       </main>
     </ThemeProvider>
   );

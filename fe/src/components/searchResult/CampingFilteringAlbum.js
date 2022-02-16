@@ -6,6 +6,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import Paging from '../common/Pagination';
 
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -13,6 +14,11 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 const theme = createTheme();
 
 export default function CampingFilteringAlbum() {
+  const [pageNum, setPageNum] = React.useState(1);
+  const [numPerPage, setNumPerPage] = React.useState(8);
+  let totalListCount = cards.length;
+  let offset = (pageNum - 1) * numPerPage;
+
   return (
     <ThemeProvider theme={theme}>    
       <CssBaseline />
@@ -43,7 +49,7 @@ export default function CampingFilteringAlbum() {
         <Container sx={{ py: 0 }} maxWidth="lg">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
+            {cards.slice(offset,offset+numPerPage).map((card) => (
               <Grid item key={card} xs={12} sm={6} md={3}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
@@ -72,6 +78,7 @@ export default function CampingFilteringAlbum() {
             ))}
           </Grid>
         </Container>
+        <Paging pageNum={pageNum} setPageNum={setPageNum} numPerPage={numPerPage} totalListCount={totalListCount}></Paging>
       </main>
     </ThemeProvider>
   );

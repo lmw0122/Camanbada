@@ -160,6 +160,7 @@ export default function MessageRoom(props) {
       <div style={{ height: 700, overflowY: 'auto' }} onScroll={scroll}>
         
         <Grid>
+          {console.log(props.oppNickname)}
           {chats.map((chat, i) => (
             <ChatBubble chat={chat} i={i} userId={props.userId} oppNickname={props.oppNickname} ></ChatBubble>
             ))}
