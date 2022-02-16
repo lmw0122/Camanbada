@@ -19,6 +19,12 @@ const spanStyle ={
 }
 
 export default function Update() {
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
   // 실시간 글자수 체크
   const [ textLength, setTextLength ] = useState('0');
   
@@ -27,13 +33,7 @@ export default function Update() {
     const totalLength = totalText.length;
     setTextLength(totalLength);
   }
-  
-  const accessToken = localStorage.getItem("accessToken");
-  const HEADER = {
-    headers: {
-      'Authorization': accessToken
-    }
-  }
+
   // 닉네임 중복 체크 & 유효성 체크
   const [ userNickname, setUserNickname ] = useState('');
 
@@ -145,7 +145,7 @@ export default function Update() {
     .then(res => {
       if (res.status === 200) {
       alert('수정이 완료되었습니다.')
-      window.location.href = `/profile`
+      window.location.href = `/profile/${nick}`
     }})
   }
   console.log(nickname, intro)
@@ -228,8 +228,8 @@ export default function Update() {
                       <span>이미지를 불러오는 중입니다.</span>
                     )}
                   </div>
-                  <div className="upload-button">
-                    <Button variant="contained" sx={{ mt: 5, mr : 1 }} type="primary" onClick={() => inputRef.click()}>Preview</Button>
+                  <div className="upload-button" >
+                    <Button variant="contained" sx={{ mt: 5, mr : 1 }} type="primary" onClick={() => inputRef.click()}>이미지 삽입</Button>
                     <Button variant="contained" component="span" sx={{ mt: 5 }} onClick={sendImageToServer}>
                       프로필 이미지 변경
                     </Button>

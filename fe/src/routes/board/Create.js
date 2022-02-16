@@ -14,6 +14,9 @@ export default function Create() {
   const [content, setContent] = useState('');
   const [clientId, setClientId] = useState('');
   const [photo, setPhoto] = useState('');
+  
+  const [communityTag, setCommnunityTag] = useState(true);
+  const [campTag, setCampTag] = useState(true);
 
   const BOARD_CREATE_URL = 'http://i6c109.p.ssafy.io:8000/board';
   const BOARD_LIST_URL = 'http://localhost:3000/community';
@@ -25,9 +28,27 @@ export default function Create() {
   }
   }
 
-  const onSubmit = (e) => {
-    if (campId === "" || content === "" || tag === "" || title === "" || clientId === "")
+  const onSubmit = () => {
+    console.log(campTag + " ``````````````````` " + campId);
+    if (content === "" || tag === "" || title === "" || clientId === "")
       alert("게시판에 등록할 목록을 모두 작성해 주세요");
+    else if (campTag === false) {
+      axios.post(BOARD_CREATE_URL, {
+        "campId": 2911,//자유 게시판
+        "clientId": clientId,
+        "photo": photo,
+        "content": content,
+        "tag": tag,
+        "title": title
+      }, HEADER)
+        .then((res) => {
+          console.log(res)
+          alert("게시판에 등록하였습니다!");
+          window.location.href = (BOARD_LIST_URL);
+        }).catch(() => {
+          alert("전송에 실패하였습니다");
+        })
+    }
     else {
       axios.post(BOARD_CREATE_URL, {
         "campId": campId,
@@ -61,11 +82,14 @@ export default function Create() {
   //태그 받아오기
   const tag_camp_data = (data) => {
     console.log(data);
-    setTag(data);
-  }
-  
-  const tag_commnunity_data = (data) => {
-    console.log(data);
+    if (data == '장비 후기'|| data == '자유소통-자유') {
+      setCommnunityTag(true);
+      setCampTag(false);
+    }
+    else{
+      setCommnunityTag(false);
+      setCampTag(true);
+    }
     setTag(data);
   }
   
@@ -105,15 +129,16 @@ export default function Create() {
           <Stack spacing={2} >
             <RadioButtonCamping
               func1={tag_camp_data}
-              func2={tag_commnunity_data}
             ></RadioButtonCamping>
           </Stack>
           <Box sx={{ width: 500, maxWidth: "100%", mt : 2}}>
           사용자 아이디: {clientId}
           </Box>
-          <CampingSearch
-          func={camping_data}
-          ></CampingSearch>
+          {campTag === true &&
+            <CampingSearch
+              func={camping_data}
+            ></CampingSearch>
+          }
           <Box sx={{ width: 500, maxWidth: "100%", mt : 2}}>
             <TextField
               onChange={title_data}  

@@ -79,7 +79,7 @@ export default function Album() {
                     sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                     align="center"
                   >
-                    <Skeleton variant="rectangular" width="100%" height={240}></Skeleton>
+                    <Skeleton variant="rectangular" width="100%" height={250}></Skeleton>
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Skeleton></Skeleton>
                     </CardContent>  
@@ -104,8 +104,10 @@ export default function Album() {
                       window.location.href = `/camping/${item.campId}`;
                     }}
                   >
-                    <CampingImage basics={ item }></CampingImage>
-                    <CardContent sx={{ flexGrow: 1 }}>
+                    <Grid sx={{ height : '250px' }} >
+                      <CampingImage basics={ item } ></CampingImage>
+                    </Grid>
+                    <CardContent sx={{ flexGrow: 1, mt : 1 }}>
                       <Typography gutterBottom variant="h5" component="h2">
                         {item.facltNm}
                       </Typography>

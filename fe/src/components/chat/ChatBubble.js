@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
+import Axios from "axios";
 
 //const [moreButtonStyle, setMoreButtonStyle] = React.useState({});
 
@@ -34,6 +35,8 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
       cM.innerText = chat.message + data.overMessage;
     });
   };
+
+
   // 전송자가 본인일 때
   if (chat.sender === userId) {
     if (chat.over) {
