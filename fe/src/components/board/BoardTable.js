@@ -38,7 +38,7 @@ export default function BoardTable() {
         <CssBaseline />
         <TableContainer align="center">
           <Table sx={{ m : 2, width: 700 }} aria-label="simple table">
-            <TableHead>
+            <TableHead >
               <TableRow>
                 <TableCell>번호</TableCell>
                 <TableCell align="center">말머리</TableCell>
