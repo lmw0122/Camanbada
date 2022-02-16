@@ -240,7 +240,7 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="sm">
+      <Container component="main" maxWidth="sm" sx={{ mb : 4}}>
         <CssBaseline />
         <Box
           component="img"
@@ -256,7 +256,7 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
-          <Avatar xs={{ m: 2, bgcolor: "secondary.main" }}>
+          <Avatar xs={{ m: 2, bgcolor: '#1b5e20' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5" sx={{ mb: 6, mt: 2 }}>
@@ -287,6 +287,7 @@ export default function SignUp() {
                   variant="contained"
                   size="large"
                   sx={{ width: 126, height: 55 }}
+                  style={{backgroundColor: "#2e7d32"}}
                 >
                   중복 확인
                 </Button>
@@ -355,6 +356,7 @@ export default function SignUp() {
                   variant="contained"
                   size="large"
                   sx={{ width: 126, height: 55 }}
+                  style={{backgroundColor: "#2e7d32"}}
                 >
                   중복 확인
                 </Button>
@@ -380,16 +382,17 @@ export default function SignUp() {
             {/* 위의 유효성 검사가 성립된다면 버튼 활성화 */}
             <Button
               type="submit"
-              disabled={!(isId && isEmail && isPassword && isPasswordConfirm)}
+              // disabled={!(isId && isEmail && isPassword && isPasswordConfirm)}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 1, height: 55 }}
+              style={{ backgroundColor: "#1b5e20", color : '#fafafa' }}
             >
               Sign Up
             </Button>
             <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/login" variant="body2">
+              <Grid item >
+                <Link href="/login" variant="body2" underline='none' style={{color : '#1b5e20'}}>
                   계정이 이미 있으신가요?? 로그인하러 가기!
                 </Link>
               </Grid>

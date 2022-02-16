@@ -93,7 +93,10 @@ export default function ProfileHead() {
   const [loading, setLoading] = useState(true);
   const [userIntro, setUserIntro] = useState("");
   const [ followerList, setFollowerList ] = useState("");
-  const [ followingList, setFollowingList ] = useState("");
+  const [followingList, setFollowingList] = useState("");
+  
+  const [otherFollowerLength, setOtherFollowerLength] = useState("");
+  const [otherFollowingLength, setOtherFollowingLength] = useState("");
 
   const getFollow = (isFollow) => {
     setIsFollow(isFollow);
@@ -103,33 +106,35 @@ export default function ProfileHead() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  
   // 유저 정보 얻어오기
   // nick은 한글이라 인코딩
   const uri = `http://i6c109.p.ssafy.io:8000/user/${nick}`;
   const encoded = encodeURI(uri);
-
+  
   //현재 프로필 사용자
   const getUserId = () => {
     axios
-      .get(encoded)
-      .then((res) => {
-        console.log(res);
-        setUserInfo(res.data);
-        setLoading(false);
-        setUserIntro(res.data[0].intro);
+    .get(encoded)
+    .then((res) => {
+      setUserInfo(res.data);
+      setLoading(false);
+      setUserIntro(res.data[0].intro);
 
-        followCheck(res.data);
+      followCheck(res.data);
       });
   }
+
+  //console.log("현재 눌러본 프로필의 아이디" + userInfo[0].id);
   //팔로잉 리스트
-  function getFollwoingList(loginUserId){
-    axios.get(`http://i6c109.p.ssafy.io:8000/follow/follower`,HEADER)
+  function getFollwoingList(loginUserId,profileUserId) {
+    const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/follower`;
+    axios.get(URL,HEADER)
       .then(res => {
         setFollowingList(res.data);
-        console.log(res);
+        //console.log(res.data + "````````````````````` " + loginUserId + "````````````````````` " + profileUserId);
         res.data.map(folloUser => {
-          console.log(folloUser.following + " " + loginUserId);
+          //console.log(folloUser.following + " " + loginUserId);
           if (folloUser.following == loginUserId) {
             setIsFollow(true);
           }
@@ -137,8 +142,9 @@ export default function ProfileHead() {
       })
   }
   //팔로워 리스트
-  const getFollowerList = () => {
-    axios.get(`http://i6c109.p.ssafy.io:8000/follow/following`,HEADER)
+  function getFollowerList(profileUserId) {
+    const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/following`;
+    axios.get(URL,HEADER)
       .then(res => setFollowerList(res.data))
   }
 
@@ -147,7 +153,9 @@ export default function ProfileHead() {
     const URI = `http://i6c109.p.ssafy.io:8000/user`;
     axios.get(URI,HEADER)
       .then((res) => {
-        getFollwoingList(user[0].id);
+        getFollwoingList(res.data, user[0].id);//검색한 프로필 id
+        getFollowerList(user[0].id);
+
         if (res.data == user[0].id)
           setOtherUserCheck(false);
         else {

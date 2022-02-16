@@ -45,8 +45,8 @@ export default function NewsFeed() {
       .then((response) => {
         getFollower();
       }).catch((err) => {
-        console.log(err);
-        alert("로그인이 필요합니다");
+        // console.log(err);
+        // alert("로그인이 필요합니다");
       });
   }
 
@@ -56,7 +56,7 @@ export default function NewsFeed() {
       .then((response) => {
         setBoardList(response.data);
       }).catch((err) => {
-        alert("게시물이 아예 없습니다");
+        // alert("게시물이 아예 없습니다");
       });
   }
 
@@ -68,7 +68,7 @@ export default function NewsFeed() {
         getFollowBoards(response.data);
       }).catch((error) => {
         //팔로워가 없어요
-        alert("팔로우가 없어요");
+        // alert("팔로우가 없어요");
       });
   }
   
@@ -80,7 +80,7 @@ export default function NewsFeed() {
       .then((response) => {
         console.log(response.data);
         if (response.data == "") {
-          alert("팔로우 유저의 게시물이 없습니다");
+          // alert("팔로우 유저 없습니다");
         } else {
           setFollowBoardList(response.data);
           console.log(followBoardList);
