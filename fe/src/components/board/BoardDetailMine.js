@@ -9,6 +9,12 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
 // import StickyFooter from "../../components/common/Footer";
+// import Input from '@mui/material/Input';
+
+
+
+
+import ProfileImage from '../profile/ProfileImage';
 
 const theme = createTheme();
 
@@ -57,6 +63,7 @@ export default function BoardDetailMine() {
         setBoardUserId(response.data.clientId);
         setDataList(response.data);
         const onePhoto = response.data.photo;
+        console.log(onePhoto);
         if (onePhoto != "") {
           document.getElementById('userImage').setAttribute("src", onePhoto);
         }
@@ -231,6 +238,7 @@ export default function BoardDetailMine() {
                 sx={{ fontSize: 60 }}
                 onClick={(e)=>{goProfile(e, boardUserId)}}
               />
+              {/* <ProfileImage userInfo={ dataList } /> */}
             </Grid>
             <Grid>
               <Stack direction='row' alignItems="center">
