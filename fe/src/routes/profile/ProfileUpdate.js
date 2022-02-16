@@ -28,6 +28,12 @@ export default function Update() {
     setTextLength(totalLength);
   }
   
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      'Authorization': accessToken
+    }
+  }
   // 닉네임 중복 체크 & 유효성 체크
   const [ userNickname, setUserNickname ] = useState('');
 
@@ -107,13 +113,7 @@ export default function Update() {
   const [ userIntro, setUserIntro ] = useState('');
   const [ userId, setUserId ] = useState('');
   const [ userEmail, setUserEmail ] = useState('');
-  const [intro, setIntro] = useState('');
-  const accessToken = localStorage.getItem("accessToken");
-  const HEADER = {
-    headers: {
-      'Authorization': accessToken
-    }
-  }
+  const [ intro, setIntro ] = useState('');
 
   // console.log(userInfo)
 
@@ -160,7 +160,9 @@ export default function Update() {
   let inputRef;
   
   const saveImage = (e) => {
+    e.preventDefault();
     const fileReader = new FileReader();
+
     if(e.target.files[0]) {
       setLoaded("loading")
       fileReader.readAsDataURL(e.target.files[0])

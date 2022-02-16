@@ -6,12 +6,7 @@
 import MessageRooms from "../components/chat/MessageRooms";
 import NavBar from "../components/common/NavBar";
 
-
-
 export default function Message () {
-
-  
-  
 
   return (
     <div>

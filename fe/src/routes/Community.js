@@ -6,13 +6,19 @@ import Button from '@mui/material/Button';
 import { Container, CssBaseline, Grid, Typography } from '@mui/material';
 import { Link } from "react-router-dom";
 import Stack from '@mui/material/Stack';
+import { green, lightGreen, lime } from '@mui/material/colors';
+import Divider from '@mui/material/Divider';
 import StickyFooter from '../components/common/Footer';
 
 function Community() {
+  const primary = green[50];
+  const second = lightGreen[50];
+  const third = lime[50];
+
   return (
     <div>
       <NavBar />    
-      <Grid container sx={{ height : '100vh', m: 4}}>
+      <Grid container sx={{ height : '100vh' }}>
         <CssBaseline />
         <Grid item xs={12} align="center">
           <Container sx={{mt : 10, mb : 2}}>
@@ -27,7 +33,7 @@ function Community() {
                 <Button 
                   style={{
                     color: "white",
-                    backgroundColor: "#4caf50"
+                    backgroundColor: "#43a047"
                   }}
                   type="submit"
                   sx={{
@@ -35,7 +41,6 @@ function Community() {
                     minWidth: 100,
                     height: "7ch",
                   }}
-                  
                   variant="contained"
                 >
                   게시글 작성
@@ -43,11 +48,12 @@ function Community() {
               </Link>
             </Stack>
           </div>
+          <Divider sx={{ borderBottomWidth: 2, my: 2 }} />
           <SelectVariantsBoard />
         </Grid>
       {/* <BoardTable />   */}
+      <StickyFooter></StickyFooter>
     </Grid>
-    <StickyFooter></StickyFooter>
     </div>
   )
 }
