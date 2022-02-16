@@ -11,8 +11,9 @@ import Container from '@mui/material/Container';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 
-export default function MessageRoom(chatroomId) {
-  const [user, setUser] = React.useState('B');
+export default function MessageRoom(props) {
+  const [user, setUser] = React.useState({});
+  const [oppUser, setOppUser] = React.useState({});
   const [roomId, setRoomId] = React.useState(0);
   const [chats, setChats] = React.useState([]);
   const [find, setFind] = React.useState({});
@@ -24,7 +25,7 @@ export default function MessageRoom(chatroomId) {
   let stomp = Stomp.over(sock);
   const accessToken = localStorage.getItem("accessToken");
   const [getLastMesssage, setGetLastMessage] = React.useState(false);
-
+  console.log(props);
 
   const getFind = async () => {
     if (roomId === 0) {
@@ -115,7 +116,7 @@ export default function MessageRoom(chatroomId) {
   };
   const sendMessage = () => {
     let msg = document.getElementById("userMessageInput");
-    stomp.send('/pub/chatting/message', {'Authorization': accessToken}, JSON.stringify({ chatroomId: roomId, date: new Date(), message: msg.value, sender: user }));
+    stomp.send('/pub/chatting/message', {'Authorization': accessToken}, JSON.stringify({ chatroomId: roomId, date: new Date(), message: msg.value, sender: user.userId }));
     msg.value = '';
   };
   React.useEffect(() => {
@@ -123,8 +124,11 @@ export default function MessageRoom(chatroomId) {
   }, []);
   React.useEffect(() => {
     console.log("useEffect 2 act");
-    if (roomId !== chatroomId.chatroomId.roomId) {
-      setRoomId(chatroomId.chatroomId.roomId);
+    console.log(props.roomId);
+    if (roomId !== props.roomId) {
+      setRoomId(props.roomId);
+      setUser({ userId: props.userId, nickname: props.nickname });
+      setOppUser({ oppUserId: props.oppUserId, oppNickname: props.oppNickname });
       setCount(0);
       setChats([]);
       setButtonVisible(false);
@@ -157,7 +161,7 @@ export default function MessageRoom(chatroomId) {
         
         <Grid>
           {chats.map((chat, i) => (
-            <ChatBubble chat={ chat } i={ i }></ChatBubble>
+            <ChatBubble chat={chat} i={i} userId={props.userId} oppNickname={props.oppNickname} ></ChatBubble>
             ))}
         </Grid>
       </div>

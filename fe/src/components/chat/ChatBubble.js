@@ -12,9 +12,9 @@ import Grid from '@mui/material/Grid';
 
 //const [moreButtonStyle, setMoreButtonStyle] = React.useState({});
 
-const ChatBubble = ({ chat, i }) => {
+const ChatBubble = ({ chat, i, userId, oppNickname }) => {
   const accessToken = localStorage.getItem("accessToken");
-  
+  console.log(oppNickname+ " "+ userId)
   const getOverMessage = async (messageId) => {
     console.log("getOverMessage act");
     await fetch(
@@ -35,16 +35,16 @@ const ChatBubble = ({ chat, i }) => {
     });
   };
   // 전송자가 본인일 때
-  if (chat.sender === 'B') {
+  if (chat.sender === userId) {
     if (chat.over) {
       return (
         <Grid align="right">
           <Typography id={chat.message_id}>
-            {chat.message} 
+            {chat.message}
           </Typography>
           <Typography>
-            {chat.date} 
-          </Typography> 
+            {chat.date}
+          </Typography>
           <button onClick={() => { getOverMessage(chat.message_id) }}>더보기</button>
         </Grid>
       )
@@ -53,30 +53,50 @@ const ChatBubble = ({ chat, i }) => {
       return (
         <Grid align="right">
           <Typography>
-            {chat.message} 
+            {chat.message}
           </Typography>
           <Typography>
-            {chat.date} 
-          </Typography>          
+            {chat.date}
+          </Typography>
         </Grid>
       )
     }
   } else {
-    return (
-      <Grid align="left">
-        <Typography sx={{ fontWeight: 'bold' }}>
-          {chat.sender}
-        </Typography>
-        <Typography>
-          {chat.message} 
-        </Typography>
-        <Typography>
-          {chat.date} 
-        </Typography>          
-      </Grid>
-    )
+    if (chat.over) {
+      return (
+        <Grid align="left">
+          <Typography sx={{ fontWeight: 'bold' }}>
+            {oppNickname}
+          </Typography>
+          <Typography id={chat.message_id}>
+            {chat.message}
+          </Typography>
+          <Typography>
+            {chat.date}
+          </Typography>
+          <button onClick={() => { getOverMessage(chat.message_id) }}>더보기</button>
+        </Grid>
+      )
+    }
+    else {
+      
+      return (
+        <Grid align="left">
+          <Typography sx={{ fontWeight: 'bold' }}>
+            {oppNickname}
+          </Typography>
+          <Typography id={chat.message_id}>
+            {chat.message}
+          </Typography>
+          <Typography>
+            {chat.date}
+          </Typography>
+        </Grid>
+      )
+    }
   }
 }
+
 
 
 export default ChatBubble;
