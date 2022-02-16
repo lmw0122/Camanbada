@@ -85,13 +85,15 @@ export default function ProfileHead() {
     },
   };
 
-  // const [isfollowed, setIsfollowed] = React.useState('false');
+ // const [isfollowed, setIsfollowed] = React.useState('false');
 
   const { nick } = useParams('');
   const [userInfo, setUserInfo] = useState("");
+  const [otherUserCheck, setOtherUserCheck] = useState("");
+  const [isFollow, setIsFollow] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [userIntro, setUserIntro] = useState("");
-
   const [ followerList, setFollowerList ] = useState("");
   const [ followingList, setFollowingList ] = useState("");
   
@@ -105,31 +107,68 @@ export default function ProfileHead() {
   const uri = `http://i6c109.p.ssafy.io:8000/user/${nick}`;
   const encoded = encodeURI(uri);
 
-  React.useEffect(() => {
+  //현재 프로필 사용자
+  const getUserId = () => {
     axios
       .get(encoded)
       .then((res) => {
         setUserInfo(res.data);
         setLoading(false);
         setUserIntro(res.data[0].intro);
-      });
-  }, []);
 
-  //
-  React.useEffect(() => {
+        followCheck(res.data);
+      });
+  }
+  //팔로잉 리스트
+  function getFollwoingList(loginUserId){
     axios.get(`http://i6c109.p.ssafy.io:8000/follow/follower`,HEADER)
       .then(res => {
-        setFollowerList(JSON.stringify(res.data))
+        setFollowingList(res.data);
+        console.log(res);
+        res.data.map(folloUser => {
+          console.log(folloUser.following + " " + loginUserId);
+          if (folloUser.following == loginUserId) {
+            setIsFollow(true);
+          }
+        });
+        // for(let i = 0; i<res.data.length; i++){
+        //   console.log(res.data[i].following +" "+ userInfo.id);
+        //   if (res.data[i].following == userInfo.id) {
+        //     setIsFollow(true);
+        //   }
+        // }
       })
+  }
+  //console.log(isFollow);
+  //팔로워 리스트
+  const getFollowerList = () => {
+    axios.get(`http://i6c109.p.ssafy.io:8000/follow/following`,HEADER)
+      .then(res => setFollowerList(res.data))
+  }
+
+  //현재 로그인한 사용자인지 아닌지
+  function followCheck(user){
+    const URI = `http://i6c109.p.ssafy.io:8000/user`;
+    axios.get(URI,HEADER)
+      .then((res) => {
+        getFollwoingList(user[0].id);
+        if (res.data == user[0].id)
+          setOtherUserCheck(false);
+        else {
+          setOtherUserCheck(true);
+        }
+      })
+  }
+
+  React.useEffect(() => {
+    getUserId();
+    getFollowerList();
   }, []);
 
   React.useEffect(() => {
-    axios.get(`http://i6c109.p.ssafy.io:8000/follow/following`,HEADER)
-      .then(res => setFollowingList(JSON.stringify(res.data)))
-  }, []);
+    getUserId();
+  }, [nick]);
   
-  console.log(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
-  console.log(followerList);
 
   return (
     <div>
@@ -168,7 +207,13 @@ export default function ProfileHead() {
                     메시지 보내기
                   </Button>
                 </Link>                */}
-                    <IsFollow />
+                    {console.log("----------------------------------------------------")}
+                    {console.log(isFollow)}
+                    {otherUserCheck == true &&
+                      <IsFollow
+                      setFollow = {isFollow}
+                    />
+                    }
                   </Stack>
                   {/* 게시물, 팔로워, 팔로우 부분 */}
                   <Stack direction="row" spacing={4} sx={{ mb: 2 }}>
@@ -187,7 +232,7 @@ export default function ProfileHead() {
                     <Stack direction="row" spacing={1}>
                       <Typography sx={{ fontSize: 20 }}>팔로우</Typography>
                       <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
-                        20
+                        {followerList.length}
                       </Typography>
                     </Stack>
                   </Stack>

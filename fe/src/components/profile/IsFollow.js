@@ -6,16 +6,21 @@ import { Link, useParams } from "react-router-dom";
 // import PersonIcon from '@mui/icons-material/Person';
 
 class IsFollow extends Component {
-
   constructor(props) {
     super(props);
-  
     this.state = {
       isfollowed: false,
       userE: true,
         // userE: false,
     }
-    
+  }
+
+  componentDidUpdate() {
+    this.state = {
+      isfollowed: this.props.setFollow,
+      userE: false
+    }
+    console.log(this.props);
   }
 
   follow = () => {
@@ -29,9 +34,13 @@ class IsFollow extends Component {
       isfollowed: false,
     });
   }
-
-  
   render() {
+
+    // this.state = {
+    //   isfollowed: this.props.setFollow,
+    //   userE: false,
+    // }
+
     if (this.state.isfollowed === true && this.state.userE === false) {
       return (
         <Button

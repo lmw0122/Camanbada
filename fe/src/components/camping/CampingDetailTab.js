@@ -89,6 +89,18 @@ export default function BasicTabs() {
     }
   }
 
+  //캠핑 가져오기
+  const getCamping = async () => {
+    axios.get(BASIC_GET_URL)
+      .then((response) => {
+          setBasics(response.data);
+      }).catch((error) => {
+        //에러처리
+        alert("가져올 캠핑장 데이터가 없습니다.");
+      });
+  };
+  
+
   //캠핑 좋아요
   const campingLike= (e, campId) =>{{
     // console.log(campId);
@@ -100,13 +112,13 @@ export default function BasicTabs() {
         if (response.status == 204) {
           axios.delete(URL, HEADER)
             .then((response) => {
-              window.location.href = NOW_PAGE;
+              getCamping();
           }).catch((error) => {
             alert("싫어요에 실패하였습니다");
           });
         }
         else {//좋아요 성공
-          window.location.href = NOW_PAGE;
+          getCamping();
         }
       }).catch((error) => {
         alert("좋아요에 실패하였습니다");
