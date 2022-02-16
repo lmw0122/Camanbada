@@ -162,12 +162,12 @@ export default function NewsFeed() {
                         <CardContent>
                           <Typography variant="body2" color="text.secondary">
                             {board.photo == "" && board.content.length > 140 && (
-                              <div style={{ height: 322 }}>
+                              <div style={{ height: 122 }}>
                                 <h2>더 보기</h2>
                               </div>
                             )}
                             {board.photo != "" && board.content.length > 140 && (
-                              <div style={{ height: 128 }}>
+                              <div style={{ height: 28 }}>
                                 <h2>더 보기</h2>
                               </div>
                             )}
@@ -177,7 +177,7 @@ export default function NewsFeed() {
                                   dangerouslySetInnerHTML={{
                                     __html: board.content,
                                   }}
-                                  style={{ height: 345 }}
+                                  style={{ height: 245 }}
                                 ></div>
                               )}
                             {board.photo != "" &&
@@ -186,7 +186,7 @@ export default function NewsFeed() {
                                   dangerouslySetInnerHTML={{
                                     __html: board.content,
                                   }}
-                                  style={{ height: 151 }}
+                                  style={{ height: 51 }}
                                 ></div>
                               )}
                           </Typography>
@@ -235,12 +235,12 @@ export default function NewsFeed() {
                         <CardContent>
                           <Typography variant="body1" color="text.secondary">
                             {board.photo == "" && board.content.length > 140 && (
-                              <div style={{ height: 322 }}>
+                              <div style={{ height: 222 }}>
                                 <h2>더 보기</h2>
                               </div>
                             )}
                             {board.photo != "" && board.content.length > 140 && (
-                              <div style={{ height: 128 }}>
+                              <div style={{ height: 28 }}>
                                 <h2>더 보기</h2>
                               </div>
                             )}
@@ -250,7 +250,7 @@ export default function NewsFeed() {
                                   dangerouslySetInnerHTML={{
                                     __html: board.content,
                                   }}
-                                  style={{ height: 345 }}
+                                  style={{ height: 245 }}
                                 ></div>
                               )}
                             {board.photo != "" &&
@@ -259,7 +259,7 @@ export default function NewsFeed() {
                                   dangerouslySetInnerHTML={{
                                     __html: board.content,
                                   }}
-                                  style={{ height: 151 }}
+                                  style={{ height: 51 }}
                                 ></div>
                               )}
                           </Typography>
