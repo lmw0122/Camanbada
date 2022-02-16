@@ -114,6 +114,7 @@ export default function ProfileHead() {
     axios
       .get(encoded)
       .then((res) => {
+        console.log(res);
         setUserInfo(res.data);
         setLoading(false);
         setUserIntro(res.data[0].intro);
@@ -191,35 +192,46 @@ export default function ProfileHead() {
                       {nick}
                     </Typography>
                     <ProfileUser />
-                    {/* <Link to={'/message'} style={{textDecoration:'none'}}>
-                  <Button
-                    style={{
-                      border: "1px black solid",
-                      color: "black"
-                    }}
-                    variant="outlined"
-                  >
-                    메시지 보내기
-                  </Button>
-                </Link>                */}
+                    
                     {otherUserCheck == true &&
-                      <IsFollow
-                        isFollow={isFollow}
-                        followUser={userInfo[0].id }
-                        getFollow={getFollow}
-                      ></IsFollow>
+                      <div>
+                        <IsFollow
+                          isFollow={isFollow}
+                          followUser={userInfo[0].id }
+                          getFollow={getFollow}
+                        ></IsFollow>
+                        {console.log(userInfo.id)}
+                        <Link to={'/message'}
+                          state={{
+                            oppUserId: userInfo[0].id
+                          }}
+                          style={{ textDecoration: 'none' }}>
+                          <Button style={{
+                            border: "1px black solid",
+                            color: "black"
+                          }}
+                          variant="outlined">
+                            메시지 보내기
+                          </Button>
+                        </Link> 
+                      
+                      </div>
                     }
                     {otherUserCheck == false &&
-                      <Button
-                        style={{
-                          border: "1px black solid",
-                          color: "black"
-                        }}
-                        onClick={() => { window.location.href = `/profile/update/${nick}`}}
-                        variant="outlined"
-                      >
-                        프로필 편집
-                      </Button>
+                      <div>
+                        <Button
+                          style={{
+                            border: "1px black solid",
+                            color: "black"
+                          }}
+                          onClick={() => { window.location.href = `/profile/update/${nick}`}}
+                          variant="outlined"
+                        >
+                          프로필 편집
+                        </Button>
+                        
+            
+                      </div>
                   }
                   </Stack>
                   {/* 게시물, 팔로워, 팔로우 부분 */}
