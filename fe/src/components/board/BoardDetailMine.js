@@ -1,22 +1,14 @@
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Grid';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Button from '@mui/material/Button';
-import { Link } from "react-router-dom";
-import Divider from '@mui/material/Divider';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import Input from '@mui/material/Input';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
+import { Container, Box, CssBaseline, Typography, Grid, Stack, Button, Divider, Input, Paper, IconButton } from '@mui/material';
+import { useParams, Link } from 'react-router-dom';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import DeleteIcon from '@mui/icons-material/Delete';
+// import StickyFooter from "../../components/common/Footer";
 
 const theme = createTheme();
 
@@ -156,20 +148,23 @@ export default function BoardDetailMine() {
 
 
   //댓글 좋아요와 싫어요
+  const [ likeComment, setLikeComment ] = useState(false);
   const commentOneLike= (e, commentId) =>{{
     const URL = COMMENT_ONE_LIKE_URL + commentId;
     axios.get(URL,HEADER)
       .then((response) => {
-        if (response.status == 204) {
+        if (response.status === 204) {
           axios.delete(URL, HEADER)
             .then((response) => {
               getComments();
+              setLikeComment(false)
           }).catch((error) => {
             alert("싫어요에 실패하였습니다");
           });
         }
         else {//좋아요 성공
           getComments();
+          setLikeComment(true)
         }
       }).catch((error) => {
         alert("좋아요에 실패하였습니다");
@@ -177,21 +172,24 @@ export default function BoardDetailMine() {
   };
 }
 
-  //게시판 좋아요와 싫어요
+  //게시판 좋아요와 싫어요 & 아이콘 변경
+  const [ like, setLike ] = useState(false);
   const boardOneLike = (e, boardId) => {{
     const URL = BOARD_ONE_LIKE_URL + boardId;
     axios.get(URL,HEADER)
       .then((response) => {
-        if (response.status == 204) {
+        if (response.status === 204) {
           axios.delete(URL, HEADER)
             .then((response) => {
               getBoards();
+              setLike(false)
           }).catch((error) => {
             alert("싫어요에 실패하였습니다");
           });
         }
         else {//좋아요 성공
           getBoards();
+          setLike(true)
         }
       }).catch((error) => {
         alert("좋아요에 실패하였습니다");
@@ -215,7 +213,7 @@ export default function BoardDetailMine() {
       <main>
         <Container sx={{ p:0, mt: 12, mb: 8}} maxWidth="md">
           <Typography sx={{ mb: 1 }}>
-            {dataList.tag}
+            &#60;{dataList.tag}&#62;
           </Typography>
           <Typography variant="h4" sx={{ mb: 2 }}>
             {dataList.title}
@@ -235,44 +233,53 @@ export default function BoardDetailMine() {
               />
             </Grid>
             <Grid>
-              <Typography>
-                {dataList.clientId}
-              </Typography>
+              <Stack direction='row' alignItems="center">
+                <Typography>
+                  {dataList.clientId}
+                </Typography>
+                  { like ? <FavoriteIcon onClick={(e)=>{boardOneLike(e, dataList.boardId)}} sx={{ fontSize : 20, mx : 1, color : '#f44336'}}/> 
+                  : <FavoriteBorderIcon onClick={(e)=>{boardOneLike(e, dataList.boardId)}} sx={{ fontSize : 20, mx : 1, color : '#f44336'}}/> }
+                <Typography >
+                  {dataList.like}
+                </Typography>
+              </Stack>
               <Typography>
                 {Date(dataList.date)}
               </Typography>
-            </Grid>
-            <Grid>
-            좋아요 {dataList.like}
-              <button onClick={(e)=>{boardOneLike(e, dataList.boardId)}}>❤</button>
+
             </Grid>
           </Stack>
+
             <img id="userImage" width="850" />
           <Box sx={{ mb: 2 }} >
             <div dangerouslySetInnerHTML={{ __html: content }}></div>
             {/* {dataList.content.innerText} */}
             
           </Box>
-          <Divider sx={{ borderBottomWidth: 5, mb: 2 }} />
+          <Divider sx={{ borderBottomWidth: 5, mb : 1 }} />
           <Stack
             direction="row"
             spacing={2}
             alignItems="center"
           >
             <Grid>
-              <FavoriteBorderIcon />
-            </Grid>
-            <Grid>
-              {dataList.like}
-            </Grid>
-            <Grid>
-              <ChatBubbleOutlineIcon />
-            </Grid>
-            <Grid>
-              댓글 {comments.length}
+              <Stack direction='row' alignItems="center">
+                { like ? <FavoriteIcon onClick={(e)=>{boardOneLike(e, dataList.boardId)}} sx={{ fontSize : 25, mx : 1, color : '#f44336'}}/> 
+                : <FavoriteBorderIcon onClick={(e)=>{boardOneLike(e, dataList.boardId)}} sx={{ fontSize : 25, mx : 1, color : '#f44336'}}/> }
+                <Typography >
+                  {dataList.like}
+                </Typography>
+                <Grid>
+                  <ChatBubbleOutlineIcon sx={{ fontSize : 21
+                    , mx : 1}}/>
+                </Grid>
+                <Grid>
+                  댓글 {comments.length}
+                </Grid>
+              </Stack>
             </Grid>
           </Stack>
-          <Divider sx={{ borderBottomWidth: 5, mb: 2 }} />
+          <Divider sx={{ borderBottomWidth: 5, my: 1 }} />
           {/* 댓글 출력 부분 */}
           <Stack
             direction="column"
@@ -280,9 +287,28 @@ export default function BoardDetailMine() {
             {comments.map((comment) => (
               <Grid item key={comment}>
                 <Grid>
-                  <Typography sx={{ fontWeight: 'bold' }}>
-                    {comment.clientId}
-                  </Typography>
+                  <Stack direction="row" alignItems="center">
+                    <Typography sx={{ fontWeight: 'bold' }}>
+                      {comment.clientId}
+                    </Typography>
+                    { likeComment ? <FavoriteIcon onClick={(e)=>{commentOneLike(e, comment.commentId)}} sx={{ fontSize : 25, mx : 1, color : '#f44336'}}/> 
+                    : <FavoriteBorderIcon onClick={(e)=>{commentOneLike(e, comment.commentId)}} sx={{ fontSize : 25, mx : 1, color : '#f44336'}}/> }
+                    <Typography >
+                      {comment.like}
+                    </Typography>
+                    <Grid sx={{ ml : 1}}>
+                      <IconButton>
+                        {clientId === comment.clientId &&
+                          <DeleteIcon onClick={(e)=>{deleteOneComment(e, comment)}} sx={{ color : '#f44336' }}/>
+                          // <Button variant="outlined" style={{ backgroundColor : "#f44336"}}
+                          //   onClick={(e)=>{deleteOneComment(e, comment)}}
+                          // >
+                          // 삭제
+                          // </Button>
+                          }
+                      </IconButton>
+                    </Grid>
+                  </Stack>
                 </Grid>
                 <Grid>
                   <Typography id="boardcontent">
@@ -294,20 +320,7 @@ export default function BoardDetailMine() {
                     {Date(comment.date)}
                   </Typography>
                 </Grid>
-                <Grid>
-                  <Typography>
-                    좋아요 수 : {comment.like}
-                    <button onClick={(e)=>{commentOneLike(e, comment.commentId)}}>❤</button>
-                  </Typography>
-                </Grid>
-                <Grid>
-                {clientId == comment.clientId &&
-                    <Button variant="contained" style={{ backgroundColor: "#f44336" }}
-                      onClick={(e)=>{deleteOneComment(e, comment)}}
-                    >
-                  삭제
-                </Button>}
-                </Grid>
+
               </Grid>
             ))}           
           </Stack>
@@ -331,11 +344,12 @@ export default function BoardDetailMine() {
               }}
               variant="contained"
               onClick={ createOneComment }
+              style={{ backgroundColor : '#1b5e20' }}
             >
               등록
             </Button>
           </Stack>
-          {clientId == dataList.clientId &&
+          {clientId === dataList.clientId &&
             <Stack
               direction="row"
               spacing={2}
@@ -345,6 +359,7 @@ export default function BoardDetailMine() {
                 <Link to={`/board/update/${boardId}`} style={{ textDecoration: 'none' }}>
                   <Button
                     variant="contained"
+                    style={{ backgroundColor : '#1b5e20' }}
                   >
                     게시글 수정
                   </Button>
@@ -363,9 +378,9 @@ export default function BoardDetailMine() {
               </Item>
             </Stack>
           }
-          
         </Container>
       </main>
+      {/* <StickyFooter/> */}
     </ThemeProvider>
 
   );
