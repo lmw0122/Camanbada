@@ -12,11 +12,17 @@ import Grid from '@mui/material/Grid';
 
 //const [moreButtonStyle, setMoreButtonStyle] = React.useState({});
 
-const ChatBubble = ({ chat, i}) => {
+const ChatBubble = ({ chat, i }) => {
+  const accessToken = localStorage.getItem("accessToken");
+  
   const getOverMessage = async (messageId) => {
     console.log("getOverMessage act");
     await fetch(
-      `http://localhost:8082/chat/over/${messageId}`
+      `http://i6c109.p.ssafy.io:8000/chat/over/${messageId}`, {
+        headers: {
+          'Authorization': accessToken
+        }
+      }
     ).then(res => {
       console.log(res);
       if (res.ok) {
