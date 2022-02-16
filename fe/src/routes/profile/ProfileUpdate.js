@@ -33,7 +33,10 @@ export default function Update() {
     const totalLength = totalText.length;
     setTextLength(totalLength);
   }
+<<<<<<< HEAD
   
+=======
+>>>>>>> 176d386987608b9871af29b60b07a37e9033de0c
 
   // 닉네임 중복 체크 & 유효성 체크
   const [ userNickname, setUserNickname ] = useState('');

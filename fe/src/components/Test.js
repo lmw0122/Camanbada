@@ -3,28 +3,32 @@ import { useEffect, useState } from "react";
 
 
 export default function Test () {
-  const [user, setUser] = useState("");
-  const name = "나영";
-  const encode = encodeURI(name);
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
+
+  const [nickname, setNickname] = useState("");
+
+  const getNickname = () => {
+    Axios.get(`http://i6c109.p.ssafy.io:8000/user`, HEADER)
+      .then((res) => setNickname(res.data))
+  }
+
+  React.useEffect(() => {
+    getNickname();
+    console.log('가져온 유저 닉네임은:', nickname);
+  }, []);
+
+  console.log('zz')
+ 
 
   
 
-  useEffect(() => {
-    Axios.post('http://i6c109.p.ssafy.io:8000/user', {
-      "email": "de@naver.com",
-      "id" : "haha",
-      "password" : "1234",
-      "nickname" : "haha",
-      "intro": "dd",
-      "photo": "dd",
-      "username": "dd"
-    })
-        .then((response) => {
-            // console.log(response.headers.authorization)
-            console.log(response)
-            //console.log("token 입니당" + response.headers.authorization)
-    });
-  }, []);
+
+    
   return (
     <div>
       {/* <h1>{user[0].intro}</h1> */}

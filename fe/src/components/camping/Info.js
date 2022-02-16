@@ -5,10 +5,6 @@ import Divider from '@mui/material/Divider';
 
 const Info = ({details}) => {
 
-
-  
-  
-
   return (
     <Stack>
       {details.tel ? (
