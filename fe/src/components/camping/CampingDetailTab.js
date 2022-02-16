@@ -308,7 +308,7 @@ export default function BasicTabs() {
                 <NaverMapAPI />
               </RenderAfterNavermapsLoaded>
             </TabPanel>
-            <TabPanel value={value} index={3}>
+            <TabPanel value={value} index={2}>
               <Review details={ reviews }></Review>
             </TabPanel>
           </Box>
