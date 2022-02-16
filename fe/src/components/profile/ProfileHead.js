@@ -92,10 +92,18 @@ export default function ProfileHead() {
 
   const [loading, setLoading] = useState(true);
   const [userIntro, setUserIntro] = useState("");
+<<<<<<< HEAD
   const [followerList, setFollowerList] = useState("");
   const [followingList, setFollowingList] = useState("");
 
   const [likedCampings, setLikedCampings] = useState("");
+=======
+  const [ followerList, setFollowerList ] = useState("");
+  const [followingList, setFollowingList] = useState("");
+  
+  const [otherFollowerLength, setOtherFollowerLength] = useState("");
+  const [otherFollowingLength, setOtherFollowingLength] = useState("");
+>>>>>>> 01c8e1f7b03e4a9410b17149a6c9e52937d028d9
 
   const getFollow = (isFollow) => {
     setIsFollow(isFollow);
@@ -105,20 +113,27 @@ export default function ProfileHead() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  
   // 유저 정보 얻어오기
   // nick은 한글이라 인코딩
   const uri = `http://i6c109.p.ssafy.io:8000/user/${nick}`;
   const encoded = encodeURI(uri);
-
+  
   //현재 프로필 사용자
   const getUserId = () => {
+<<<<<<< HEAD
     axios.get(encoded).then((res) => {
+=======
+    axios
+    .get(encoded)
+    .then((res) => {
+>>>>>>> 01c8e1f7b03e4a9410b17149a6c9e52937d028d9
       setUserInfo(res.data);
       setLoading(false);
       setUserIntro(res.data[0].intro);
 
       followCheck(res.data);
+<<<<<<< HEAD
     });
   };
   //팔로잉 리스트
@@ -131,21 +146,46 @@ export default function ProfileHead() {
         res.data.map((folloUser) => {
           console.log(folloUser.following + " " + loginUserId);
           if (folloUser.following === loginUserId) {
+=======
+      });
+  }
+
+  //console.log("현재 눌러본 프로필의 아이디" + userInfo[0].id);
+  //팔로잉 리스트
+  function getFollwoingList(loginUserId,profileUserId) {
+    const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/follower`;
+    axios.get(URL,HEADER)
+      .then(res => {
+        setFollowingList(res.data);
+        //console.log(res.data + "````````````````````` " + loginUserId + "````````````````````` " + profileUserId);
+        res.data.map(folloUser => {
+          //console.log(folloUser.following + " " + loginUserId);
+          if (folloUser.following == loginUserId) {
+>>>>>>> 01c8e1f7b03e4a9410b17149a6c9e52937d028d9
             setIsFollow(true);
           }
         });
       });
   }
   //팔로워 리스트
+<<<<<<< HEAD
   const getFollowerList = () => {
     axios
       .get(`http://i6c109.p.ssafy.io:8000/follow/following`, HEADER)
       .then((res) => setFollowerList(res.data));
   };
+=======
+  function getFollowerList(profileUserId) {
+    const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/following`;
+    axios.get(URL,HEADER)
+      .then(res => setFollowerList(res.data))
+  }
+>>>>>>> 01c8e1f7b03e4a9410b17149a6c9e52937d028d9
 
   //현재 로그인한 사용자인지 아닌지
   function followCheck(user) {
     const URI = `http://i6c109.p.ssafy.io:8000/user`;
+<<<<<<< HEAD
     axios.get(URI, HEADER).then((res) => {
       getFollwoingList(user[0].id);
       if (res.data == user[0].id) setOtherUserCheck(false);
@@ -153,6 +193,19 @@ export default function ProfileHead() {
         setOtherUserCheck(true);
       }
     });
+=======
+    axios.get(URI,HEADER)
+      .then((res) => {
+        getFollwoingList(res.data, user[0].id);//검색한 프로필 id
+        getFollowerList(user[0].id);
+
+        if (res.data == user[0].id)
+          setOtherUserCheck(false);
+        else {
+          setOtherUserCheck(true);
+        }
+      })
+>>>>>>> 01c8e1f7b03e4a9410b17149a6c9e52937d028d9
   }
 
 
@@ -210,6 +263,7 @@ export default function ProfileHead() {
                       {nick}
                     </Typography>
                     <ProfileUser />
+<<<<<<< HEAD
                     {/* <Link to={'/message'} style={{textDecoration:'none'}}>
                   <Button
                     style={{
@@ -242,6 +296,49 @@ export default function ProfileHead() {
                         프로필 편집
                       </Button>
                     )}
+=======
+                    
+                    {otherUserCheck == true &&
+                      <div>
+                        <IsFollow
+                          isFollow={isFollow}
+                          followUser={userInfo[0].id }
+                          getFollow={getFollow}
+                        ></IsFollow>
+                        {console.log(userInfo.id)}
+                        <Link to={'/message'}
+                          state={{
+                            oppUserId: userInfo[0].id
+                          }}
+                          style={{ textDecoration: 'none' }}>
+                          <Button style={{
+                            border: "1px black solid",
+                            color: "black"
+                          }}
+                          variant="outlined">
+                            메시지 보내기
+                          </Button>
+                        </Link> 
+                      
+                      </div>
+                    }
+                    {otherUserCheck == false &&
+                      <div>
+                        <Button
+                          style={{
+                            border: "1px black solid",
+                            color: "black"
+                          }}
+                          onClick={() => { window.location.href = `/profile/update/${nick}`}}
+                          variant="outlined"
+                        >
+                          프로필 편집
+                        </Button>
+                        
+            
+                      </div>
+                  }
+>>>>>>> 01c8e1f7b03e4a9410b17149a6c9e52937d028d9
                   </Stack>
                   {/* 게시물, 팔로워, 팔로우 부분 */}
                   <Stack direction="row" spacing={4} sx={{ mb: 2 }}>

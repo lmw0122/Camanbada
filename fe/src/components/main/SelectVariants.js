@@ -225,8 +225,9 @@ export default function SelectVariants() {
             sx={{
               m: 1,
               minWidth: 100,
-              height: '7ch'
+              height: '7ch',
             }}
+            style={{ backgroundColor : '#1b5e20'}}
             variant="contained"
           >
             검색
