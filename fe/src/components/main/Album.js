@@ -104,8 +104,10 @@ export default function Album() {
                       window.location.href = `/camping/${item.campId}`;
                     }}
                   >
-                    <CampingImage basics={ item }></CampingImage>
-                    <CardContent sx={{ flexGrow: 1 }}>
+                    <Grid sx={{ height : '200px' }} >
+                      <CampingImage basics={ item } ></CampingImage>
+                    </Grid>
+                    <CardContent sx={{ flexGrow: 1, mt : 1 }}>
                       <Typography gutterBottom variant="h5" component="h2">
                         {item.facltNm}
                       </Typography>
