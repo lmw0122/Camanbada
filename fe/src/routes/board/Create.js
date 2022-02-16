@@ -5,7 +5,7 @@ import NavBar from '../../components/common/NavBar'
 import Editor from '../../components/board/Editor'
 import RadioButtonCamping from '../../components/board/RadioButtonCamping'
 import CampingSearch from '../../components/camping/CampingSearch';
-
+import StickyFooter from '../../components/common/Footer';
 
 export default function Create() {
   const [campId, setCampId] = useState('')
@@ -138,6 +138,7 @@ export default function Create() {
           </Typography>
         </Box>
       </Container>
+      <StickyFooter/>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import SearchAll from "../components/searchResult/SearchAll";
 import NavBar from "../components/common/NavBar";
+import StickyFooter from '../components/common/Footer';
 
 
 export default function Search () {
@@ -8,6 +9,7 @@ export default function Search () {
     <div>
       <NavBar></NavBar>
       <SearchAll></SearchAll>
+      <StickyFooter></StickyFooter>
     </div>
   )
 }

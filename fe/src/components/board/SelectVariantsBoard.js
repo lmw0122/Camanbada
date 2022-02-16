@@ -196,7 +196,6 @@ export default function SelectVariants() {
     for (var i=0; i<dataList.length; i++) {
       if (tag === dataList[i].tag) {
         selectedTag.push(dataList[i]);
-        console.log(selectedTag)
       }
     };
   } else if (tag !== '' && titleKeyword !== '') {

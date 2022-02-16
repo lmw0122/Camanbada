@@ -8,6 +8,7 @@ import NavBar from '../../components/common/NavBar'
 import "../../styles/uploader.css"
 import dog from '../../img/dog.png'
 import { useParams } from 'react-router-dom';
+import StickyFooter from '../../components/common/Footer';
 
 const Input = styled('input')({
   display: 'none',
@@ -342,6 +343,7 @@ export default function Update() {
           </Container>
         </div>
       )}
+      <StickyFooter></StickyFooter>
     </div>
   );
 }
