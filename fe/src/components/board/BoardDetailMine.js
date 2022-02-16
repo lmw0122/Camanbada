@@ -268,7 +268,7 @@ export default function BoardDetailMine() {
                 </Typography>
               </Stack>
               <Typography>
-                {dataList.date.replace("T", " ").substring(2,16)}
+                {/* {dataList.date.replace("T", " ").substring(2,16)} */}
               </Typography>
 
             </Grid>
