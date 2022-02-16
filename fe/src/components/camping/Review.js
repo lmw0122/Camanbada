@@ -4,9 +4,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 
 const review = ({ details }) => {
-  
   console.log(details);
-  
   return (
     <div>
       {console.log(details) }
