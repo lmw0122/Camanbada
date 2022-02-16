@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
+import StickyFooter from '../../components/common/Footer';
 
 export default function BoardUpdate() {
   useEffect(() => {
@@ -136,6 +137,7 @@ export default function BoardUpdate() {
           </Typography>
         </Box>
       </Container>
+      <StickyFooter/>
     </div>
   )
 }

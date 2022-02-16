@@ -5,7 +5,7 @@ import NavBar from '../../components/common/NavBar'
 import Editor from '../../components/board/Editor'
 import RadioButtonCamping from '../../components/board/RadioButtonCamping'
 import CampingSearch from '../../components/camping/CampingSearch';
-
+import StickyFooter from '../../components/common/Footer';
 
 export default function Create() {
   const [campId, setCampId] = useState('')
@@ -26,7 +26,7 @@ export default function Create() {
   }
 
   const onSubmit = (e) => {
-    if (campId == "" || content == "" || tag == "" || title == "" || clientId == "")
+    if (campId === "" || content === "" || tag === "" || title === "" || clientId === "")
       alert("게시판에 등록할 목록을 모두 작성해 주세요");
     else {
       axios.post(BOARD_CREATE_URL, {
@@ -138,6 +138,7 @@ export default function Create() {
           </Typography>
         </Box>
       </Container>
+      <StickyFooter/>
     </div>
   )
 }

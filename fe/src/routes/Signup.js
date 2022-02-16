@@ -6,6 +6,7 @@ import Copyright from "../components/common/Copyright";
 import Logo from "../img/logo.png";
 import Avatar from '@mui/material/Avatar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import StickyFooter from '../components/common/Footer';
 
 const theme = createTheme();
 const BASE_URL_USER = 'i6c109.p.ssafy.io:8000';
@@ -394,6 +395,7 @@ export default function SignUp() {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
+      <StickyFooter></StickyFooter>
     </ThemeProvider>
   );
 }

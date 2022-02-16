@@ -62,6 +62,7 @@ class IsFollow extends Component {
     } else {
       return (
         // <Link to={`/profile/update/${nick}`} style={{textDecoration:'none'}}>
+        // nickname 받아오는 api사용해서 url 연결 완성하기
         <div>
           <Button 
             style={{
@@ -70,7 +71,7 @@ class IsFollow extends Component {
             }}
             onClick={(e)=> {
               const {nick} = useParams();
-              window.location.href = `/profile/${nick}`
+              window.location.href = `/profile/update/${nick}`
             }}
           >
             프로필 편집

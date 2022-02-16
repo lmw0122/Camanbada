@@ -27,9 +27,11 @@ export default function SearchCampingAlbum() {
 
   const [campings, setCampings] = React.useState([]);
 
+  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list';
+
 
   React.useEffect(() => {
-    Axios.get('http://i6c109.p.ssafy.io:8092/camp/basic/list')
+    Axios.get(CAMP_GET_URL)
       .then(res => setCampings(res.data))   
   }, []);
 
@@ -94,6 +96,7 @@ export default function SearchCampingAlbum() {
                     e.preventDefault();
                     window.location.href = `/camping/${camp.campId}`;
                   }}
+                  
                 >
                   <CampingImage basics={ camp }></CampingImage>
                   <CardContent sx={{ flexGrow: 1 }}>

@@ -1,0 +1,10 @@
+#wrapper {
+  height: auto;
+  min-height: 100%;
+}
+
+#footer {
+  height: 15vh;
+  position: relative;
+  transform: translateY(-100%);
+}

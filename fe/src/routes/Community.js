@@ -5,6 +5,8 @@ import BoardTable from '../components/board/BoardTable';
 import Button from '@mui/material/Button';
 import { Container, CssBaseline, Grid, Typography } from '@mui/material';
 import { Link } from "react-router-dom";
+import Stack from '@mui/material/Stack';
+import StickyFooter from '../components/common/Footer';
 
 function Community() {
   return (
@@ -17,14 +19,35 @@ function Community() {
             <img src="img/camping.jpg" sx={{ mt: 20 }} alt="camping"/>
           </Container>
           <div>
-            <Typography display="inline" component="h1" variant="h4" align="center" sx={{m: 2}}> 
-              CAM:NABADA 커뮤니티
-            </Typography>
+            <Stack direction="row" alignItems="center" justifyContent="center">
+              <Typography display="inline" component="h1" variant="h4" align="center" sx={{m: 2}}> 
+                CAM:NABADA 커뮤니티
+              </Typography>
+              <Link to={'/create'} style={{ textDecoration: 'none' }}>
+                <Button 
+                  style={{
+                    color: "white",
+                    backgroundColor: "#4caf50"
+                  }}
+                  type="submit"
+                  sx={{
+                    m: 1,
+                    minWidth: 100,
+                    height: "7ch",
+                  }}
+                  
+                  variant="contained"
+                >
+                  게시글 작성
+                </Button>
+              </Link>
+            </Stack>
           </div>
           <SelectVariantsBoard />
         </Grid>
-      <BoardTable />  
+      {/* <BoardTable />   */}
     </Grid>
+    <StickyFooter></StickyFooter>
     </div>
   )
 }

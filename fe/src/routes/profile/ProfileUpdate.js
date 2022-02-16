@@ -5,7 +5,10 @@ import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NavBar from '../../components/common/NavBar'
+import "../../styles/uploader.css"
+import dog from '../../img/dog.png'
 import { useParams } from 'react-router-dom';
+import StickyFooter from '../../components/common/Footer';
 
 const Input = styled('input')({
   display: 'none',
@@ -100,6 +103,10 @@ export default function Update() {
       }
   }
   // 아이디, 이메일 정보 얻어오기
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 8c03ac77db43b66a3399a3f3b224810a2103d5c1
  
   const [ userIntro, setUserIntro ] = useState('');
   const [ userId, setUserId ] = useState('');
@@ -140,7 +147,50 @@ export default function Update() {
       window.location.href = `/profile`
     }})
   }
-  // console.log(nickname, intro)
+  console.log(nickname, intro)
+
+  // 이미지 수정
+  const [ image, setImage ] = useState({
+    image_file : "",
+    preview_URL : "../img/dog.png",
+  });
+
+  const [ loaded, setLoaded ] = useState(false);
+  let inputRef;
+  
+  const saveImage = (e) => {
+    e.preventDefault();
+    const fileReader = new FileReader();
+
+    if(e.target.files[0]) {
+      setLoaded("loading")
+      fileReader.readAsDataURL(e.target.files[0])
+    } 
+    fileReader.onload = () => {
+      setImage({
+        image_file : e.target.files[0],
+        preview_URL : fileReader.result
+      })
+      setLoaded(true);
+    }
+  }
+  
+  const sendImageToServer = async () => {
+    if (image.image_file) {
+      const formData = new FormData ()
+      formData.append('file', image.image_file);
+      console.log(image.image_file)
+      await axios.post(`http://i6c109.p.ssafy.io:8000/user/${userId}`, {"photo" : formData});
+      alert("등록 완료했습니다.")
+      setImage({
+        image_file: "",
+        preview_URL : "../img/dog.png",
+      })
+      setLoaded(false);
+    } else {
+      alert("사진을 등록하세요!")
+    }
+  }
 
   return (
     <div>
@@ -152,18 +202,30 @@ export default function Update() {
             <h2>회원 정보 수정</h2>
             <Grid container>
               <Grid item xs={3}>
-                <AccountCircleIcon sx={{ fontSize: 150 }} />
-                <label htmlFor="upload-button">
-                  <Input
-                    accept="image/*"
-                    id="upload-button"
-                    multiple
-                    type="file"
+                {/* <AccountCircleIcon sx={{ fontSize: 150 }} /> */}
+                {/* <Box sx={{ height : 100, ml : 2 }}> */}
+                  {/* <img src={require("../../img/dog.png")} alt='109' width="120px" /> */}
+                {/* </Box> */}
+                <div className="uploader-wrapper">
+                  <input type="file" accept="image/*"
+                    onChange={saveImage}
+                    ref={refParam => inputRef = refParam}
+                    style={{ display: "none" }}
                   />
-                  <Button variant="contained" component="span" sx={{ mt: 3 }}>
-                    프로필 이미지 변경
-                  </Button>
-                </label>
+                  </div>
+                  <div className="img-wrapper">
+                    {loaded === false || loaded === true ? (
+                      <img src={image.preview_URL} alt="109"/>
+                    ) : (
+                      <span>이미지를 불러오는 중입니다.</span>
+                    )}
+                  </div>
+                  <div className="upload-button">
+                    <Button variant="contained" sx={{ mt: 5, mr : 1 }} type="primary" onClick={() => inputRef.click()}>Preview</Button>
+                    <Button variant="contained" component="span" sx={{ mt: 5 }} onClick={sendImageToServer}>
+                      프로필 이미지 변경
+                    </Button>
+                  </div>
               </Grid>
               <Grid item xs={9}>
                 <Stack direction="row" sx={{ mt: 2 }}>
@@ -269,19 +331,22 @@ export default function Update() {
                 </Box>
               </Grid>
               <Grid item xs={12}>
-                <Button
-                  onClick={onChangeInfo}
-                  variant="contained"
-                  sx={{ width: 200, mt: 3 }}
-                  color="success"
-                >
-                  수정 완료
-                </Button>
+                <Box sx={{ mx : 60, my : 3 }}>
+                  <Button
+                    onClick={onChangeInfo}
+                    variant="contained"
+                    sx={{ width: 200, mt: 3 }}
+                    color="success"
+                  >
+                    수정 완료
+                  </Button>
+                </Box>
               </Grid>
             </Grid>
           </Container>
         </div>
       )}
+      <StickyFooter></StickyFooter>
     </div>
   );
 }

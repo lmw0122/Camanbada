@@ -18,6 +18,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Axios from "axios";
 import CampingImage from './CampingImage';
+import Subs from './Subs';
+import Info from './Info';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -65,9 +67,15 @@ export default function BasicTabs() {
 
   // 캠핑장 api 부분
   const { campId } = useParams();
-  console.log(campId)
+  
   const [basics, setBasics] = React.useState([]);
   const [details, setDetails] = React.useState([]);
+  
+
+  const BASIC_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/basic/one/${campId}`
+  const DETAIL_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/detail/one/${campId}`
+
+  
 
   const NOW_PAGE = `http://localhost:3000/camping/${campId}`;
   
@@ -106,14 +114,25 @@ export default function BasicTabs() {
   };}
   
   React.useEffect(() => {
-    Axios.get(`http://i6c109.p.ssafy.io:8092/camp/basic/one/${campId}`)
+    Axios.get(BASIC_GET_URL)
       .then(res => setBasics(res.data))
   }, []);
 
   React.useEffect(() => {
-    Axios.get(`http://i6c109.p.ssafy.io:8092/camp/detail/one/${campId}`)
+    Axios.get(DETAIL_GET_URL)
       .then(res => setDetails(res.data))   
   }, []);
+
+  // React.useEffect(() => {
+  //   setSubs(details.sbrsCl); 
+  // }, []);
+  // // setSubs(details.sbrsCl); 
+  console.log(details.sbrsCl);
+
+
+  
+
+  
 
   // 네이버 지도 api 부분
   function NaverMapAPI() {
@@ -138,6 +157,23 @@ export default function BasicTabs() {
       </NaverMap>
     );
   }
+
+  // var sbrsCls = [];
+
+  // const str = details.sbrsCl;
+  // console.log(str)
+  // const sbrsCls = str.split(",");
+
+  // const [elec, setElec] = React.useState(false);
+
+  // for (var i=0; i<sbrsCls.lenth; i++) {
+  //   if (sbrsCls[i] === '전기') {
+  //     setElec(true);
+  //   }
+  // }
+  // console.log(elec);
+  
+ 
 
   
 
@@ -166,6 +202,7 @@ export default function BasicTabs() {
               {basics.facltNm}
             </Typography>
           </Container>
+          {basics.lineIntro ? (
           <Container>
             <Typography
               sx={{
@@ -173,9 +210,9 @@ export default function BasicTabs() {
               }}
               align="center"
             >
-              한 줄 소개: {basics.lineIntro}
+              {basics.lineIntro}
             </Typography>
-          </Container>
+          </Container>) : ''}
           <Stack direction="row" spacing={5} alignItems="center" justifyContent="center">
             <Stack direction="row" spacing={1} alignItems="center">
               <Button
@@ -213,39 +250,33 @@ export default function BasicTabs() {
               </Link> 
             </Stack>
           </Stack> 
+
+          <Subs sub={details.sbrsCl}></Subs>
+
           <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
-                <Tab label="캠핑장 소개" {...a11yProps(0)} />
-                <Tab label="영업 정보" {...a11yProps(1)} />
+                <Tab label="영업 정보" {...a11yProps(0)} />
+                <Tab label="캠핑장 소개" {...a11yProps(1)} />
                 <Tab label="위치" {...a11yProps(2)} />
                 <Tab label="후기" {...a11yProps(3)} /> 
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-              {details.intro}
+              <Info details={ details }></Info>
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <Typography>
-                문의처: {details.tel}
-              </Typography>
-              <Typography>
-                운영기간: {details.operPdCl}
-              </Typography>
-              <Typography>
-                운영일: {details.operDeCl}                
-              </Typography>
-              <Typography>
-                홈페이지: <a href={details.homepage}>{details.homepage}</a>             
-              </Typography>
-              <Typography>
-                예약방법: {details.resveCl}                
-              </Typography>
+              {details.intro}
             </TabPanel>
             <TabPanel value={value} index={2}>
-              <Typography sx={{ mb: 1 }}>
-                주소: {basics.address}
-              </Typography>
+              <Stack direction="row">
+                <Typography sx={{ fontWeight: 'bold', width: '10ch', mb: 1 }}>
+                  주소
+                </Typography>
+                <Typography sx={{ mb: 1 }}>
+                  {basics.address}
+                </Typography>
+              </Stack>
               {/* 네이버 지도 마커 */}
               <RenderAfterNavermapsLoaded
                 ncpClientI												d={'v1qzk7bjak'} // 자신의 네이버 계정에서 발급받은 Client ID

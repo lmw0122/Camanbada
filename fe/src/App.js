@@ -51,7 +51,6 @@ function App() {
         {/* 캠핑장 상세 링크 수정 */}
         {/* 캠핑장 상세 수정해야함 */}
         <Route path="/camping/:campId" element={<CampingDetail></CampingDetail>}></Route>
-        <Route path="/camping" element={<CampingFiltering></CampingFiltering>}></Route>
 
         {/* profile */}
         {/* 프로필 편집 링크 수정 */}

@@ -26,49 +26,8 @@ import Logout from "../../img/logout.png";
 import Message from "../../img/message.png";
 import Community from "../../img/community.png";
 import Profile from "../../img/profile.png";
-import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.black, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.black, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
 
 export default function PrimarySearchAppBar() {
   const [keyword, setKeyword] = React.useState('');
@@ -102,6 +61,7 @@ export default function PrimarySearchAppBar() {
     } else {
       window.location.href = `/searchall/${keyword}`;
     }
+    setKeyword('');
   };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -278,7 +238,11 @@ export default function PrimarySearchAppBar() {
                 <MailIcon />
               </IconButton> */}
             </Link>
+<<<<<<< HEAD
             <Link to={`/profile/${nick}`}>
+=======
+            <Link to={`/profile`}>
+>>>>>>> 8c03ac77db43b66a3399a3f3b224810a2103d5c1
               <Box
                 component="img"
                 sx={{ height: 25, m:1 }}
@@ -302,7 +266,8 @@ export default function PrimarySearchAppBar() {
               component="img"
               sx={{ height: 25, m:1 }}
               alt="logo"
-              src={Logout}      
+              src={Logout}     
+              onClick={onLogout} 
             >
             </Box>
             {/* <IconButton
