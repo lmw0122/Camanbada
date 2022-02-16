@@ -436,7 +436,7 @@ return (
                     </Link>
                     </TableCell>
                   {/* <TableCell align="center">{Date(d.date)}</TableCell> */}
-                  <TableCell align="center" sx={{ fontSize: '15px'}}>{(d.date)}</TableCell>
+                  <TableCell align="center" sx={{ fontSize: '15px'}}>{d.date.replace("T", " ").substring(2,16)}</TableCell>
                 </TableRow>
               )) : ''}
             </TableBody>

@@ -145,7 +145,7 @@ export default function Update() {
     .then(res => {
       if (res.status === 200) {
       alert('수정이 완료되었습니다.')
-      window.location.href = `/profile`
+      window.location.href = `/profile/${nick}`
     }})
   }
   console.log(nickname, intro)
@@ -228,8 +228,8 @@ export default function Update() {
                       <span>이미지를 불러오는 중입니다.</span>
                     )}
                   </div>
-                  <div className="upload-button">
-                    <Button variant="contained" sx={{ mt: 5, mr : 1 }} type="primary" onClick={() => inputRef.click()}>Preview</Button>
+                  <div className="upload-button" >
+                    <Button variant="contained" sx={{ mt: 5, mr : 1 }} type="primary" onClick={() => inputRef.click()}>이미지 삽입</Button>
                     <Button variant="contained" component="span" sx={{ mt: 5 }} onClick={sendImageToServer}>
                       프로필 이미지 변경
                     </Button>

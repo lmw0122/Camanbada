@@ -26,8 +26,6 @@ function Main() {
         <SelectVariants></SelectVariants>
         <Album></Album>
         <NewsFeed></NewsFeed>
-
-
         <StickyFooter></StickyFooter>
 
     </div>

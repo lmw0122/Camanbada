@@ -32,7 +32,7 @@ export default function Create() {
     console.log(campTag + " ``````````````````` " + campId);
     if (content === "" || tag === "" || title === "" || clientId === "")
       alert("게시판에 등록할 목록을 모두 작성해 주세요");
-    else if (campTag == false) {
+    else if (campTag === false) {
       axios.post(BOARD_CREATE_URL, {
         "campId": 2911,//자유 게시판
         "clientId": clientId,
@@ -134,7 +134,7 @@ export default function Create() {
           <Box sx={{ width: 500, maxWidth: "100%", mt : 2}}>
           사용자 아이디: {clientId}
           </Box>
-          {campTag == true &&
+          {campTag === true &&
             <CampingSearch
               func={camping_data}
             ></CampingSearch>

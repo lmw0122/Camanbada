@@ -98,12 +98,14 @@ export default function BasicTabs() {
   const getCampingReview = async () => {
     axios.get(REVIEW_GET_CAMP_URL,HEADER)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setReviews(response.data);
       }).catch((error) => {
         setReviews("후기가 존재하지 않습니다");
       });
   };
+
+  console.log('리뷰스는', reviews)
 
   //캠핑 가져오기
   const getCamping = async () => {
