@@ -17,6 +17,7 @@ import Paper from '@mui/material/Paper';
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
+import ProfileImage from '../profile/ProfileImage';
 
 const theme = createTheme();
 
@@ -65,6 +66,7 @@ export default function BoardDetailMine() {
         setBoardUserId(response.data.clientId);
         setDataList(response.data);
         const onePhoto = response.data.photo;
+        console.log(onePhoto);
         if (onePhoto != "") {
           document.getElementById('userImage').setAttribute("src", onePhoto);
         }
@@ -233,6 +235,7 @@ export default function BoardDetailMine() {
                 sx={{ fontSize: 60 }}
                 onClick={(e)=>{goProfile(e, boardUserId)}}
               />
+              {/* <ProfileImage userInfo={ dataList } /> */}
             </Grid>
             <Grid>
               <Typography>
