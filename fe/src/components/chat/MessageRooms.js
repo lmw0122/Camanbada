@@ -11,19 +11,21 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import { Link } from "react-router-dom";
+import { createRoutesFromChildren, Link, useLocation } from "react-router-dom";
 import MessageRoom from './MessageRoom';
 import IfRoomId from './IfRoomId';
 
 export default function MessageRooms() {
   
-
+  const [user, setUser] = React.useState();
+  const [oppUser, setOppUser] = React.useState("");
+  const location = useLocation();
+  console.log(location.state);
+  let fromProfile = false;
   // 채팅 리스트 불러오기
-
   // date, user, message, chatroomId
   const [lists, setLists] = React.useState([]);
   // 유저 일단 B로 설정
-  const [user, setUser] = React.useState();
   const [roomId, setRoomId] = React.useState(0);
   const accessToken = localStorage.getItem("accessToken");
   const HEADER = {
@@ -48,24 +50,45 @@ export default function MessageRooms() {
         console.log(res);
         setUser(res.data);
         getLists(res.data);
-      // if (res.ok) {
-      //   data = res.json();
-      //   console.log(data);
-      //   setUser(data);
-      //   getLists();
-      // }
     })
   };
-  
+  const createRoom = (userFromProfile) => {
+    axios.post(`http://i6c109.p.ssafy.io:8000/chat/room/${userFromProfile}`, {}, HEADER).then(
+      res => {
+        console.log(res);
+        if (res.status === 200) {
+          setRoomId(res.data.chatroomId);
+        }
+        else {
+          console.log(res.data.message);
+        }
+      }
+    )
+  };
+  const getRoomId = (userFromProfile) => {
+    axios.get(`http://i6c109.p.ssafy.io:8000/chat/enter/${userFromProfile}`, HEADER)
+      .then(res => {
+        console.log(res);
+        if (res.status === 204) {
+          //방을 새로 만들어야할 때
+          let myChatroomId = createRoom(userFromProfile);
+          
+        }
+        else {
+          console.log(res.data.chatroomId);
+        }
+      })
+  };
   React.useEffect(() => {
     getUserId();
-    //getLists();
-    console.log(lists);
+    if (location.state !== null) {
+      const userFromProfile = location.state.oppUserId;
+      console.log(userFromProfile);
+      setOppUser(userFromProfile);
+      getRoomId(userFromProfile);
+    }
   }, []);
-  // React.useEffect(() => {
-  //   console.log(user);
-  //   getLists();
-  // }, [user]);
+  console.log(user);
   const createMessageRoom = (chatroomId) => {
     setRoomId(chatroomId);
     console.log(roomId);
