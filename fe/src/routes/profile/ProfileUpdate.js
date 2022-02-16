@@ -28,6 +28,12 @@ export default function Update() {
     setTextLength(totalLength);
   }
   
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      'Authorization': accessToken
+    }
+  }
   // 닉네임 중복 체크 & 유효성 체크
   const [ userNickname, setUserNickname ] = useState('');
 
@@ -172,20 +178,6 @@ export default function Update() {
   
   const sendImageToServer = async () => {
     if (image.image_file) {
-<<<<<<< HEAD
-      const reader = new FileReader();
-      console.log(reader.readAsDataURL(image.image_file))
-      const formData = new FormData ()
-      formData.append('file', image.image_file);
-      // console.log(image.image_file)
-      await axios.put(`http://i6c109.p.ssafy.io:8000/user/${userId}`, {"photo" : formData});
-      alert("등록 완료했습니다.")
-      setImage({
-        image_file: "",
-        preview_URL : "../img/dog.png",
-      })
-      setLoaded(false);
-=======
       const formData = new FormData()
       formData.append('file', image.image_file);
       const fileReader = new FileReader();
@@ -203,7 +195,6 @@ export default function Update() {
           });
         setLoaded(false);
    		};
->>>>>>> fd80f078f2339992b6a55cd4725fc9ca6ec0a608
     } else {
       alert("사진을 등록하세요!")
     }
