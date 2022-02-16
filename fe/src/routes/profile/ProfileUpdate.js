@@ -173,9 +173,11 @@ export default function Update() {
   
   const sendImageToServer = async () => {
     if (image.image_file) {
+      const reader = new FileReader();
+      console.log(reader.readAsDataURL(image.image_file))
       const formData = new FormData ()
       formData.append('file', image.image_file);
-      console.log(image.image_file)
+      // console.log(image.image_file)
       await axios.put(`http://i6c109.p.ssafy.io:8000/user/${userId}`, {"photo" : formData});
       alert("등록 완료했습니다.")
       setImage({
