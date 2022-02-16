@@ -45,16 +45,9 @@ export default function NewsFeed() {
       .get(ID_GET_URL, HEADER)
       .then((response) => {
         getFollower();
-<<<<<<< HEAD
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("로그인이 필요합니다");
-=======
       }).catch((err) => {
         // console.log(err);
         // alert("로그인이 필요합니다");
->>>>>>> 01c8e1f7b03e4a9410b17149a6c9e52937d028d9
       });
   };
 
@@ -64,14 +57,8 @@ export default function NewsFeed() {
       .get(BOARD_GET_URL, HEADER)
       .then((response) => {
         setBoardList(response.data);
-<<<<<<< HEAD
-      })
-      .catch((err) => {
-        alert("게시물이 아예 없습니다");
-=======
       }).catch((err) => {
         // alert("게시물이 아예 없습니다");
->>>>>>> 01c8e1f7b03e4a9410b17149a6c9e52937d028d9
       });
   };
 
