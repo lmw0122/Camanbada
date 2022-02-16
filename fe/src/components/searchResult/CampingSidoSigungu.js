@@ -1,57 +1,54 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useParams } from 'react-router-dom';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useParams } from "react-router-dom";
 import Axios from "axios";
 import CampingImage from "../camping/CampingImage";
-import IconButton from '@mui/material/IconButton';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Link } from "react-router-dom";
-
-
 
 const theme = createTheme();
 
-
 export default function SearchCampingAlbum() {
   const { campkeyword, campkeyword2 } = useParams();
-  
+
   const [campings, setCampings] = React.useState([]);
 
-  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list';
+  const CAMP_GET_URL = "http://i6c109.p.ssafy.io:8092/camp/basic/list";
 
   React.useEffect(() => {
-    Axios.get(CAMP_GET_URL)
-      .then(res => setCampings(res.data))   
+    Axios.get(CAMP_GET_URL).then((res) => setCampings(res.data));
   }, []);
-
 
   const searchList = [];
 
-  for (var i=0; i<campings.length; i++) {
-    if (campkeyword === campings[i].doNm && campings[i].sigunguNm === campkeyword2) {
-      searchList.push(campings[i])
+  for (var i = 0; i < campings.length; i++) {
+    if (
+      campkeyword === campings[i].doNm &&
+      campings[i].sigunguNm === campkeyword2
+    ) {
+      searchList.push(campings[i]);
     }
   }
 
-
   return (
-    <ThemeProvider theme={theme}>    
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
         {/* Hero unit */}
         <Box
           sx={{
-            bgcolor: 'background.paper',
+            bgcolor: "background.paper",
             pt: 10,
             pb: 2,
           }}
@@ -88,32 +85,36 @@ export default function SearchCampingAlbum() {
           <Grid container spacing={4}>
             {searchList.map((camp) => (
               <Grid item key={camp.campId} xs={12} sm={6} md={3}>
-                
                 <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
                   align="center"
-                  onClick = {(e) => {
+                  onClick={(e) => {
                     e.preventDefault();
                     window.location.href = `/camping/${camp.campId}`;
                   }}
-                  >
-                  <CampingImage basics={ camp }></CampingImage>
+                >
+                  <CampingImage basics={camp}></CampingImage>
                   <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="subtitle1" >
+                    <Typography gutterBottom variant="subtitle1">
                       {camp.facltNm}
                     </Typography>
                   </CardContent>
-                  <IconButton aria-label="add to favorites" color="warning" align="left">
+                  <IconButton
+                    aria-label="add to favorites"
+                    color="warning"
+                    align="left"
+                  >
                     <FavoriteIcon />
-                    <Typography>
-                      {camp.likes}
-                    </Typography>
+                    <Typography>{camp.likes}</Typography>
                   </IconButton>
                   {/* <CardActions>
                     <Button size="small">상세정보</Button>
                   </CardActions> */}
                 </Card>
-            
               </Grid>
             ))}
           </Grid>

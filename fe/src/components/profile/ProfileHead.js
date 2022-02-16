@@ -30,6 +30,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
+import CampingImage from "../camping/CampingImage";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -73,7 +74,6 @@ const Item = styled(Paper)(({ theme }) => ({
   // color: theme.palette.text.secondary,
 }));
 
-
 export default function ProfileHead() {
   const [value, setValue] = React.useState(0);
 
@@ -85,20 +85,22 @@ export default function ProfileHead() {
     },
   };
 
-  const { nick } = useParams('');
+  const { nick } = useParams("");
   const [userInfo, setUserInfo] = useState("");
   const [otherUserCheck, setOtherUserCheck] = useState("");
   const [isFollow, setIsFollow] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [userIntro, setUserIntro] = useState("");
-  const [ followerList, setFollowerList ] = useState("");
-  const [ followingList, setFollowingList ] = useState("");
+  const [followerList, setFollowerList] = useState("");
+  const [followingList, setFollowingList] = useState("");
+
+  const [likedCampings, setLikedCampings] = useState("");
 
   const getFollow = (isFollow) => {
     setIsFollow(isFollow);
     getUserId();
-  }
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -111,49 +113,57 @@ export default function ProfileHead() {
 
   //현재 프로필 사용자
   const getUserId = () => {
-    axios
-      .get(encoded)
-      .then((res) => {
-        setUserInfo(res.data);
-        setLoading(false);
-        setUserIntro(res.data[0].intro);
+    axios.get(encoded).then((res) => {
+      setUserInfo(res.data);
+      setLoading(false);
+      setUserIntro(res.data[0].intro);
 
-        followCheck(res.data);
-      });
-  }
+      followCheck(res.data);
+    });
+  };
   //팔로잉 리스트
-  function getFollwoingList(loginUserId){
-    axios.get(`http://i6c109.p.ssafy.io:8000/follow/follower`,HEADER)
-      .then(res => {
+  function getFollwoingList(loginUserId) {
+    axios
+      .get(`http://i6c109.p.ssafy.io:8000/follow/follower`, HEADER)
+      .then((res) => {
         setFollowingList(res.data);
         console.log(res);
-        res.data.map(folloUser => {
+        res.data.map((folloUser) => {
           console.log(folloUser.following + " " + loginUserId);
-          if (folloUser.following == loginUserId) {
+          if (folloUser.following === loginUserId) {
             setIsFollow(true);
           }
         });
-      })
+      });
   }
   //팔로워 리스트
   const getFollowerList = () => {
-    axios.get(`http://i6c109.p.ssafy.io:8000/follow/following`,HEADER)
-      .then(res => setFollowerList(res.data))
-  }
+    axios
+      .get(`http://i6c109.p.ssafy.io:8000/follow/following`, HEADER)
+      .then((res) => setFollowerList(res.data));
+  };
 
   //현재 로그인한 사용자인지 아닌지
-  function followCheck(user){
+  function followCheck(user) {
     const URI = `http://i6c109.p.ssafy.io:8000/user`;
-    axios.get(URI,HEADER)
-      .then((res) => {
-        getFollwoingList(user[0].id);
-        if (res.data == user[0].id)
-          setOtherUserCheck(false);
-        else {
-          setOtherUserCheck(true);
-        }
-      })
+    axios.get(URI, HEADER).then((res) => {
+      getFollwoingList(user[0].id);
+      if (res.data == user[0].id) setOtherUserCheck(false);
+      else {
+        setOtherUserCheck(true);
+      }
+    });
   }
+
+
+
+  const getLikedCampingList = () => {
+    axios
+      .get(encodeURI(`http://i6c109.p.ssafy.io:8092/camp/like/list/${nick}`))
+      .then((res) => {
+        setLikedCampings(res.data);
+      });
+  };
 
   React.useEffect(() => {
     getUserId();
@@ -163,8 +173,17 @@ export default function ProfileHead() {
   React.useEffect(() => {
     getUserId();
   }, [nick]);
-  
 
+  React.useEffect(() => {
+    getLikedCampingList();
+  }, [nick]);
+
+  const searchList = [];
+
+  for (var i = 0; i < likedCampings.length; i++) {
+    searchList.push(likedCampings[i]);
+  }
+  
   return (
     <div>
       {loading ? null : (
@@ -202,25 +221,27 @@ export default function ProfileHead() {
                     메시지 보내기
                   </Button>
                 </Link>                */}
-                    {otherUserCheck == true &&
+                    {otherUserCheck === true && (
                       <IsFollow
                         isFollow={isFollow}
-                        followUser={userInfo[0].id }
+                        followUser={userInfo[0].id}
                         getFollow={getFollow}
                       ></IsFollow>
-                    }
-                    {otherUserCheck == false &&
+                    )}
+                    {otherUserCheck === false && (
                       <Button
                         style={{
                           border: "1px black solid",
-                          color: "black"
+                          color: "black",
                         }}
-                        onClick={() => { window.location.href = `/profile/update/${nick}`}}
+                        onClick={() => {
+                          window.location.href = `/profile/update/${nick}`;
+                        }}
                         variant="outlined"
                       >
                         프로필 편집
                       </Button>
-                  }
+                    )}
                   </Stack>
                   {/* 게시물, 팔로워, 팔로우 부분 */}
                   <Stack direction="row" spacing={4} sx={{ mb: 2 }}>
@@ -233,23 +254,15 @@ export default function ProfileHead() {
                     <Stack direction="row" spacing={1}>
                       <Typography sx={{ fontSize: 20 }}>팔로잉</Typography>
                       <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
-                        {otherUserCheck == true &&
-                           followerList.length 
-                        }
-                        {otherUserCheck == false &&
-                           followingList.length 
-                        }
+                        {otherUserCheck === true && followerList.length}
+                        {otherUserCheck === false && followingList.length}
                       </Typography>
                     </Stack>
                     <Stack direction="row" spacing={1}>
                       <Typography sx={{ fontSize: 20 }}>팔로워</Typography>
                       <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
-                      {otherUserCheck == true &&
-                           followingList.length 
-                        }
-                        {otherUserCheck == false &&
-                           followerList.length 
-                        }
+                        {otherUserCheck === true && followingList.length}
+                        {otherUserCheck === false && followerList.length}
                       </Typography>
                     </Stack>
                   </Stack>
@@ -335,7 +348,7 @@ export default function ProfileHead() {
                   </Card>
                 </TabPanel>
                 <TabPanel value={value} index={1} align="center">
-                  <Card
+                  {/* <Card
                     // sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                     sx={{ maxWidth: 345 }}
                   >
@@ -353,18 +366,55 @@ export default function ProfileHead() {
                       <Typography gutterBottom variant="h5" component="h2">
                         $캠핑장 이름
                       </Typography>
-                      {/* <Typography>
-                    This is a media card. You can use this section to describe the
-                    content.
-                  </Typography> */}
-                    </CardContent>
-                    {/* 캠핑장 상세 정보 링크 걸기 */}
-                    <Link to={"/campingdetail"}>
+                    </CardContent> */}
+                  {/* 캠핑장 상세 정보 링크 걸기 */}
+                  {/* <Link to={"/campingdetail"}>
                       <CardActions>
                         <Button size="small">상세정보</Button>
                       </CardActions>
                     </Link>
-                  </Card>
+                  </Card> */}
+
+                  <Container sx={{ py: 0 }} maxWidth="lg">
+                    {/* End hero unit */}
+                    <Grid container spacing={4}>
+                      {/* {console.log("mmmmmmmmmmmmmmmmmmmmmmmmmm")} */}
+                      {searchList.map((camp) => (
+                        <Grid item key={camp.campId} xs={12} sm={6} md={3}>
+                          <Card
+                            sx={{
+                              height: "100%",
+                              display: "flex",
+                              flexDirection: "column",
+                            }}
+                            align="center"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              window.location.href = `/camping/${camp.campId}`;
+                            }}
+                          >
+                            <CampingImage basics={camp}></CampingImage>
+                            <CardContent sx={{ flexGrow: 1 }}>
+                              <Typography gutterBottom variant="subtitle1">
+                                {camp.facltNm}
+                              </Typography>
+                            </CardContent>
+                            <IconButton
+                              aria-label="add to favorites"
+                              color="warning"
+                              align="left"
+                            >
+                              <FavoriteIcon />
+                              <Typography>{camp.likes}</Typography>
+                            </IconButton>
+                            {/* <CardActions>
+                    <Button size="small">상세정보</Button>
+                  </CardActions> */}
+                          </Card>
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </Container>
                 </TabPanel>
               </Box>
             </Container>
