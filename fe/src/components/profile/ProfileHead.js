@@ -92,14 +92,16 @@ export default function ProfileHead() {
 
   const [loading, setLoading] = useState(true);
   const [userIntro, setUserIntro] = useState("");
-  const [ followerList, setFollowerList ] = useState("");
+  const [followerList, setFollowerList] = useState("");
   const [followingList, setFollowingList] = useState("");
-  
+
   const [otherFollowerLength, setOtherFollowerLength] = useState("");
   const [otherFollowingLength, setOtherFollowingLength] = useState("");
 
   const [likedCampings, setLikedCampings] = useState("");
-  
+
+  const [boardList, setBoardList] = useState([]);
+
   const getFollow = (isFollow) => {
     setIsFollow(isFollow);
     getUserId();
@@ -108,71 +110,76 @@ export default function ProfileHead() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  
+
   // 유저 정보 얻어오기
   // nick은 한글이라 인코딩
   const uri = `http://i6c109.p.ssafy.io:8000/user/${nick}`;
   const encoded = encodeURI(uri);
-  
+
   //현재 프로필 사용자
   const getUserId = () => {
-    axios
-    .get(encoded)
-    .then((res) => {
+    axios.get(encoded).then((res) => {
       setUserInfo(res.data);
       setLoading(false);
       setUserIntro(res.data[0].intro);
 
       followCheck(res.data);
-      });
-  }
+    });
+  };
 
   //console.log("현재 눌러본 프로필의 아이디" + userInfo[0].id);
   //팔로잉 리스트
-  function getFollwoingList(loginUserId,profileUserId) {
+  function getFollwoingList(loginUserId, profileUserId) {
     const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/follower`;
-    axios.get(URL,HEADER)
-      .then(res => {
-        setFollowingList(res.data);
-        //console.log(res.data + "````````````````````` " + loginUserId + "````````````````````` " + profileUserId);
-        res.data.map(folloUser => {
-          //console.log(folloUser.following + " " + loginUserId);
-          if (folloUser.following == loginUserId) {
-            setIsFollow(true);
-          }
-        });
+    axios.get(URL, HEADER).then((res) => {
+      setFollowingList(res.data);
+      //console.log(res.data + "````````````````````` " + loginUserId + "````````````````````` " + profileUserId);
+      res.data.map((folloUser) => {
+        //console.log(folloUser.following + " " + loginUserId);
+        if (folloUser.following == loginUserId) {
+          setIsFollow(true);
+        }
       });
+    });
   }
   //팔로워 리스트
   function getFollowerList(profileUserId) {
     const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/following`;
-    axios.get(URL,HEADER)
-      .then(res => setFollowerList(res.data))
+    axios.get(URL, HEADER).then((res) => setFollowerList(res.data));
   }
 
   //현재 로그인한 사용자인지 아닌지
   function followCheck(user) {
     const URI = `http://i6c109.p.ssafy.io:8000/user`;
-    axios.get(URI,HEADER)
-      .then((res) => {
-        getFollwoingList(res.data, user[0].id);//검색한 프로필 id
-        getFollowerList(user[0].id);
+    axios.get(URI, HEADER).then((res) => {
+      getFollwoingList(res.data, user[0].id); //검색한 프로필 id
+      getFollowerList(user[0].id);
 
-        if (res.data == user[0].id)
-          setOtherUserCheck(false);
-        else {
-          setOtherUserCheck(true);
-        }
-      })
+      if (res.data == user[0].id) setOtherUserCheck(false);
+      else {
+        setOtherUserCheck(true);
+      }
+    });
   }
 
-
-
+  //닉네임을 이용하여 해당 유저가 좋아요한 캠핑장 리스트 불러오기
   const getLikedCampingList = () => {
     axios
       .get(encodeURI(`http://i6c109.p.ssafy.io:8092/camp/like/list/${nick}`))
       .then((res) => {
         setLikedCampings(res.data);
+      });
+  };
+
+  //모든 게시판 가져오기
+  const getBoardList = () => {
+    axios
+      .get(`http://i6c109.p.ssafy.io:8000/board`, HEADER)
+      .then((response) => {
+        setBoardList(response.data);
+      })
+      .catch((err) => {
+        // alert("게시물이 아예 없습니다");
       });
   };
 
@@ -189,12 +196,16 @@ export default function ProfileHead() {
     getLikedCampingList();
   }, [nick]);
 
+  useEffect(() => {
+    getBoardList();
+  }, []);
+
   const searchList = [];
 
   for (var i = 0; i < likedCampings.length; i++) {
     searchList.push(likedCampings[i]);
   }
-  
+
   return (
     <div>
       {loading ? null : (
@@ -221,47 +232,50 @@ export default function ProfileHead() {
                       {nick}
                     </Typography>
                     <ProfileUser />
-                    
-                    {otherUserCheck == true &&
+
+                    {otherUserCheck == true && (
                       <div>
                         <IsFollow
                           isFollow={isFollow}
-                          followUser={userInfo[0].id }
+                          followUser={userInfo[0].id}
                           getFollow={getFollow}
                         ></IsFollow>
                         {console.log(userInfo.id)}
-                        <Link to={'/message'}
+                        <Link
+                          to={"/message"}
                           state={{
-                            oppUserId: userInfo[0].id
+                            oppUserId: userInfo[0].id,
                           }}
-                          style={{ textDecoration: 'none' }}>
-                          <Button style={{
-                            border: "1px black solid",
-                            color: "black"
-                          }}
-                          variant="outlined">
+                          style={{ textDecoration: "none" }}
+                        >
+                          <Button
+                            style={{
+                              border: "1px black solid",
+                              color: "black",
+                            }}
+                            variant="outlined"
+                          >
                             메시지 보내기
                           </Button>
-                        </Link> 
-                      
+                        </Link>
                       </div>
-                    }
-                    {otherUserCheck == false &&
+                    )}
+                    {otherUserCheck == false && (
                       <div>
                         <Button
                           style={{
                             border: "1px black solid",
-                            color: "black"
+                            color: "black",
                           }}
-                          onClick={() => { window.location.href = `/profile/update/${nick}`}}
+                          onClick={() => {
+                            window.location.href = `/profile/update/${nick}`;
+                          }}
                           variant="outlined"
                         >
                           프로필 편집
                         </Button>
-                        
-            
                       </div>
-                  }
+                    )}
                   </Stack>
                   {/* 게시물, 팔로워, 팔로우 부분 */}
                   <Stack direction="row" spacing={4} sx={{ mb: 2 }}>
@@ -331,7 +345,7 @@ export default function ProfileHead() {
                   </Tabs>
                 </Box>
                 <TabPanel value={value} index={0} align="center">
-                  <Card sx={{ maxWidth: 345 }}>
+                  {/* <Card sx={{ maxWidth: 345 }}>
                     <CardHeader
                       avatar={
                         <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -365,7 +379,90 @@ export default function ProfileHead() {
                         <ShareIcon />
                       </IconButton>
                     </CardActions>
-                  </Card>
+                  </Card> */}
+
+                  <Container sx={{ py: 0, mb: 8 }} maxWidth="lg">
+                    <Grid container spacing={4}>
+                      {boardList.map(
+                        (board, idx) =>
+                          board.clientId === userInfo[0].id && (
+                            <Grid item key={board} xs={12} sm={6} md={4}>
+                              <Link
+                                to={`/board/${board.boardId}`}
+                                style={{ textDecoration: "none" }}
+                              >
+                                <Card sx={{ maxWidth: 345, maxHight: 345 }}>
+                                  <CardHeader
+                                    avatar={
+                                      <Avatar
+                                        sx={{ bgcolor: red[500] }}
+                                        aria-label="recipe"
+                                      />
+                                    }
+                                    title={board.title}
+                                    subheader={board.date}
+                                  />
+                                  {board.photo != "" && (
+                                    <CardMedia
+                                      component="img"
+                                      height="194"
+                                      image={board.photo}
+                                      alt="없음"
+                                    />
+                                  )}
+                                  <CardContent>
+                                    <Typography
+                                      variant="body1"
+                                      color="text.secondary"
+                                    >
+                                      {board.photo == "" &&
+                                        board.content.length > 140 && (
+                                          <div style={{ height: 322 }}>
+                                            <h2>더 보기</h2>
+                                          </div>
+                                        )}
+                                      {board.photo != "" &&
+                                        board.content.length > 140 && (
+                                          <div style={{ height: 128 }}>
+                                            <h2>더 보기</h2>
+                                          </div>
+                                        )}
+                                      {board.photo == "" &&
+                                        board.content.length <= 100 && (
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html: board.content,
+                                            }}
+                                            style={{ height: 345 }}
+                                          ></div>
+                                        )}
+                                      {board.photo != "" &&
+                                        board.content.length <= 100 && (
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html: board.content,
+                                            }}
+                                            style={{ height: 151 }}
+                                          ></div>
+                                        )}
+                                    </Typography>
+                                  </CardContent>
+                                  <CardActions disableSpacing>
+                                    <IconButton
+                                      aria-label="add to favorites"
+                                      color="warning"
+                                    >
+                                      <FavoriteIcon />
+                                      <Typography>{board.like}</Typography>
+                                    </IconButton>
+                                  </CardActions>
+                                </Card>
+                              </Link>
+                            </Grid>
+                          )
+                      )}
+                    </Grid>
+                  </Container>
                 </TabPanel>
                 <TabPanel value={value} index={1} align="center">
                   {/* <Card

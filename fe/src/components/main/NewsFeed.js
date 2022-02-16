@@ -45,7 +45,8 @@ export default function NewsFeed() {
       .get(ID_GET_URL, HEADER)
       .then((response) => {
         getFollower();
-      }).catch((err) => {
+      })
+      .catch((err) => {
         // console.log(err);
         // alert("로그인이 필요합니다");
       });
@@ -57,7 +58,8 @@ export default function NewsFeed() {
       .get(BOARD_GET_URL, HEADER)
       .then((response) => {
         setBoardList(response.data);
-      }).catch((err) => {
+      })
+      .catch((err) => {
         // alert("게시물이 아예 없습니다");
       });
   };
@@ -171,24 +173,22 @@ export default function NewsFeed() {
                                 <h2>더 보기</h2>
                               </div>
                             )}
-                            {board.photo == "" &&
-                              board.content.length <= 100 && (
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: board.content,
-                                  }}
-                                  style={{ height: 345 }}
-                                ></div>
-                              )}
-                            {board.photo != "" &&
-                              board.content.length <= 100 && (
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: board.content,
-                                  }}
-                                  style={{ height: 151 }}
-                                ></div>
-                              )}
+                            {board.photo == "" && board.content.length <= 100 && (
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: board.content,
+                                }}
+                                style={{ height: 345 }}
+                              ></div>
+                            )}
+                            {board.photo != "" && board.content.length <= 100 && (
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: board.content,
+                                }}
+                                style={{ height: 151 }}
+                              ></div>
+                            )}
                           </Typography>
                         </CardContent>
                         <CardActions disableSpacing>
@@ -244,24 +244,22 @@ export default function NewsFeed() {
                                 <h2>더 보기</h2>
                               </div>
                             )}
-                            {board.photo == "" &&
-                              board.content.length <= 100 && (
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: board.content,
-                                  }}
-                                  style={{ height: 345 }}
-                                ></div>
-                              )}
-                            {board.photo != "" &&
-                              board.content.length <= 100 && (
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: board.content,
-                                  }}
-                                  style={{ height: 151 }}
-                                ></div>
-                              )}
+                            {board.photo == "" && board.content.length <= 100 && (
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: board.content,
+                                }}
+                                style={{ height: 345 }}
+                              ></div>
+                            )}
+                            {board.photo != "" && board.content.length <= 100 && (
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: board.content,
+                                }}
+                                style={{ height: 151 }}
+                              ></div>
+                            )}
                           </Typography>
                         </CardContent>
                         <CardActions disableSpacing>
