@@ -19,6 +19,12 @@ const spanStyle ={
 }
 
 export default function Update() {
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
   // 실시간 글자수 체크
   const [ textLength, setTextLength ] = useState('0');
   
@@ -28,12 +34,7 @@ export default function Update() {
     setTextLength(totalLength);
   }
   
-  const accessToken = localStorage.getItem("accessToken");
-  const HEADER = {
-    headers: {
-      'Authorization': accessToken
-    }
-  }
+
   // 닉네임 중복 체크 & 유효성 체크
   const [ userNickname, setUserNickname ] = useState('');
 

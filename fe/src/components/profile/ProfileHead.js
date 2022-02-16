@@ -31,6 +31,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import CampingImage from "../camping/CampingImage";
+import ProfileImage from "./ProfileImage";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -223,7 +224,8 @@ export default function ProfileHead() {
                 }}
               >
                 <Grid item align="center" md={2.4} sx={{ mr: 4 }}>
-                  <AccountCircleIcon sx={{ fontSize: 150 }} />
+                  <ProfileImage userInfo={ userInfo } />
+                  {/* <AccountCircleIcon sx={{ fontSize: 150 }} /> */}
                 </Grid>
                 <Grid item md={7.2}>
                   {/* 닉네임 */}

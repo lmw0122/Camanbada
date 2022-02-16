@@ -323,6 +323,7 @@ return (
           }}
           variant="contained"
           onClick={clickButton}
+          style={{ backgroundColor : '#1b5e20'}}
         >
           이동
         </Button>
@@ -369,14 +370,14 @@ return (
       </Stack>
       <Stack>
         <TableContainer align="center">
-          <Table sx={{ m : 2, width: 700 }} aria-label="simple table">
+          <Table sx={{ m : 2, width: 900 }} aria-label="simple table">
             <TableHead>
-              <TableRow>
+              <TableRow sx={{ border : '1px solid black', bgcolor : '#1b5e20' }}>
                 {/* <TableCell>번호</TableCell> */}
-                <TableCell align="center">말머리</TableCell>
-                <TableCell align="center">제목</TableCell>
-                <TableCell align="center">작성자</TableCell>
-                <TableCell align="center">작성날짜</TableCell>
+                <TableCell align="center" sx={{ fontWeight: 'bold',color : '#ffffff', fontSize: '18px' }}>말머리</TableCell>
+                <TableCell align="center" sx={{ fontWeight: 'bold',color : '#ffffff', fontSize: '18px' }}>제목</TableCell>
+                <TableCell align="center" sx={{ fontWeight: 'bold',color : '#ffffff', fontSize: '18px' }}> 작성자</TableCell>
+                <TableCell align="center" sx={{ fontWeight: 'bold',color : '#ffffff', fontSize: '18px' }}>작성날짜</TableCell>
               </TableRow>
             </TableHead>
             <TableBody> 

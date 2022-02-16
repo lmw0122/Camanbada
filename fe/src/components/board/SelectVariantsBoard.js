@@ -17,7 +17,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paging from '../common/Pagination';
-import { green, lightGreen, lime, blueGrey } from '@mui/material/colors';
+
 
 export default function SelectVariants() {
   const [camp, setCamp] = React.useState('');
@@ -175,7 +175,16 @@ export default function SelectVariants() {
   const getBoards = async () => {
     Axios.get(BOARD_GET_URL,)
       .then((response) => {
-        setDataList(response.data);
+        let boardList = response.data;
+        boardList.sort(function (a, b) {
+          if(a.date > b.date)
+            return -1;
+          else if(a.date == b.date)
+            return 0;
+          else
+            return 1;
+        })
+        setDataList(boardList);
       }).catch((error) => {
         alert("게시판이 비어있습니다");
       });
@@ -221,8 +230,10 @@ export default function SelectVariants() {
       selectedTag.push(targetList[i]);
     };
   }
+
   let totalListCount = selectedTag.length;
   let offset = (pageNum - 1) * numPerPage;
+
   React.useEffect(() => {
     console.log('///////');
     console.log("totalListCount : " + totalListCount);
@@ -397,6 +408,7 @@ return (
               <TableRow sx={{ border : '1px solid black', bgcolor : '#1b5e20' }}>
                 {/* <TableCell>번호</TableCell> */}
                 <TableCell align="center" sx={{ fontWeight: 'bold',color : '#ffffff', fontSize: '18px' }}>말머리</TableCell>
+                <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>캠핑장명</TableCell>
                 <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>제목</TableCell>
                 <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>작성자</TableCell>
                 <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>작성날짜</TableCell>
@@ -412,11 +424,12 @@ return (
                     {d.boardId}
                   </TableCell> */}
                   <TableCell align="center" sx={{ fontSize: '15px'}}>{d.tag}</TableCell>
-                    <TableCell align="center" sx={{ fontSize: '15px'}}>
-                      <Link to={`/board/${d.boardId}`} style={{ textDecoration: 'none', color : '#1b5e20'}}>
-                      {d.title}
-                      </Link>
-                    </TableCell>
+                  <TableCell align="center" sx={{ fontSize: '15px'}}>{d}</TableCell>
+                  <TableCell align="center" sx={{ fontSize: '15px'}}>
+                    <Link to={`/board/${d.boardId}`} style={{ textDecoration: 'none', color : '#1b5e20'}}>
+                    {d.title}
+                    </Link>
+                  </TableCell>
                   <TableCell align="center" sx={{ fontSize: '15px'}}>
                     <Link to={`/profile/${d.clientId}`} style={{ textDecoration: 'none', color : '#1b5e20'}}>
                       {d.clientId}
