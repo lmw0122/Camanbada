@@ -80,7 +80,7 @@ export default function NewsFeed() {
       .then((response) => {
         console.log(response.data);
         if (response.data == "") {
-          alert("게시판이 비어있습니다");
+          alert("팔로우 유저의 게시물이 없습니다");
         } else {
           setFollowBoardList(response.data);
           console.log(followBoardList);

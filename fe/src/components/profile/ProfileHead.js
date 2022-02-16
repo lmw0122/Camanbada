@@ -85,8 +85,6 @@ export default function ProfileHead() {
     },
   };
 
- // const [isfollowed, setIsfollowed] = React.useState('false');
-
   const { nick } = useParams('');
   const [userInfo, setUserInfo] = useState("");
   const [otherUserCheck, setOtherUserCheck] = useState("");
@@ -96,7 +94,11 @@ export default function ProfileHead() {
   const [userIntro, setUserIntro] = useState("");
   const [ followerList, setFollowerList ] = useState("");
   const [ followingList, setFollowingList ] = useState("");
-  
+
+  const getFollow = (isFollow) => {
+    setIsFollow(isFollow);
+    getUserId();
+  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -131,15 +133,8 @@ export default function ProfileHead() {
             setIsFollow(true);
           }
         });
-        // for(let i = 0; i<res.data.length; i++){
-        //   console.log(res.data[i].following +" "+ userInfo.id);
-        //   if (res.data[i].following == userInfo.id) {
-        //     setIsFollow(true);
-        //   }
-        // }
       })
   }
-  //console.log(isFollow);
   //팔로워 리스트
   const getFollowerList = () => {
     axios.get(`http://i6c109.p.ssafy.io:8000/follow/following`,HEADER)
@@ -207,13 +202,25 @@ export default function ProfileHead() {
                     메시지 보내기
                   </Button>
                 </Link>                */}
-                    {console.log("----------------------------------------------------")}
-                    {console.log(isFollow)}
                     {otherUserCheck == true &&
                       <IsFollow
-                      setFollow = {isFollow}
-                    />
+                        isFollow={isFollow}
+                        followUser={userInfo[0].id }
+                        getFollow={getFollow}
+                      ></IsFollow>
                     }
+                    {otherUserCheck == false &&
+                      <Button
+                        style={{
+                          border: "1px black solid",
+                          color: "black"
+                        }}
+                        onClick={() => { window.location.href = `/profile/update/${nick}`}}
+                        variant="outlined"
+                      >
+                        프로필 편집
+                      </Button>
+                  }
                   </Stack>
                   {/* 게시물, 팔로워, 팔로우 부분 */}
                   <Stack direction="row" spacing={4} sx={{ mb: 2 }}>
@@ -224,15 +231,25 @@ export default function ProfileHead() {
                       </Typography>
                     </Stack>
                     <Stack direction="row" spacing={1}>
-                      <Typography sx={{ fontSize: 20 }}>팔로워</Typography>
+                      <Typography sx={{ fontSize: 20 }}>팔로잉</Typography>
                       <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
-                        {followerList.length}
+                        {otherUserCheck == true &&
+                           followerList.length 
+                        }
+                        {otherUserCheck == false &&
+                           followingList.length 
+                        }
                       </Typography>
                     </Stack>
                     <Stack direction="row" spacing={1}>
-                      <Typography sx={{ fontSize: 20 }}>팔로우</Typography>
+                      <Typography sx={{ fontSize: 20 }}>팔로워</Typography>
                       <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
-                        {followerList.length}
+                      {otherUserCheck == true &&
+                           followingList.length 
+                        }
+                        {otherUserCheck == false &&
+                           followerList.length 
+                        }
                       </Typography>
                     </Stack>
                   </Stack>
