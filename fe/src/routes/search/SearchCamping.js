@@ -1,5 +1,6 @@
 import SearchCampingAlbum from "../../components/searchResult/SearchCampingAlbum"
 import NavBar from '../../components/common/NavBar'
+import StickyFooter from "../../components/common/Footer"
 
 export default function SearchCamping () {
 
@@ -7,6 +8,7 @@ export default function SearchCamping () {
     <div>
       <NavBar></NavBar>
       <SearchCampingAlbum></SearchCampingAlbum>
+      <StickyFooter></StickyFooter>
     </div>
   )
 }

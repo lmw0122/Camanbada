@@ -15,6 +15,7 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { Link } from "react-router-dom";
+import axios from "axios";
 import Axios from "axios";
 import CampingImage from './CampingImage';
 import Subs from './Subs';
@@ -76,6 +77,41 @@ export default function BasicTabs() {
 
   
 
+  const NOW_PAGE = `http://localhost:3000/camping/${campId}`;
+  
+  // const CAMPING_LIKE_URL = `http://i6c109.p.ssafy.io:8092/camp/like/`
+  const CAMPING_LIKE_URL = `http://i6c109.p.ssafy.io:8092/camp/like/`
+
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      'Authorization': accessToken
+    }
+  }
+
+  //캠핑 좋아요
+  const campingLike= (e, campId) =>{{
+    // console.log(campId);
+    const URL = CAMPING_LIKE_URL + campId;
+    axios.post(URL, {}, HEADER)
+      .then((response) => {
+        console.log(response);
+        console.log(response.status);
+        if (response.status == 204) {
+          axios.delete(URL, HEADER)
+            .then((response) => {
+              window.location.href = NOW_PAGE;
+          }).catch((error) => {
+            alert("싫어요에 실패하였습니다");
+          });
+        }
+        else {//좋아요 성공
+          window.location.href = NOW_PAGE;
+        }
+      }).catch((error) => {
+        alert("좋아요에 실패하였습니다");
+      });
+  };}
   
   React.useEffect(() => {
     Axios.get(BASIC_GET_URL)
@@ -185,6 +221,7 @@ export default function BasicTabs() {
                   color: "black"
                 }}
                 variant="outlined"
+                onClick={(e)=>{campingLike(e, campId)}}
               >
                 <ThumbUpOffAltIcon />
               </Button>
@@ -242,7 +279,7 @@ export default function BasicTabs() {
               </Stack>
               {/* 네이버 지도 마커 */}
               <RenderAfterNavermapsLoaded
-                ncpClientId={'v1qzk7bjak'} // 자신의 네이버 계정에서 발급받은 Client ID
+                ncpClientI												d={'v1qzk7bjak'} // 자신의 네이버 계정에서 발급받은 Client ID
                 error={<p>Maps Load Error</p>}
                 loading={<p>Maps Loading...</p>}
               >

@@ -38,9 +38,9 @@ export default function BoardTable() {
         <CssBaseline />
         <TableContainer align="center">
           <Table sx={{ m : 2, width: 700 }} aria-label="simple table">
-            <TableHead>
+            <TableHead >
               <TableRow>
-                <TableCell>번호</TableCell>
+                {/* <TableCell>번호</TableCell> */}
                 <TableCell align="center">말머리</TableCell>
                 <TableCell align="center">제목</TableCell>
                 <TableCell align="center">작성자</TableCell>
@@ -53,9 +53,9 @@ export default function BoardTable() {
                   key={d.boardId}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
+                  {/* <TableCell component="th" scope="row">
                     {d.boardId}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell align="center">{d.tag}</TableCell>
                     <TableCell align="center">
                       <Link to={`/board/${d.boardId}`} style={{ textDecoration: 'none' }}>

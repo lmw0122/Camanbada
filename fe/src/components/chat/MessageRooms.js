@@ -56,6 +56,18 @@ export default function MessageRooms() {
       // }
     })
   };
+  const getUserId = async () => {
+    await fetch(
+      `http://i6c109.p.ssafy.io:8082/chat/user`
+    ).then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+    }).then(data => {
+      console.log(data);
+      setUser(data);
+    })
+  };
   React.useEffect(() => {
     getUserId();
     //getLists();

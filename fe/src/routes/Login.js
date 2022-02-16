@@ -14,6 +14,7 @@ import camping3 from "../img/campingImg/camping3.jpg";
 import camping4 from "../img/campingImg/camping4.jpg";
 import camping5 from "../img/campingImg/camping5.jpg";
 import Logo from "../img/logo.png";
+import StickyFooter from '../components/common/Footer';
 
 
 const theme = createTheme();
@@ -203,6 +204,7 @@ export default function SignInSide() {
           </Box>
         </Grid>
       </Grid>
+      <StickyFooter></StickyFooter>
     </ThemeProvider>
   );
 }

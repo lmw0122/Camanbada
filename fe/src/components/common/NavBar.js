@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import Axios from "axios";
 import { Box, Button } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import { Link, useParams } from "react-router-dom";
@@ -30,6 +33,23 @@ export default function PrimarySearchAppBar() {
   const [keyword, setKeyword] = React.useState('');
   // const keyword = '';
   
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      'Authorization': accessToken
+    }
+  }
+  const [ nick, setUserNick ] = useState('');
+
+  React.useEffect(() => {
+    Axios.get(`http://i6c109.p.ssafy.io:8000/user/nickname`, HEADER)
+      .then(res => {
+        setUserNick(res.data);
+      })
+  }, []);
+
+  console.log(nick);
+
   const getKeyword = (e) => {
     setKeyword(e.target.value);
   };
@@ -147,7 +167,7 @@ export default function PrimarySearchAppBar() {
     window.location.href = '/'
   }
 
-  const { nick } = useParams();  
+  // const { nick } = useParams();  
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -218,7 +238,7 @@ export default function PrimarySearchAppBar() {
                 <MailIcon />
               </IconButton> */}
             </Link>
-            <Link to={`/profile`}>
+            <Link to={`/profile/${nick}`}>
               <Box
                 component="img"
                 sx={{ height: 25, m:1 }}

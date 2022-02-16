@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import { Container, CssBaseline, Grid, Typography } from '@mui/material';
 import { Link } from "react-router-dom";
 import Stack from '@mui/material/Stack';
+import StickyFooter from '../components/common/Footer';
 
 function Community() {
   return (
@@ -46,6 +47,7 @@ function Community() {
         </Grid>
       {/* <BoardTable />   */}
     </Grid>
+    <StickyFooter></StickyFooter>
     </div>
   )
 }
