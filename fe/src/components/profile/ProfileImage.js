@@ -10,7 +10,7 @@ const ProfileImage = ({ userInfo }) => {
   // fileReader.readAsDataURL(userInfo[0].photo);
   // const url = fileReader.result;
 
-  if (userInfo[0].photo === 'null' || userInfo[0].photo === 'string') {
+  if (userInfo[0].photo === null || userInfo[0].photo === 'string' || userInfo[0].photo === 'null') {
     return (
       <img src={ProfileDefaultImage} width="100%" alt="ProfileDefaultImage"></img>
     )} else {
