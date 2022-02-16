@@ -28,8 +28,10 @@ export default function BoardDetailMine() {
   const [boardUserId, setBoardUserId] = useState([]);
   const [dataList, setDataList] = useState([]);
   const [comments, setComments] = useState([]);
+  const [nickName, setNickName] = useState([]);
 
   const ID_GET_URL = 'http://i6c109.p.ssafy.io:8000/user'
+  const NICKNAME_GET_URL = 'http://i6c109.p.ssafy.io:8000/user/getnickname/'
 
   const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/one/${boardId}`;
   const BOARD_DELETE_URL = `http://i6c109.p.ssafy.io:8000/board/${boardId}`;
@@ -56,6 +58,7 @@ export default function BoardDetailMine() {
       .then((response) => {
         setBoardUserId(response.data.clientId);
         setDataList(response.data);
+        getNickName(response.data.clientId);
         const onePhoto = response.data.photo;
         if (onePhoto != "") {
           document.getElementById('userImage').setAttribute("src", onePhoto);
@@ -66,6 +69,16 @@ export default function BoardDetailMine() {
         alert("게시판이 비어있습니다");
       });
   };
+
+  //닉네임 가져오기
+  function getNickName(userId) {
+    const URL = NICKNAME_GET_URL + userId;
+    axios.get(URL)
+      .then((response) => {
+        setNickName(response.data);
+      })
+  };
+
   //댓글 가져오기
   const getComments = async () => {
     axios.get(COMMENT_GET_URL)
@@ -234,8 +247,11 @@ export default function BoardDetailMine() {
             </Grid>
             <Grid>
               <Stack direction='row' alignItems="center">
+              <Typography>
+                아이디 {dataList.clientId}
+                </Typography>
                 <Typography>
-                  {dataList.clientId}
+                  닉네임 {nickName}
                 </Typography>
                   { like ? <FavoriteIcon onClick={(e)=>{boardOneLike(e, dataList.boardId)}} sx={{ fontSize : 20, mx : 1, color : '#f44336'}}/> 
                   : <FavoriteBorderIcon onClick={(e)=>{boardOneLike(e, dataList.boardId)}} sx={{ fontSize : 20, mx : 1, color : '#f44336'}}/> }
