@@ -22,15 +22,19 @@ export default function MessageRoom(chatroomId) {
   const [buttonStyle, setButtonStyle] = React.useState({});
   let sock = new SockJS("http://i6c109.p.ssafy.io:8082/stomp/chatting");
   let stomp = Stomp.over(sock);
-  //let buttonStyle = {};
-
+  const accessToken = localStorage.getItem("accessToken");
+  const [getLastMesssage, setGetLastMessage] = React.useState(false);
   const getFind = async () => {
     if (roomId === 0) {
       return;
     }
     console.log("getFind act");
     await fetch(
-      `http://i6c109.p.ssafy.io:8082/chat/counts/${roomId}`
+      `http://i6c109.p.ssafy.io:8000/chat/counts/${roomId}`, {
+        headers: {
+          'Authorization': accessToken
+        }
+      }
     ).then(res => {
       console.log(res);
       if (res.ok) {
@@ -49,14 +53,25 @@ export default function MessageRoom(chatroomId) {
       return;
     }
     console.log("getChats act");
+    console.log(count);
     setCount(count+1);
     await fetch (
-        `http://i6c109.p.ssafy.io:8082/chat/logs/${roomId}/${find.lastMessageId}/${find.totalCount}/${count+1}`
+        `http://i6c109.p.ssafy.io:8000/chat/logs/${roomId}/${find.lastMessageId}/${find.totalCount}/${count+1}`, {
+          headers: {
+            'Authorization': accessToken
+          }
+        }
     ).then(res => {
+      console.log(res);
       if (res.ok) {
         return res.json();
       }
+      if (res.status === 202) {
+        setGetLastMessage(true);
+        return res.json();
+      }
     }).then(data => {
+      console.log(data);
       setChats(data.concat(chats));
       if(type === 1)
         setChatDone(true);
@@ -67,6 +82,8 @@ export default function MessageRoom(chatroomId) {
     return chats;
   };
   const scroll = (e) => {
+    if (getLastMesssage)
+      return;
     if (e.target.scrollTop == 0)
       getChats(2);
   };
@@ -77,7 +94,9 @@ export default function MessageRoom(chatroomId) {
       return;
     }
     let prevChats = getLogs();
-    stomp.connect({}, function (frame) {
+    stomp.connect({
+        'Authorization': accessToken
+    }, function (frame) {
       //console.log(frame);
       console.log("Stomp conn!");
       stomp.subscribe("/sub/chatting/room/" + roomId, function (chat) {
@@ -85,12 +104,12 @@ export default function MessageRoom(chatroomId) {
         prevChats = prevChats.concat(content);
         console.log(prevChats);
         setChats(prevChats);
-      });
+      }, {'Authorization': accessToken});
     });
   };
   const sendMessage = () => {
     let msg = document.getElementById("userMessageInput");
-    stomp.send('/pub/chatting/message', {}, JSON.stringify({ chatroomId: roomId, date: new Date(), message: msg.value, sender: user }));
+    stomp.send('/pub/chatting/message', {'Authorization': accessToken}, JSON.stringify({ chatroomId: roomId, date: new Date(), message: msg.value, sender: user }));
     msg.value = '';
   };
   React.useEffect(() => {
