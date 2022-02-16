@@ -34,6 +34,12 @@ export default function Update() {
     setTextLength(totalLength);
   }
   
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      'Authorization': accessToken
+    }
+  }
   // 닉네임 중복 체크 & 유효성 체크
   const [ userNickname, setUserNickname ] = useState('');
 

@@ -5,12 +5,7 @@
 // import MessageRoom from "../components/chat/MessageRoom";
 import MessageRooms from "../components/chat/MessageRooms";
 
-
-
 export default function Message () {
-
-  
-  
 
   return (
     <div>

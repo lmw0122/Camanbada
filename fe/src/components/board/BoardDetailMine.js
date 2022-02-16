@@ -25,6 +25,7 @@ export default function BoardDetailMine() {
 
   const [allCommentLike, setAllCommentLike] = useState([]);
   const [clientId, setClientId] = useState([]);
+  const [boardUserId, setBoardUserId] = useState([]);
   const [dataList, setDataList] = useState([]);
   const [comments, setComments] = useState([]);
 
@@ -39,8 +40,8 @@ export default function BoardDetailMine() {
   const COMMENT_DELETE_URL = `http://i6c109.p.ssafy.io:8000/comment/`;
   const COMMENT_ONE_LIKE_URL = `http://i6c109.p.ssafy.io:8000/like/comment/`
   
-
   const HOME_TEST_URL = "http://localhost:3000/community";
+  const PROFILE_MOVE_URL = "http://localhost:3000/profile/"
 
   const accessToken = localStorage.getItem("accessToken");
   const HEADER = {
@@ -53,6 +54,7 @@ export default function BoardDetailMine() {
   const getBoards = async () => {
     axios.get(BOARD_GET_URL)
       .then((response) => {
+        setBoardUserId(response.data.clientId);
         setDataList(response.data);
         const onePhoto = response.data.photo;
         if (onePhoto != "") {
@@ -193,15 +195,16 @@ export default function BoardDetailMine() {
         alert("좋아요에 실패하였습니다");
       });
   };
-}
+  }
+  
+  function goProfile(e, id) {
+    window.location.href = PROFILE_MOVE_URL + id;
+  }
   
   useEffect(() => {
     getBoards(); getComments(); getId();
   }, [])
   
-
-  
-
   const content = dataList.content
   
   return (
@@ -224,7 +227,10 @@ export default function BoardDetailMine() {
             }}
           >
             <Grid>
-              <AccountCircleIcon  sx={{ fontSize: 60 }} />
+              <AccountCircleIcon
+                sx={{ fontSize: 60 }}
+                onClick={(e)=>{goProfile(e, boardUserId)}}
+              />
             </Grid>
             <Grid>
               <Stack direction='row' alignItems="center">

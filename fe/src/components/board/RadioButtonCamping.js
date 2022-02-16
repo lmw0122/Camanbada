@@ -15,11 +15,6 @@ export default function RadioButtonsGroup(props) {
 		const refName = e.target.value;
 		props.func1(refName);
 	}
-	function checkOnlyOneCommunity(e) {
-		const refName = e.target.value;
-		props.func2(refName);
-	}
-
 	
   return (
     <FormControl>
@@ -27,8 +22,8 @@ export default function RadioButtonsGroup(props) {
 				<FormLabel id="radio-button" sx={{ fontWeight : 'bold', fontSize : 18 }} >&lt;캠핑 소통&gt;</FormLabel>
 				<Typography sx={{ fontSize : 13}}>캠핑장을 선택해주세요.</Typography>
 			</Stack>
-			<RadioGroup
-				onChange={checkOnlyOneCamp}
+		  <RadioGroup
+			  onChange={checkOnlyOneCamp}
 				row
 				aria-labelledby="radio-button"
 				name="radio-button-group"
