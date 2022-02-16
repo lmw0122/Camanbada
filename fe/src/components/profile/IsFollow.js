@@ -2,54 +2,59 @@ import Button from '@mui/material/Button';
 import React, { Component } from "react";
 import PersonIcon from '@mui/icons-material/Person';
 import CheckIcon from '@mui/icons-material/Check';
+import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 // import PersonIcon from '@mui/icons-material/Person';
 
-class IsFollow extends Component {
+const IsFollow = ({ isFollow, getFollow, followUser }) => {
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
 
-  constructor(props) {
-    super(props);
-  
-    this.state = {
-      isfollowed: false,
-      userE: true,
-        // userE: false,
-    }
-    
+  console.log('IsFollow에서 ', isFollow);
+  console.log('팔로우 할 유저의 id ', followUser);
+
+  const FOLLOW_URL = 'http://i6c109.p.ssafy.io:8000/follow/' + followUser;
+  const follow = () => {
+    console.log('팔로우');
+    axios
+      .post(FOLLOW_URL, {} ,HEADER)
+      .then((res) => {
+        console.log(res);
+      });
+    getFollow(true);
   }
 
-  follow = () => {
-    this.setState({
-      isfollowed: true,
-    });
+  const unfollow = () => {
+    console.log('언팔로우');
+    axios
+    .delete(FOLLOW_URL,HEADER)
+      .then((res) => {
+        console.log(res);
+      });
+    getFollow(false);
   }
 
-  unFollow = () => {
-    this.setState({
-      isfollowed: false,
-    });
-  }
-
-  
-  render() {
-    if (this.state.isfollowed === true && this.state.userE === false) {
-      return (
+  return (
+    <div>
+      {isFollow ? (
         <Button
-        onClick={this.unFollow}
-        style={{
-          border: "1px black solid",
-          color: "black"
-        }}
-        variant="outlined"
+          onClick={unfollow}
+          style={{
+            border: "1px black solid",
+            color: "black"
+          }}
+          variant="outlined"
         >
           <PersonIcon />
           <CheckIcon />
         </Button>
-      ) 
-    } if (this.state.isfollowed === false && this.state.userE === false) {
-      return (
+      ) : (
         <Button
-          onClick={this.follow}
+          onClick={follow}
           style={{
             color: "white",
             backgroundColor: "#1e88e5"
@@ -58,29 +63,10 @@ class IsFollow extends Component {
         >
           팔로우
         </Button>
-      )
-    } else {
-      return (
-        // <Link to={`/profile/update/${nick}`} style={{textDecoration:'none'}}>
-        // nickname 받아오는 api사용해서 url 연결 완성하기
-        <div>
-          <Button 
-            style={{
-              color: "white",
-              backgroundColor: "#1e88e5"
-            }}
-            onClick={(e)=> {
-              const {nick} = useParams();
-              window.location.href = `/profile/update/${nick}`
-            }}
-          >
-            프로필 편집
-          </Button>
-        </div>
-        // </Link>
-      )
-    }
-  }
+      )}
+    </div>
+  )
 }
+
 
 export default IsFollow;

@@ -172,6 +172,7 @@ export default function Update() {
   
   const sendImageToServer = async () => {
     if (image.image_file) {
+<<<<<<< HEAD
       const reader = new FileReader();
       console.log(reader.readAsDataURL(image.image_file))
       const formData = new FormData ()
@@ -184,6 +185,25 @@ export default function Update() {
         preview_URL : "../img/dog.png",
       })
       setLoaded(false);
+=======
+      const formData = new FormData()
+      formData.append('file', image.image_file);
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(image.image_file);
+
+      fileReader.onload = function () {
+        const fileImage = fileReader.result;
+        console.log(fileImage)
+        axios
+          .put(`http://i6c109.p.ssafy.io:8000/user/${userId}`,
+            { "photo": fileImage },HEADER)
+          .then(res => {
+            console.log(res);
+            alert("등록 완료했습니다.")
+          });
+        setLoaded(false);
+   		};
+>>>>>>> fd80f078f2339992b6a55cd4725fc9ca6ec0a608
     } else {
       alert("사진을 등록하세요!")
     }
