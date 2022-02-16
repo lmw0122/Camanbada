@@ -424,7 +424,7 @@ return (
                     {d.boardId}
                   </TableCell> */}
                   <TableCell align="center" sx={{ fontSize: '15px'}}>{d.tag}</TableCell>
-                  <TableCell align="center" sx={{ fontSize: '15px'}}>{d}</TableCell>
+                  {/* <TableCell align="center" sx={{ fontSize: '15px'}}>{d}</TableCell> */}
                   <TableCell align="center" sx={{ fontSize: '15px'}}>
                     <Link to={`/board/${d.boardId}`} style={{ textDecoration: 'none', color : '#1b5e20'}}>
                     {d.title}
