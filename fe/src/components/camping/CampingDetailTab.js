@@ -279,7 +279,7 @@ export default function BasicTabs() {
               </Stack>
               {/* 네이버 지도 마커 */}
               <RenderAfterNavermapsLoaded
-                ncpClientI												d={'v1qzk7bjak'} // 자신의 네이버 계정에서 발급받은 Client ID
+                ncpClientId={'v1qzk7bjak'} // 자신의 네이버 계정에서 발급받은 Client ID
                 error={<p>Maps Load Error</p>}
                 loading={<p>Maps Loading...</p>}
               >

@@ -204,20 +204,6 @@ return (
         >
           검색
         </Button>
-        <Link to={'/create'}>
-          <Button 
-            type="submit"
-            sx={{
-              m: 1,
-              minWidth: 100,
-              height: "7ch",
-            }}
-            color="error"
-            variant="contained"
-          >
-            게시글 작성
-          </Button>
-        </Link>
         {/* <Link href="/create" style={{textDecoration:'none'}}>
         </Link> */}
       </Stack>
