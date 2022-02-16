@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import Pagination from "react-js-pagination";
 import '../../styles/Pagination.css'
 
-function Paging() {
-  const [page, setPage] = useState(1);
+const Paging = ({ pageNum, setPageNum, numPerPage, totalListCount }) => {
+  //const [page, setPage] = useState(1);
 
-  const handlePageChange = (page) => {
-    setPage(page);
+  const handlePageChange = (pageNum) => {
+    setPageNum(pageNum);
   };
 
   return (
     <Pagination 
-      activePage={page}
-      itemsCountPerPage={2}
-      totalItemsCount={450}
+      activePage={pageNum}
+      itemsCountPerPage={numPerPage}
+      totalItemsCount={totalListCount}
       pageRangeDisplayed={5}
       prevPageText={"<"}
       nextPageText={">"}

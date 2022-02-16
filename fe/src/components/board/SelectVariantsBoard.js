@@ -43,6 +43,10 @@ export default function SelectVariants() {
 
   const [sigungusjson, setSigungusjson] = React.useState('');
 
+  const [pageNum, setPageNum] = React.useState(1);
+
+  const [numPerPage, setNumPerPage] = React.useState(10);
+
   const sidos = [];
   const sigungus = [];
   var dropbox3 = [];
@@ -219,7 +223,15 @@ export default function SelectVariants() {
       selectedTag.push(targetList[i]);
     };
   }
-
+  let totalListCount = selectedTag.length;
+  let offset = (pageNum - 1) * numPerPage;
+  React.useEffect(() => {
+    console.log('///////');
+    console.log("totalListCount : " + totalListCount);
+    console.log("pageNum : " + pageNum);
+    console.log("numPerPage : " + numPerPage);
+    console.log("offset : " + offset);
+  });
 return (
   <Box
     sx={{
@@ -391,7 +403,7 @@ return (
               </TableRow>
             </TableHead>
             <TableBody> 
-              {selectedTag ? selectedTag.map((d) => (
+              {selectedTag ? selectedTag.slice(offset, offset+numPerPage).map((d) => (
                 <TableRow
                   key={d.boardId}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -412,7 +424,7 @@ return (
               )) : ''}
             </TableBody>
           </Table>
-          <Paging />
+          <Paging pageNum={pageNum} setPageNum={setPageNum} numPerPage={numPerPage} totalListCount={totalListCount}></Paging>
         </TableContainer>
       </Stack>
     </Container>
