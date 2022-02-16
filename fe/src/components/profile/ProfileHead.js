@@ -96,6 +96,10 @@ export default function ProfileHead() {
   const [userIntro, setUserIntro] = useState("");
   const [ followerList, setFollowerList ] = useState("");
   const [ followingList, setFollowingList ] = useState("");
+
+  const getFollow = (isFollow) => {
+    setIsFollow(isFollow);
+  }
   
 
   const handleChange = (event, newValue) => {
@@ -209,11 +213,29 @@ export default function ProfileHead() {
                 </Link>                */}
                     {console.log("----------------------------------------------------")}
                     {console.log(isFollow)}
-                    {otherUserCheck == true &&
+                    {/* {otherUserCheck == true &&
                       <IsFollow
-                      setFollow = {isFollow}
+                      isFollow = {isFollow}
                     />
-                    }
+                    } */}
+                    {/* <IsFollow isFollow={isFollow}></IsFollow> */}
+
+                    {otherUserCheck ? (
+                      <IsFollow isFollow={isFollow} getFollow={getFollow}></IsFollow>
+                    ) : (
+                      <Button 
+                        style={{
+                          color: "white",
+                          backgroundColor: "#1e88e5"
+                        }}
+                        onClick={()=> {
+                          window.location.href = `/profile/update/${nick}`
+                        }}
+                      >
+                      프로필 편집
+                      </Button>
+                    )}
+
                   </Stack>
                   {/* 게시물, 팔로워, 팔로우 부분 */}
                   <Stack direction="row" spacing={4} sx={{ mb: 2 }}>

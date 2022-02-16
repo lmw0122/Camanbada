@@ -24,6 +24,8 @@ export default function MessageRoom(chatroomId) {
   let stomp = Stomp.over(sock);
   const accessToken = localStorage.getItem("accessToken");
   const [getLastMesssage, setGetLastMessage] = React.useState(false);
+
+
   const getFind = async () => {
     if (roomId === 0) {
       return;
@@ -42,8 +44,12 @@ export default function MessageRoom(chatroomId) {
       }
     }).then(data => {
       console.log(data);
+      let currentFind = data[0];
+      if (currentFind.lastMessageId === null) {
+        currentFind.lastMessageId = 0;
+      }
       setFind((prevFind) => {
-        return Object.assign({}, data[0]);
+        return Object.assign({}, currentFind);
       });
     });
   };
