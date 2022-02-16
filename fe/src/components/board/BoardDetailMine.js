@@ -252,7 +252,7 @@ export default function BoardDetailMine() {
                 </Typography>
               </Stack>
               <Typography>
-                {Date(dataList.date)}
+                {dataList.date.replace("T", " ").substring(2,16)}
               </Typography>
 
             </Grid>
@@ -325,7 +325,7 @@ export default function BoardDetailMine() {
                 </Grid>
                 <Grid>
                   <Typography>
-                    {Date(comment.date)}
+                    {comment.date.replace("T", " ").substring(2,16)}
                   </Typography>
                 </Grid>
 

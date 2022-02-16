@@ -34,9 +34,21 @@ export default function BoardTable() {
   };
   
 
+  // const getUserNickname = () => {
+  //   axios
+  //     .get(encodeURI(`http://i6c109.p.ssafy.io:8000/user/getnickname/${id}`))
+  //     .then((res) => {
+  //       setLikedCampings(res.data);
+  //     });
+  // };
+
   useEffect(() => {
     getBoards()
   }, [])
+
+  // useEffect(() => {
+  //   getUserNickname();
+  // }, []);
 
   return (
     <ThemeProvider theme={theme} >
@@ -69,7 +81,7 @@ export default function BoardTable() {
                       </Link>
                     </TableCell>
                   <TableCell align="center">{d.clientId}</TableCell>
-                  <TableCell align="center">{Date(d.date)}</TableCell>
+                  <TableCell align="center">{d.date}</TableCell>
                 </TableRow>
               )) : ''}
             </TableBody>
