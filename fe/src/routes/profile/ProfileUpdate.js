@@ -103,10 +103,6 @@ export default function Update() {
       }
   }
   // 아이디, 이메일 정보 얻어오기
-<<<<<<< HEAD
-=======
-  
->>>>>>> 8c03ac77db43b66a3399a3f3b224810a2103d5c1
  
   const [ userIntro, setUserIntro ] = useState('');
   const [ userId, setUserId ] = useState('');
@@ -180,7 +176,7 @@ export default function Update() {
       const formData = new FormData ()
       formData.append('file', image.image_file);
       console.log(image.image_file)
-      await axios.post(`http://i6c109.p.ssafy.io:8000/user/${userId}`, {"photo" : formData});
+      await axios.put(`http://i6c109.p.ssafy.io:8000/user/${userId}`, {"photo" : formData});
       alert("등록 완료했습니다.")
       setImage({
         image_file: "",

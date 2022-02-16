@@ -151,11 +151,14 @@ export default function SignUp() {
   const onCheckId = (e) => {
     axios.get(`http://i6c109.p.ssafy.io:8050/user/valid/${userId}`)
     .then(res=> {
+      console.log(res)
       if ( res.data === 'OK' && (5 < userId.length && userId.length < 15)) {
         alert('사용할 수 있는 아이디입니다.')
       } if (userId.length < 5 || userId.length > 15) {
         alert('5글자 이상 15글자 미만으로 입력해주세요.')
-      } 
+      } else {
+        alert('다른 사용자가 사용하고 있는 아이디입니다.')
+      }
     })
   }
 
