@@ -85,7 +85,7 @@ export default function ProfileHead() {
     },
   };
 
-  // const [isfollowed, setIsfollowed] = React.useState('false');
+ // const [isfollowed, setIsfollowed] = React.useState('false');
 
   const { nick } = useParams('');
   const [userInfo, setUserInfo] = useState("");
