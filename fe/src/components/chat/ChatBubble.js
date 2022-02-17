@@ -19,10 +19,8 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
   const [isSec, setIsSec] = React.useState(false);
   const [originM, setoriginM] = React.useState("");
   const [overdM, setoverdM] = React.useState("");
-  console.log(chat.date);
-  let date = new Date(chat.date);
-  console.log(date);
-  function setCurTime(date) {
+  function setCurTime(tmp) {
+    let date = new Date(tmp);
     let year = date.getFullYear();
     let isYun = false;
     if (year % 4 == 0) {
@@ -60,9 +58,7 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
     let curTime = year+"년 "+month+"월 "+day+"일 "+hour+"시 "+minute+"분";
     return curTime;
   }
-  console.log(setCurTime(date));
-
-  let tmp = setCurTime(date);
+  
   console.log(oppNickname + " " + userId)
   const getOverMessage = async (messageId) => {
     console.log("getOverMessage act");
@@ -109,7 +105,7 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
             {chat.message}
           </Typography>
           <Typography>
-            {tmp}
+            {setCurTime(chat.date)}
           </Typography>
           {isClicked ? <button onClick={() => { deleteOverMessage() }}>줄이기</button>
           : <button onClick={() => { getOverMessage(chat.message_id) }}>더보기</button>}
@@ -123,7 +119,7 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
             {chat.message}
           </Typography>
           <Typography>
-            {tmp}
+            {setCurTime(chat.date)}
           </Typography>
         </Grid>
       )
@@ -139,7 +135,7 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
             {chat.message}
           </Typography>
           <Typography>
-            {tmp}
+            {setCurTime(chat.date)}
           </Typography>
           {isClicked ? <button onClick={() => { deleteOverMessage() }}>줄이기</button>
           : <button onClick={() => { getOverMessage(chat.message_id) }}>더보기</button>}
@@ -157,7 +153,7 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
             {chat.message}
           </Typography>
           <Typography>
-            {tmp}
+            {setCurTime(chat.date)}
           </Typography>
         </Grid>
       )

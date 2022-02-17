@@ -69,7 +69,47 @@ export default function BoardDetailMine() {
       Authorization: accessToken,
     },
   };
-  
+
+  // 시간 변환 함수
+  function setCurTime(tmp) {
+    let date = new Date(tmp);
+    let year = date.getFullYear();
+    let isYun = false;
+    if (year % 4 == 0) {
+      if (year % 100 == 0) {
+        if (year % 400 == 0) {
+          isYun = true;
+        }
+      } else {
+        isYun = true;
+      }
+    }
+    let dayPerMonth = [];
+    if (isYun) {
+      dayPerMonth = [0,31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    } else {
+      dayPerMonth = [0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    }
+    let minute = date.getMinutes();
+    let hour = date.getHours() + 9;
+    let day = date.getDate();
+    if (hour >= 24) {
+      hour = hour % 24;
+      day++;
+    }
+    let month = date.getMonth() + 1;
+    if (day > dayPerMonth[month]) {
+      day %= dayPerMonth[month];
+      month++;
+    }
+    if (month > 12) {
+      month %= 12;
+      year++;
+    }
+    
+    let curTime = year+"년 "+month+"월 "+day+"일 "+hour+"시 "+minute+"분";
+    return curTime;
+  }
   //사용자 가져오기
   function getUserInfo(nick){
     const USERINFO_GET_URL = `http://i6c109.p.ssafy.io:8000/user/${nick}`
@@ -179,6 +219,7 @@ export default function BoardDetailMine() {
         HEADER
       )
       .then((response) => {
+        oneContent.value = '';
         getComments();
       })
       .catch((error) => {
@@ -328,10 +369,7 @@ export default function BoardDetailMine() {
                 </Typography>
               </Stack>
               <Typography>
-                {(function () {
-                  if (dataList.date !== undefined)
-                    return dataList.date.replace("T", " ").substring(2, 16);
-                })()}
+                {setCurTime(dataList.date)}
               </Typography>
             </Grid>
           </Stack>
@@ -402,7 +440,7 @@ export default function BoardDetailMine() {
                 </Grid>
                 <Grid>
                   <Typography>
-                    {/* {comment.date.replace("T", " ").substring(2,16)} */}
+                    {setCurTime(comment.date)}
                   </Typography>
                 </Grid>
               </Grid>
@@ -421,6 +459,7 @@ export default function BoardDetailMine() {
             >
             </Input>
             <Button
+              id="summitBtn"
               type="submit"
               sx={{
                 m: 1,

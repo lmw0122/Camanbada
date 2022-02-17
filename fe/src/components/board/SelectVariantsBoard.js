@@ -65,6 +65,46 @@ export default function SelectVariants() {
   const SIDO_GET_URL = 'http://i6c109.p.ssafy.io:8000/camp/basic/list/sido';
   const KEYWORD_GET_URL = `http://i6c109.p.ssafy.io:8000/board/search/${titleKeyword}`
 
+  // 시간 변환 함수
+  function setCurTime(tmp) {
+    let date = new Date(tmp);
+    let year = date.getFullYear();
+    let isYun = false;
+    if (year % 4 == 0) {
+      if (year % 100 == 0) {
+        if (year % 400 == 0) {
+          isYun = true;
+        }
+      } else {
+        isYun = true;
+      }
+    }
+    let dayPerMonth = [];
+    if (isYun) {
+      dayPerMonth = [0,31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    } else {
+      dayPerMonth = [0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    }
+    let minute = date.getMinutes();
+    let hour = date.getHours() + 9;
+    let day = date.getDate();
+    if (hour >= 24) {
+      hour = hour % 24;
+      day++;
+    }
+    let month = date.getMonth() + 1;
+    if (day > dayPerMonth[month]) {
+      day %= dayPerMonth[month];
+      month++;
+    }
+    if (month > 12) {
+      month %= 12;
+      year++;
+    }
+    
+    let curTime = year+"년 "+month+"월 "+day+"일 "+hour+"시 "+minute+"분";
+    return curTime;
+  }
   const getTitleKeyword = (e) => {
     setTitleKeyword(e.target.value);
   }
@@ -450,7 +490,7 @@ return (
                     {d.title}
                     </Link>
                   </TableCell>
-                  <TableCell align="center" sx={{ fontSize: '15px'}}>{d.date.replace("T", " ").substring(2,16)}</TableCell>
+                  <TableCell align="center" sx={{ fontSize: '15px'}}>{setCurTime(d.date)}</TableCell>
                 </TableRow>
               )) : ''}
             </TableBody>
