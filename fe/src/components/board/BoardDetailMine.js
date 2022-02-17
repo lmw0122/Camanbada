@@ -267,6 +267,14 @@ export default function BoardDetailMine() {
     window.location.href = PROFILE_MOVE_URL + id;
   }
 
+  function formatDate(date) {
+    return date.getFullYear() + '년 ' + 
+      (date.getMonth() + 1) + '월 ' + 
+      date.getDate() + '일 ' + 
+      date.getHours() + '시 ' + 
+      date.getMinutes() + '분';
+  }
+
   useEffect(() => {
     getBoards();
     getComments();
@@ -312,10 +320,10 @@ export default function BoardDetailMine() {
                 </Typography>
               </Stack>
               <Typography>
-                {(function () {
+                {/* {(function () {
                   if (dataList.date !== undefined)
                     return dataList.date.replace("T", " ").substring(2, 16);
-                })()}
+                })()} */}
               </Typography>
             </Grid>
           </Stack>
@@ -389,7 +397,6 @@ export default function BoardDetailMine() {
                     {/* {console.log(comment.date)} */}
                     {/* {console.log(Date(comment.date))} */}
                     {/* {comment.date.replace("T", " ").substring(2,16)} */}
-                    {Date(comment.date)}
                   </Typography>
                 </Grid>
               </Grid>

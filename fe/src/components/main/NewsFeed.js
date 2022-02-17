@@ -18,6 +18,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 const theme = createTheme();
 
@@ -128,7 +129,18 @@ export default function NewsFeed() {
               color="text.primary"
               gutterBottom
             >
-              뉴스피드
+              뉴스피드{" "}
+              <Link to={"/community"} style={{ textDecoration: "none" }}>
+                <Button
+                  style={{
+                    border: "1px black solid",
+                    color: "black",
+                  }}
+                  variant="outlined"
+                >
+                  더보기
+                </Button>
+              </Link>
             </Typography>
           </Container>
         </Box>
@@ -173,24 +185,22 @@ export default function NewsFeed() {
                                 <h2>더 보기</h2>
                               </div>
                             )}
-                            {board.photo == "" &&
-                              board.content.length <= 100 && (
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: board.content,
-                                  }}
-                                  style={{ height: 245 }}
-                                ></div>
-                              )}
-                            {board.photo != "" &&
-                              board.content.length <= 100 && (
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: board.content,
-                                  }}
-                                  style={{ height: 51 }}
-                                ></div>
-                              )}
+                            {board.photo == "" && board.content.length <= 100 && (
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: board.content,
+                                }}
+                                style={{ height: 245 }}
+                              ></div>
+                            )}
+                            {board.photo != "" && board.content.length <= 100 && (
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: board.content,
+                                }}
+                                style={{ height: 51 }}
+                              ></div>
+                            )}
                           </Typography>
                         </CardContent>
                         <CardActions disableSpacing>
@@ -246,24 +256,22 @@ export default function NewsFeed() {
                                 <h2>더 보기</h2>
                               </div>
                             )}
-                            {board.photo == "" &&
-                              board.content.length <= 100 && (
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: board.content,
-                                  }}
-                                  style={{ height: 245 }}
-                                ></div>
-                              )}
-                            {board.photo != "" &&
-                              board.content.length <= 100 && (
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: board.content,
-                                  }}
-                                  style={{ height: 51 }}
-                                ></div>
-                              )}
+                            {board.photo == "" && board.content.length <= 100 && (
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: board.content,
+                                }}
+                                style={{ height: 245 }}
+                              ></div>
+                            )}
+                            {board.photo != "" && board.content.length <= 100 && (
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: board.content,
+                                }}
+                                style={{ height: 51 }}
+                              ></div>
+                            )}
                           </Typography>
                         </CardContent>
                         <CardActions disableSpacing>
