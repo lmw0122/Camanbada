@@ -218,7 +218,7 @@ export default function NewsFeed() {
                             <Photo boardList={ board } />                            
                           }
                           title={board.title}
-                          subheader={board.date}
+                          subheader={setCurTime(board.date)}
                         />
                         {board.photo != "" && (
                           <CardMedia
