@@ -3,7 +3,7 @@ import ProfileDefaultImage from "../../img/dog.png";
 import CampingDefaultImage from "../../img/CampingDefaultImage.png";
 
 const ProfileImage = ( props ) => {
-  console.log('프로필이미지js에서 사진 정보:', props.userInfo)
+  console.log('프로필이미지js에서 사진 정보:', props)
   // console.log('사진 url만:', userInfo[0].photo.files[0])
 
   // const fileReader = new FileReader();

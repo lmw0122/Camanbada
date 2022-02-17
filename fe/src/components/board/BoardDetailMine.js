@@ -44,12 +44,10 @@ export default function BoardDetailMine() {
   const [nickName, setNickName] = useState([]);
 
   const [userInfo, setUserInfo] = useState([]);
-
-  const [loginUserProfile, setLoginUserProfile] = useState('');
+  const [loginUserProfile, setLoginUserProfile] = useState([]);
 
   const ID_GET_URL = "http://i6c109.p.ssafy.io:8000/user";
   const NICKNAME_GET_URL = "http://i6c109.p.ssafy.io:8000/user/getnickname/";
-  const USERINFO_GET_URL = `http://i6c109.p.ssafy.io:8000/user/${nickName}`
 
   const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8000/board/one/${boardId}`;
   const BOARD_DELETE_URL = `http://i6c109.p.ssafy.io:8000/board/${boardId}`;
@@ -70,13 +68,14 @@ export default function BoardDetailMine() {
     },
   };
   
-  const getUserInfo = async () => {
-    // console.log(USERINFO_GET_URL);
-    await axios
+  //사용자 가져오기
+  function getUserInfo(nick){
+    const USERINFO_GET_URL = `http://i6c109.p.ssafy.io:8000/user/${nick}`
+    axios
       .get(USERINFO_GET_URL, HEADER)
       .then((res) => {
-        setUserInfo(res.data);
-        setLoginUserProfile(res.data.photo);
+        setUserInfo(res);
+        setLoginUserProfile(res.data[0].photo);
       });
   };
 
@@ -106,6 +105,7 @@ export default function BoardDetailMine() {
     const URL = NICKNAME_GET_URL + userId;
     axios.get(URL, HEADER).then((response) => {
       setNickName(response.data);
+      getUserInfo(response.data);
     });
   }
 
@@ -270,11 +270,14 @@ export default function BoardDetailMine() {
   }
 
   useEffect(() => {
-    getUserInfo();
     getBoards();
     getComments();
     getId();
   }, []);
+
+  useEffect(() => {
+    getUserInfo();
+  }, [boardId]);
 
   console.log('넘어온 유저정보',userInfo);
 
@@ -304,7 +307,7 @@ export default function BoardDetailMine() {
                   goProfile(e, boardUserId);
                 }}
               />
-              <ProfileImage userInfo={ userInfo } />
+              <ProfileImage userInfo={ loginUserProfile } />
             </Grid>
             <Grid>
               <Stack direction='row' alignItems="center">
