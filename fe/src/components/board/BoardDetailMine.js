@@ -193,8 +193,7 @@ export default function BoardDetailMine() {
   //댓글 좋아요와 싫어요
   const [likeComment, setLikeComment] = useState(false);
   const commentOneLike = (e, commentId) => {
-    {
-      const URL = COMMENT_ONE_LIKE_URL + commentId;
+    const URL = COMMENT_ONE_LIKE_URL + commentId;
       axios
         .get(URL, HEADER)
         .then((response) => {
@@ -217,14 +216,12 @@ export default function BoardDetailMine() {
         .catch((error) => {
           alert("좋아요에 실패하였습니다");
         });
-    }
-  };
+    };
 
   //게시판 좋아요와 싫어요 & 아이콘 변경
   const [like, setLike] = useState(false);
   const boardOneLike = (e, boardId) => {
-    {
-      const URL = BOARD_ONE_LIKE_URL + boardId;
+    const URL = BOARD_ONE_LIKE_URL + boardId;
       axios
         .get(URL, HEADER)
         .then((response) => {
@@ -247,7 +244,6 @@ export default function BoardDetailMine() {
         .catch((error) => {
           alert("좋아요에 실패하였습니다");
         });
-    }
   };
 
   function goProfile(e, id) {
@@ -283,7 +279,7 @@ export default function BoardDetailMine() {
               <AccountCircleIcon
                 sx={{ fontSize: 60 }}
                 onClick={(e) => {
-                  goProfile(e, boardUserId);
+                  goProfile(e, nickName);
                 }}
               />
               {/* <ProfileImage userInfo={ dataList } /> */}
@@ -440,3 +436,4 @@ export default function BoardDetailMine() {
     </ThemeProvider>
   );
 }
+
