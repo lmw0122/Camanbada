@@ -72,7 +72,7 @@ export default function ProfileHead() {
   
   let boardOffset = (boardPageNum - 1) * numPerPage;
   let LCOffset = (LikedCampingPageNum - 1) * numPerPage;
-  const { nick } = useParams("");
+  const { nick } = useParams();
   const [userInfo, setUserInfo] = useState("");
   const [otherUserCheck, setOtherUserCheck] = useState("");
   const [isFollow, setIsFollow] = useState(false);
@@ -100,13 +100,17 @@ export default function ProfileHead() {
 
   // 유저 정보 얻어오기
   // nick은 한글이라 인코딩
+  
+
+  //현재 프로필 사용자
+
   const uri = `http://i6c109.p.ssafy.io:8000/user/${nick}`;
   const encoded = encodeURI(uri);
 
-  //현재 프로필 사용자
   const getUserId = async() => {
     await axios.get(encoded).then((res) => {
       setUserInfo(res.data);
+      console.log('resres', res);
       setLoading(false);
       setUserIntro(res.data[0].intro);
 
@@ -114,10 +118,40 @@ export default function ProfileHead() {
     });
   };
 
+  // getUserId();
+
+  const getUserInfo = async() => {
+    const json = await (
+      await fetch(`http://i6c109.p.ssafy.io:8000/user/${nick}`)
+    ).json();
+    setLoading(false);
+    setUserInfo(json); 
+  };
+
+
+
+
+  // function getUserInfo(nick) {
+  //   const USERINFO_GET_URL = `http://i6c109.p.ssafy.io:8000/user/${nick}`;
+  //   axios
+  //     .get(USERINFO_GET_URL, HEADER)
+  //     .then((res) => {
+  //       setUserInfo(res);
+  //       setLoading(false);
+  //       console.log('131번째', res);
+  //       setUserIntro(res.data[0].intro);
+  //       // setLoginUserProfile(res.data[0].photo);
+  //       // console.log('로그은유저프로ㅓ필',loginUserProfile);
+  //     });
+
+  // }
+
+  // getUserInfo(nick);
+
   //팔로잉 리스트
-  async function getFollwoingList(loginUserId, profileUserId) {
+  function getFollwoingList(loginUserId, profileUserId) {
     const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/following`;
-    await axios.get(URL, HEADER).then((res) => {
+    axios.get(URL, HEADER).then((res) => {
       setFollowingList(res.data);
       console.log('팔로잉`````````````````````````````````````````````````````````````');
       res.data.map((folloUser) => {
@@ -129,10 +163,11 @@ export default function ProfileHead() {
       });
     });
   }
+
   //팔로워 리스트
-  async function getFollowerList(profileUserId) {
+  function getFollowerList(profileUserId) {
     const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/follower`;
-    await axios.get(URL, HEADER).then((res) => {
+    axios.get(URL, HEADER).then((res) => {
       console.log('팔로워`````````````````````````````````````````````````````````````');
       console.log(res.data);
       setFollowerList(res.data)
@@ -140,9 +175,9 @@ export default function ProfileHead() {
   }
 
   //현재 로그인한 사용자인지 아닌지
-  async function followCheck(user) {
+  function followCheck(user) {
     const URI = `http://i6c109.p.ssafy.io:8000/user`;
-    await axios.get(URI, HEADER).then((res) => {
+    axios.get(URI, HEADER).then((res) => {
       getFollwoingList(res.data, user[0].id); //검색한 프로필 id
       getFollowerList(user[0].id);
 
@@ -155,8 +190,8 @@ export default function ProfileHead() {
   }
 
   //닉네임을 이용하여 해당 유저가 좋아요한 캠핑장 리스트 불러오기
-  const getLikedCampingList = async() => {
-    await axios
+  const getLikedCampingList = () => {
+    axios
       .get(encodeURI(`http://i6c109.p.ssafy.io:8000/camp/like/list/${nick}`),HEADER)
       .then((res) => {
         setLikedCampings(res.data);
@@ -218,12 +253,14 @@ export default function ProfileHead() {
 
 
   React.useEffect(() => {
+    getUserId();
+    getUserInfo();
     getFollowerList();
   }, []);
 
-  React.useEffect(() => {
-    getUserId();
-  }, [nick]);
+  // React.useEffect(() => {
+  //   getUserId();
+  // }, [nick]);
 
   React.useEffect(() => {
     getLikedCampingList();
@@ -238,12 +275,16 @@ export default function ProfileHead() {
   for (var i = 0; i < likedCampings.length; i++) {
     searchList.push(likedCampings[i]);
   }
+
+  console.log('userInfo는', userInfo);
+
   for (var i = 0; i < boardList.length; i++) {
     if(boardList[i].clientId === userInfo[0].id)
       myBoardList.push(boardList[i]);
   }
   let totalBoardListCount = myBoardList.length;
   let totalLikedCampingCount = searchList.length;
+
   return (
     <div>
       {loading ? null : (
@@ -261,6 +302,13 @@ export default function ProfileHead() {
                 }}
               >
                 <Grid item align="center" md={2.4} sx={{ mr: 4 }}>
+                  {/* <div>
+                    {userInfo ? (
+                      null
+                      ): (
+                      <ProfileImage userInfo={ userInfo } />
+                    )}
+                  </div> */}
                   <ProfileImage userInfo={ userInfo } />
                   {/* <AccountCircleIcon sx={{ fontSize: 150 }} /> */}
                 </Grid>
