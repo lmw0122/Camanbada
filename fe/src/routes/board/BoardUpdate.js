@@ -21,7 +21,7 @@ export default function BoardUpdate() {
   const { boardId } = useParams();
   const [dataList, setDataList] = useState([]);
 
-  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/one/${boardId}`;
+  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8000/board/one/${boardId}`;
   const BOARD_UPDATE_URL = 'http://i6c109.p.ssafy.io:8000/board';
   const HOME_TEST_URL = `http://localhost:3000/board/${boardId}`;
 
@@ -34,7 +34,7 @@ export default function BoardUpdate() {
 
   //게시판 가져오기
   const getBoards = async () => {
-    axios.get(BOARD_GET_URL)
+    axios.get(BOARD_GET_URL,HEADER)
       .then((response) => {
         document.getElementById("clientId").innerText = response.data.clientId;
         setDataList(response.data);

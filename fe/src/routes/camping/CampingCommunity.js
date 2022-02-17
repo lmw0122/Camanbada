@@ -16,18 +16,19 @@ function CampingCommunity() {
   const { campId } = useParams();
   const [basics, setBasics] = React.useState([]);
 
-  const BASIC_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/basic/one/${campId}`
-
+  const BASIC_GET_URL = `http://i6c109.p.ssafy.io:8000/camp/basic/one/${campId}`
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
   
-
   React.useEffect(() => {
-    Axios.get(BASIC_GET_URL)
+    Axios.get(BASIC_GET_URL,HEADER)
       .then(res => setBasics(res.data))
   }, []);
 
-  
-
-  
 
   return (
     <div>

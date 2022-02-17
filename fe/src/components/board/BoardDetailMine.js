@@ -24,6 +24,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // import Input from '@mui/material/Input';
 
 import ProfileImage from "../profile/ProfileImage";
+import ProfileImageInBoard from "../profile/ProfileImageInBoard";
 
 const theme = createTheme();
 
@@ -43,14 +44,17 @@ export default function BoardDetailMine() {
   const [comments, setComments] = useState([]);
   const [nickName, setNickName] = useState([]);
 
+  const [userInfo, setUserInfo] = useState([]);
+  const [loginUserProfile, setLoginUserProfile] = useState([]);
+
   const ID_GET_URL = "http://i6c109.p.ssafy.io:8000/user";
   const NICKNAME_GET_URL = "http://i6c109.p.ssafy.io:8000/user/getnickname/";
 
-  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/one/${boardId}`;
+  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8000/board/one/${boardId}`;
   const BOARD_DELETE_URL = `http://i6c109.p.ssafy.io:8000/board/${boardId}`;
   const BOARD_ONE_LIKE_URL = `http://i6c109.p.ssafy.io:8000/like/board/`;
 
-  const COMMENT_GET_URL = `http://i6c109.p.ssafy.io:8051/comment/${boardId}`;
+  const COMMENT_GET_URL = `http://i6c109.p.ssafy.io:8000/comment/${boardId}`;
   const COMMENT_CREATE_URL = `http://i6c109.p.ssafy.io:8000/comment`;
   const COMMENT_DELETE_URL = `http://i6c109.p.ssafy.io:8000/comment/`;
   const COMMENT_ONE_LIKE_URL = `http://i6c109.p.ssafy.io:8000/like/comment/`;
@@ -64,11 +68,23 @@ export default function BoardDetailMine() {
       Authorization: accessToken,
     },
   };
+  
+  //사용자 가져오기
+  function getUserInfo(nick){
+    const USERINFO_GET_URL = `http://i6c109.p.ssafy.io:8000/user/${nick}`
+    axios
+      .get(USERINFO_GET_URL, HEADER)
+      .then((res) => {
+        setUserInfo(res);
+        setLoginUserProfile(res.data[0].photo);
+        console.log('로그은유저프로ㅓ필',loginUserProfile);
+      });
+  };
 
   //게시판 가져오기
   const getBoards = async () => {
     axios
-      .get(BOARD_GET_URL)
+      .get(BOARD_GET_URL, HEADER)
       .then((response) => {
         setBoardUserId(response.data.clientId);
         setDataList(response.data);
@@ -89,15 +105,16 @@ export default function BoardDetailMine() {
   //닉네임 가져오기
   function getNickName(userId) {
     const URL = NICKNAME_GET_URL + userId;
-    axios.get(URL).then((response) => {
+    axios.get(URL, HEADER).then((response) => {
       setNickName(response.data);
+      getUserInfo(response.data);
     });
   }
 
   //댓글 가져오기
   const getComments = async () => {
     axios
-      .get(COMMENT_GET_URL)
+      .get(COMMENT_GET_URL, HEADER)
       .then((response) => {
         let allLike = 0;
         response.data.forEach((oneComment) => {
@@ -256,6 +273,10 @@ export default function BoardDetailMine() {
     getId();
   }, []);
 
+  useEffect(() => {
+    getUserInfo();
+  }, [boardId]);
+
   const content = dataList.content;
 
   return (
@@ -275,6 +296,7 @@ export default function BoardDetailMine() {
               mb: 2,
             }}
           >
+<<<<<<< HEAD
             <Grid>
               <AccountCircleIcon
                 sx={{ fontSize: 60 }}
@@ -283,11 +305,15 @@ export default function BoardDetailMine() {
                 }}
               />
               {/* <ProfileImage userInfo={ dataList } /> */}
+=======
+            <Grid sx={{width: '5ch'  }}>
+              <ProfileImageInBoard loginUserProfile={ loginUserProfile }/>
+>>>>>>> dd87740bfb4da9835cf2bc75561012b895f2819d
             </Grid>
             <Grid>
               <Stack direction='row' alignItems="center">
                 <Typography>
-                  [{nickName}]
+                  {nickName}
                 </Typography>
                   { like ? <FavoriteIcon onClick={(e)=>{boardOneLike(e, dataList.boardId)}} sx={{ fontSize : 20, mx : 1, color : '#f44336'}}/> 
                   : <FavoriteBorderIcon onClick={(e)=>{boardOneLike(e, dataList.boardId)}} sx={{ fontSize : 20, mx : 1, color : '#f44336'}}/> }

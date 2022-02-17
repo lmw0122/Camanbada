@@ -166,7 +166,7 @@ export default function ProfileHead() {
   //닉네임을 이용하여 해당 유저가 좋아요한 캠핑장 리스트 불러오기
   const getLikedCampingList = () => {
     axios
-      .get(encodeURI(`http://i6c109.p.ssafy.io:8092/camp/like/list/${nick}`))
+      .get(encodeURI(`http://i6c109.p.ssafy.io:8000/camp/like/list/${nick}`),HEADER)
       .then((res) => {
         setLikedCampings(res.data);
       });
@@ -427,13 +427,13 @@ export default function ProfileHead() {
                                     >
                                       {board.photo == "" &&
                                         board.content.length > 140 && (
-                                          <div style={{ height: 322 }}>
+                                          <div style={{ height: 122 }}>
                                             <h2>더 보기</h2>
                                           </div>
                                         )}
                                       {board.photo != "" &&
                                         board.content.length > 140 && (
-                                          <div style={{ height: 128 }}>
+                                          <div style={{ height: 28 }}>
                                             <h2>더 보기</h2>
                                           </div>
                                         )}
@@ -443,7 +443,7 @@ export default function ProfileHead() {
                                             dangerouslySetInnerHTML={{
                                               __html: board.content,
                                             }}
-                                            style={{ height: 345 }}
+                                            style={{ height: 225 }}
                                           ></div>
                                         )}
                                       {board.photo != "" &&
@@ -452,7 +452,7 @@ export default function ProfileHead() {
                                             dangerouslySetInnerHTML={{
                                               __html: board.content,
                                             }}
-                                            style={{ height: 151 }}
+                                            style={{ height: 51 }}
                                           ></div>
                                         )}
                                     </Typography>
