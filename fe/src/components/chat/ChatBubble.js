@@ -19,6 +19,7 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
   const [isSec, setIsSec] = React.useState(false);
   const [originM, setoriginM] = React.useState("");
   const [overdM, setoverdM] = React.useState("");
+  console.log(chat.date);
   function setCurTime(tmp) {
     let date = new Date(tmp);
     let year = date.getFullYear();
@@ -95,7 +96,9 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
   }
   React.useEffect(() => {
     setoriginM(chat.message);
-  },[])
+  }, [])
+  
+  {console.log(setCurTime(chat.date))}
   // 전송자가 본인일 때
   if (chat.sender == userId) {
     if (chat.over) {

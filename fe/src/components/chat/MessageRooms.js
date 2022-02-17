@@ -208,7 +208,6 @@ export default function MessageRooms() {
                     {list.nickname}님
                   </Typography>
                   <Typography align="right">
-                    {setCurTime(list.date)} 
                   </Typography>
                 </Stack>
                 <Stack>
@@ -226,7 +225,7 @@ export default function MessageRooms() {
         md={6}
         align="center"
       >
-        <IfRoomId roomId={roomId} userId={userInfo.userId} nickname={userInfo.nickname} oppUserId={oppUser.oppUserId} oppNickname={oppUser.oppNickname}></IfRoomId>
+        <IfRoomId roomId={roomId} userId={userInfo.userId} nickname={userInfo.nickname} oppUserId={oppUser.oppUserId} oppNickname={oppUser.oppNickname} getLists={getLists}></IfRoomId>
        </Grid>
     </Grid>
 

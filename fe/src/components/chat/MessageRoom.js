@@ -111,6 +111,7 @@ export default function MessageRoom(props) {
         prevChats = prevChats.concat(content);
         console.log(prevChats);
         setChats(prevChats);
+        //props.getLists();
       }, {'Authorization': accessToken});
     });
   };
@@ -145,6 +146,9 @@ export default function MessageRoom(props) {
       setChatDone(false);
     }
   });
+  React.useEffect(() => {
+    //props.getLists();
+  },[chats])
   React.useEffect(() => {
     console.log("useEffect 3 act");
     getFind();
