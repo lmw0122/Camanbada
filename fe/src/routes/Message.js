@@ -5,6 +5,7 @@
 // import MessageRoom from "../components/chat/MessageRoom";
 import MessageRooms from "../components/chat/MessageRooms";
 import NavBar from "../components/common/NavBar";
+import StickyFooter from '../components/common/Footer';
 
 export default function Message () {
 
@@ -13,6 +14,7 @@ export default function Message () {
       <NavBar></NavBar>
       {/* <MessageRoom></MessageRoom> */}
       <MessageRooms></MessageRooms>
+      <StickyFooter></StickyFooter>
     </div>
   )
 }

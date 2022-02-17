@@ -32,23 +32,10 @@ export default function BoardTable() {
         alert("게시판이 비어있습니다");
       });
   };
-  
-
-  // const getUserNickname = () => {
-  //   axios
-  //     .get(encodeURI(`http://i6c109.p.ssafy.io:8000/user/getnickname/${id}`))
-  //     .then((res) => {
-  //       setLikedCampings(res.data);
-  //     });
-  // };
 
   useEffect(() => {
     getBoards()
   }, [])
-
-  // useEffect(() => {
-  //   getUserNickname();
-  // }, []);
 
   return (
     <ThemeProvider theme={theme} >
