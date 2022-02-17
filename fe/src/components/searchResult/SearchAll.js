@@ -33,12 +33,18 @@ export default function SearchAll() {
   // daye, 하눅, nana
   const [userList, setUserList] = React.useState([]);
 
-  const KEYWORD_GET_URL = `http://i6c109.p.ssafy.io:8050/user/search/${keyword}`
+  const KEYWORD_GET_URL = `http://i6c109.p.ssafy.io:8000/user/search/${keyword}`
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
   const [pageNum, setPageNum] = React.useState(1);
   const [numPerPage, setNumPerPage] = React.useState(8);
   
   React.useEffect(() => {
-    Axios.get(KEYWORD_GET_URL)
+    Axios.get(KEYWORD_GET_URL,HEADER)
     .then(res => setUserList(res.data))
   }, []);
   

@@ -36,52 +36,6 @@ export default function SignUp() {
   // 중복 검사
   const [ userNickname, setUserNickname ] = useState();
   const [ userId, setUserId ] = useState();
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   // eslint-disable-next-line no-console
-  //   console.log({
-  //     email: data.get('email'),
-  //     password: data.get('password'),
-  //   });
-  // };
-
-
-  // const handleJoin = (e) => {
-  //   e.preventDefault();
-  //   axios.post("http://i6c109.p.ssafy.io:8000/user/", {
-  //     "id": id,
-  //     "password": password,
-  //     "nickname": nickname,
-  //   })
-  //   .then((res) => {
-  //     console.log(res)
-  //     if (res.status === 200) {
-  //       <Link to="/main"></Link>
-  //     } 
-  //   }).catch((err) => {
-  //     console.log(err)
-  //   })
-  //   console.log(id)
-  // }
-
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   // console.log(e.target.id.value)
-  //   axios.post('i6c109.p.ssafy.io:8000/user/', {
-  //     id : id,
-  //     nickname : nickname,
-  //     password : password,
-  //     email : email
-  //   })
-  //   .then((res) => {
-  //     console.log(res)
-  //   })
-  //   .catch((err) => {
-  //     console.log(err)
-  //   })
-  // }
-    
 
   async function handleJoin(e) {
     e.preventDefault()
@@ -107,33 +61,6 @@ export default function SignUp() {
     }
   }
 
-
-
-  // const onSubmit = useCallback(
-  //   async (e) => {
-  //     e.preventDefault()
-  //     try {
-  //       axios.post('http://i6c109.p.ssafy.io:8000/user/', {
-  //           "id": id,
-  //           "password": password,
-  //           // passwordConfirm : passwordConfirm,
-  //           "nickname" : nickname,
-  //           "email": email,
-  //         })
-  //         .then((res) => {
-  //           console.log('response:', res)
-  //           if (res.status === 200) {
-  //             <Link to="/signup"></Link>
-  //           }
-  //         })
-  //     } catch (err) {
-  //       console.error(err)
-  //     }
-  //   },
-  //   [email, id, password]
-  // )
-
-
   // 아이디
   const onChangeName = useCallback((e) => {
     setUserId(e.target.value)
@@ -149,7 +76,7 @@ export default function SignUp() {
 
   // 아이디 중복 검사
   const onCheckId = (e) => {
-    axios.get(`http://i6c109.p.ssafy.io:8050/user/valid/${userId}`)
+    axios.get(`http://i6c109.p.ssafy.io:8000/user/valid/${userId}`)
     .then(res=> {
       console.log(res)
       if ( res.data === 'OK' && (5 < userId.length && userId.length < 15)) {
@@ -177,7 +104,7 @@ export default function SignUp() {
 
   // 닉네임 중복 검사
   const onCheckNickname = (e) => {
-    axios.get(`http://i6c109.p.ssafy.io:8050/user/${userNickname}`)
+    axios.get(`http://i6c109.p.ssafy.io:8000/user/${userNickname}`)
     .then(res => {
       // console.log(res.data[0])
       if (res.data[0] !== undefined ) {

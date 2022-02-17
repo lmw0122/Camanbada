@@ -28,14 +28,19 @@ export default function SearchCampingAlbum() {
 
   const [campings, setCampings] = React.useState([]);
 
-  const SEARCHKEYWORD_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/basic/list/keyword/${searchkeyword}`
- 
+  const SEARCHKEYWORD_GET_URL = `http://i6c109.p.ssafy.io:8000/camp/basic/list/keyword/${searchkeyword}`
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
   const [pageNum, setPageNum] = React.useState(1);
   const [numPerPage, setNumPerPage] = React.useState(8);
   let totalListCount = campings.length;
   let offset = (pageNum - 1) * numPerPage;
   React.useEffect(() => {
-    Axios.get(SEARCHKEYWORD_GET_URL)
+    Axios.get(SEARCHKEYWORD_GET_URL,HEADER)
       .then(res => setCampings(res.data))
   }, []);
 

@@ -17,10 +17,15 @@ export default function Album() {
   const [loading, setLoading] = React.useState(true);
   const [basics, setBasics] = React.useState([]);
 
-  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list';
-
+  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8000/camp/basic/list';
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
   React.useEffect(() => {
-    Axios.get(CAMP_GET_URL)
+    Axios.get(CAMP_GET_URL,HEADER)
       .then(res => {
         setBasics(res.data);
         setLoading(false);

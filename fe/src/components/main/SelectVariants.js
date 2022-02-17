@@ -28,10 +28,15 @@ export default function SelectVariants() {
 
   const [campings, setCampings] = React.useState([]);
 
-  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list';
-  const SIDO_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list/sido';
-  const SIGUNGU_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/basic/list/sigungu/${sido}`;
-
+  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8000/camp/basic/list';
+  const SIDO_GET_URL = 'http://i6c109.p.ssafy.io:8000/camp/basic/list/sido';
+  const SIGUNGU_GET_URL = `http://i6c109.p.ssafy.io:8000/camp/basic/list/sigungu/${sido}`;
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
   const handleChange1 = (event) => {
     setSido(event.target.value);
   };
@@ -49,14 +54,14 @@ export default function SelectVariants() {
   }
  
   React.useEffect(() => {
-    Axios.get(CAMP_GET_URL)
+    Axios.get(CAMP_GET_URL,HEADER)
       .then(res => setCampings(res.data))   
   }, []);
 
   const [sidosjson, setSidosjson] = React.useState('');
 
   React.useEffect(() => {
-    Axios.get(SIDO_GET_URL)
+    Axios.get(SIDO_GET_URL,HEADER)
       .then(res => setSidosjson(res.data))   
   }, []);
 
@@ -65,7 +70,7 @@ export default function SelectVariants() {
   // sido 값이 변화할 때만 api 호출!
   React.useEffect(() => {
     if (sido !== '') {
-      Axios.get(SIGUNGU_GET_URL)
+      Axios.get(SIGUNGU_GET_URL,HEADER)
         .then(res => setSigungusjson(res.data)) 
     }
   }, [sido]);
