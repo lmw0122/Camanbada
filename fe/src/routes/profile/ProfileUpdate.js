@@ -54,7 +54,7 @@ export default function Update() {
   }
 
   const onCheckDuplicate = (e) => {
-    axios.get(`http://i6c109.p.ssafy.io:8050/user/${userNickname}`)
+    axios.get(`http://i6c109.p.ssafy.io:8000/user/${userNickname}`,HEADER)
     .then(res => {
       // console.log(res.data[0])
       if (res.data[0] !== undefined) {

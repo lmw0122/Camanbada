@@ -25,12 +25,17 @@ export default function SearchCampingAlbum() {
 
   const [campings, setCampings] = React.useState([]);
 
-  const CAMP_GET_URL = "http://i6c109.p.ssafy.io:8092/camp/basic/list";
+  const CAMP_GET_URL = "http://i6c109.p.ssafy.io:8000/camp/basic/list";
   const [pageNum, setPageNum] = React.useState(1);
   const [numPerPage, setNumPerPage] = React.useState(8);
-  
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
   React.useEffect(() => {
-    Axios.get(CAMP_GET_URL).then((res) => setCampings(res.data));
+    Axios.get(CAMP_GET_URL,HEADER).then((res) => setCampings(res.data));
   }, []);
   
   const searchList = [];

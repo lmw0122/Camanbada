@@ -16,7 +16,6 @@ import Update from "./routes/profile/ProfileUpdate";
 import SearchCamping from "./routes/search/SearchCamping";
 import SearchUser from "./routes/search/SearchUser";
 import SearchCommunity from "./routes/search/SearchCommunity";
-import Test from "./routes/test.js"
 import CampingCommunity from "./routes/camping/CampingCommunity";
 import SearchCampingSigungu from "./routes/search/SearchCampingSigungu";
 import SearchCampingByKeyword from "./routes/search/SearchCampingByKeyword";
@@ -30,8 +29,6 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/test" element={<Test></Test>}></Route>
-
         <Route path="/main" element={<Main></Main>}></Route>
         <Route path="/" element={<NoLogin></NoLogin>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>

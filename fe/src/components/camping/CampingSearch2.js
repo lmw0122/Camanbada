@@ -11,12 +11,17 @@ export default function CampingSearch(props) {
     getCampings()
   }, []);
 
-  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list';
-
+  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8000/camp/basic/list';
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
   const getCampings = async() => {
     const json = await (
       await fetch (
-        CAMP_GET_URL
+        CAMP_GET_URL,HEADER
       )
     ).json();
     setCampings(json);

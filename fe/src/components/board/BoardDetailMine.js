@@ -43,14 +43,17 @@ export default function BoardDetailMine() {
   const [comments, setComments] = useState([]);
   const [nickName, setNickName] = useState([]);
 
+  const [userInfo, setUserInfo] = useState([]);
+  const [loginUserProfile, setLoginUserProfile] = useState([]);
+
   const ID_GET_URL = "http://i6c109.p.ssafy.io:8000/user";
   const NICKNAME_GET_URL = "http://i6c109.p.ssafy.io:8000/user/getnickname/";
 
-  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/one/${boardId}`;
+  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8000/board/one/${boardId}`;
   const BOARD_DELETE_URL = `http://i6c109.p.ssafy.io:8000/board/${boardId}`;
   const BOARD_ONE_LIKE_URL = `http://i6c109.p.ssafy.io:8000/like/board/`;
 
-  const COMMENT_GET_URL = `http://i6c109.p.ssafy.io:8051/comment/${boardId}`;
+  const COMMENT_GET_URL = `http://i6c109.p.ssafy.io:8000/comment/${boardId}`;
   const COMMENT_CREATE_URL = `http://i6c109.p.ssafy.io:8000/comment`;
   const COMMENT_DELETE_URL = `http://i6c109.p.ssafy.io:8000/comment/`;
   const COMMENT_ONE_LIKE_URL = `http://i6c109.p.ssafy.io:8000/like/comment/`;
@@ -64,11 +67,22 @@ export default function BoardDetailMine() {
       Authorization: accessToken,
     },
   };
+  
+  //사용자 가져오기
+  function getUserInfo(nick){
+    const USERINFO_GET_URL = `http://i6c109.p.ssafy.io:8000/user/${nick}`
+    axios
+      .get(USERINFO_GET_URL, HEADER)
+      .then((res) => {
+        setUserInfo(res);
+        setLoginUserProfile(res.data[0].photo);
+      });
+  };
 
   //게시판 가져오기
   const getBoards = async () => {
     axios
-      .get(BOARD_GET_URL)
+      .get(BOARD_GET_URL, HEADER)
       .then((response) => {
         setBoardUserId(response.data.clientId);
         setDataList(response.data);
@@ -89,15 +103,16 @@ export default function BoardDetailMine() {
   //닉네임 가져오기
   function getNickName(userId) {
     const URL = NICKNAME_GET_URL + userId;
-    axios.get(URL).then((response) => {
+    axios.get(URL, HEADER).then((response) => {
       setNickName(response.data);
+      getUserInfo(response.data);
     });
   }
 
   //댓글 가져오기
   const getComments = async () => {
     axios
-      .get(COMMENT_GET_URL)
+      .get(COMMENT_GET_URL, HEADER)
       .then((response) => {
         let allLike = 0;
         response.data.forEach((oneComment) => {
@@ -156,8 +171,12 @@ export default function BoardDetailMine() {
       .catch((error) => {
         alert("댓글 작성에 실패하였습니다");
       });
-  };
+  }
 
+  const onKeyPress = (e) => {
+      if (e.key == 'Enter') createOneComment(); 
+  }
+  
   //댓글 지우기
   const deleteOneComment = (e, comment) => {
     const URL = COMMENT_DELETE_URL + comment.commentId;
@@ -256,6 +275,12 @@ export default function BoardDetailMine() {
     getId();
   }, []);
 
+  useEffect(() => {
+    getUserInfo();
+  }, [boardId]);
+
+  console.log('넘어온 유저정보',userInfo);
+
   const content = dataList.content;
 
   return (
@@ -275,19 +300,19 @@ export default function BoardDetailMine() {
               mb: 2,
             }}
           >
-            <Grid>
+            <Grid sx={{width: '5ch'  }}>
               <AccountCircleIcon
                 sx={{ fontSize: 60 }}
                 onClick={(e) => {
                   goProfile(e, boardUserId);
                 }}
               />
-              {/* <ProfileImage userInfo={ dataList } /> */}
+              <ProfileImage userInfo={ loginUserProfile } />
             </Grid>
             <Grid>
               <Stack direction='row' alignItems="center">
                 <Typography>
-                  [{nickName}]
+                  {nickName}
                 </Typography>
                   { like ? <FavoriteIcon onClick={(e)=>{boardOneLike(e, dataList.boardId)}} sx={{ fontSize : 20, mx : 1, color : '#f44336'}}/> 
                   : <FavoriteBorderIcon onClick={(e)=>{boardOneLike(e, dataList.boardId)}} sx={{ fontSize : 20, mx : 1, color : '#f44336'}}/> }
@@ -353,15 +378,8 @@ export default function BoardDetailMine() {
                     </Typography>
                     <Grid sx={{ ml : 1}}>
                       <IconButton>
-                        {
-                          clientId === comment.clientId && (
-                            <DeleteIcon
-                              onClick={(e) => {
-                                deleteOneComment(e, comment);
-                              }}
-                              sx={{ color: "#f44336" }}
-                            />
-                          )
+                        {clientId == comment.clientId &&
+                          <DeleteIcon onClick={(e)=>{deleteOneComment(e, comment)}} sx={{ color : '#f44336' }}/>
                           // <Button variant="outlined" style={{ backgroundColor : "#f44336"}}
                           //   onClick={(e)=>{deleteOneComment(e, comment)}}
                           // >
@@ -392,7 +410,12 @@ export default function BoardDetailMine() {
               mb: 2,
             }}
           >
-            <Input placeholder="댓글을 남겨보세요." id="newComment"></Input>
+            <Input
+              placeholder="댓글을 남겨보세요."
+              id="newComment"
+              onKeyPress={onKeyPress}
+            >
+            </Input>
             <Button
               type="submit"
               sx={{
