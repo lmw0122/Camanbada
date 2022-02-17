@@ -38,7 +38,6 @@ export default function SignUp() {
   const [ userId, setUserId ] = useState();
 
   async function handleJoin(e) {
-    console.log(isId +" " + isNickname  +" " +  isEmail  +" " +  isPassword  +" " +  isPasswordConfirm);
     if (isId == true && isNickname == true && isEmail == true && isPassword == true && isPasswordConfirm == true) {
       try {
         //응답 성공 
