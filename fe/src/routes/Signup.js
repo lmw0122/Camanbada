@@ -53,9 +53,11 @@ export default function SignUp() {
         console.log(nickname)
         console.log(response);
         alert("회원가입에 성공하셨습니다!")
+
         if (response.status === 200) {
-          //window.location.href = "http://localhost:3000";
+          window.location.href = "http://localhost:3000";
         }
+        
       } catch (error) {
         console.error(error);
       }
