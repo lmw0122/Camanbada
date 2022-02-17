@@ -207,13 +207,8 @@ export default function MessageRooms() {
                   <Typography sx={{ fontWeight: 'bold' }}>
                     {list.nickname}님
                   </Typography>
-<<<<<<< HEAD
-                  <Typography alignItems="right" >
-                    {list.date} 
-=======
                   <Typography align="right">
                     {setCurTime(list.date)} 
->>>>>>> 36f1be096ad100b5ed006e5435e9bbae6a811cd0
                   </Typography>
                 </Stack>
                 <Stack>
