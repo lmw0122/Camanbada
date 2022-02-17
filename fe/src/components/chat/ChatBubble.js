@@ -19,7 +19,50 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
   const [isSec, setIsSec] = React.useState(false);
   const [originM, setoriginM] = React.useState("");
   const [overdM, setoverdM] = React.useState("");
-  
+  console.log(chat.date);
+  let date = new Date(chat.date);
+  console.log(date);
+  function setCurTime(date) {
+    let year = date.getFullYear();
+    let isYun = false;
+    if (year % 4 == 0) {
+      if (year % 100 == 0) {
+        if (year % 400 == 0) {
+          isYun = true;
+        }
+      } else {
+        isYun = true;
+      }
+    }
+    let dayPerMonth = [];
+    if (isYun) {
+      dayPerMonth = [0,31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    } else {
+      dayPerMonth = [0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    }
+    let minute = date.getMinutes();
+    let hour = date.getHours() + 9;
+    let day = date.getDate();
+    if (hour >= 24) {
+      hour = hour % 24;
+      day++;
+    }
+    let month = date.getMonth() + 1;
+    if (day > dayPerMonth[month]) {
+      day %= dayPerMonth[month];
+      month++;
+    }
+    if (month > 12) {
+      month %= 12;
+      year++;
+    }
+    
+    let curTime = year+"년 "+month+"월 "+day+"일 "+hour+"시 "+minute+"분";
+    return curTime;
+  }
+  console.log(setCurTime(date));
+
+  let tmp = setCurTime(date);
   console.log(oppNickname + " " + userId)
   const getOverMessage = async (messageId) => {
     console.log("getOverMessage act");
@@ -58,7 +101,7 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
     setoriginM(chat.message);
   },[])
   // 전송자가 본인일 때
-  if (chat.sender === userId) {
+  if (chat.sender == userId) {
     if (chat.over) {
       return (
         <Grid align="right">
@@ -66,7 +109,7 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
             {chat.message}
           </Typography>
           <Typography>
-            {chat.date}
+            {tmp}
           </Typography>
           {isClicked ? <button onClick={() => { deleteOverMessage() }}>줄이기</button>
           : <button onClick={() => { getOverMessage(chat.message_id) }}>더보기</button>}
@@ -80,7 +123,7 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
             {chat.message}
           </Typography>
           <Typography>
-            {chat.date}
+            {tmp}
           </Typography>
         </Grid>
       )
@@ -96,7 +139,7 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
             {chat.message}
           </Typography>
           <Typography>
-            {chat.date}
+            {tmp}
           </Typography>
           {isClicked ? <button onClick={() => { deleteOverMessage() }}>줄이기</button>
           : <button onClick={() => { getOverMessage(chat.message_id) }}>더보기</button>}
@@ -114,7 +157,7 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
             {chat.message}
           </Typography>
           <Typography>
-            {chat.date}
+            {tmp}
           </Typography>
         </Grid>
       )
