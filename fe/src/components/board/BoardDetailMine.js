@@ -46,11 +46,11 @@ export default function BoardDetailMine() {
   const ID_GET_URL = "http://i6c109.p.ssafy.io:8000/user";
   const NICKNAME_GET_URL = "http://i6c109.p.ssafy.io:8000/user/getnickname/";
 
-  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/one/${boardId}`;
+  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8000/board/one/${boardId}`;
   const BOARD_DELETE_URL = `http://i6c109.p.ssafy.io:8000/board/${boardId}`;
   const BOARD_ONE_LIKE_URL = `http://i6c109.p.ssafy.io:8000/like/board/`;
 
-  const COMMENT_GET_URL = `http://i6c109.p.ssafy.io:8051/comment/${boardId}`;
+  const COMMENT_GET_URL = `http://i6c109.p.ssafy.io:8000/comment/${boardId}`;
   const COMMENT_CREATE_URL = `http://i6c109.p.ssafy.io:8000/comment`;
   const COMMENT_DELETE_URL = `http://i6c109.p.ssafy.io:8000/comment/`;
   const COMMENT_ONE_LIKE_URL = `http://i6c109.p.ssafy.io:8000/like/comment/`;
@@ -68,7 +68,7 @@ export default function BoardDetailMine() {
   //게시판 가져오기
   const getBoards = async () => {
     axios
-      .get(BOARD_GET_URL)
+      .get(BOARD_GET_URL, HEADER)
       .then((response) => {
         setBoardUserId(response.data.clientId);
         setDataList(response.data);
@@ -97,7 +97,7 @@ export default function BoardDetailMine() {
   //댓글 가져오기
   const getComments = async () => {
     axios
-      .get(COMMENT_GET_URL)
+      .get(COMMENT_GET_URL, HEADER)
       .then((response) => {
         let allLike = 0;
         response.data.forEach((oneComment) => {
