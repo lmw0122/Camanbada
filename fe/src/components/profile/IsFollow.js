@@ -14,15 +14,17 @@ const IsFollow = ({ isFollow, getFollow, followUser }) => {
     },
   };
 
-  console.log('IsFollow에서 ', isFollow);
-  console.log('팔로우 할 유저의 id ', followUser);
+  // console.log('IsFollow에서 ', isFollow);
+  // console.log('팔로우 할 유저의 id ', followUser);
 
   const FOLLOW_URL = 'http://i6c109.p.ssafy.io:8000/follow/' + followUser;
   const follow = () => {
     console.log('팔로우');
+    console.log(FOLLOW_URL);
     axios
       .post(FOLLOW_URL, {} ,HEADER)
       .then((res) => {
+        console.log('-------------------------------------------------');
         console.log(res);
       });
     getFollow(true);
@@ -30,6 +32,7 @@ const IsFollow = ({ isFollow, getFollow, followUser }) => {
 
   const unfollow = () => {
     console.log('언팔로우');
+    console.log(FOLLOW_URL);
     axios
     .delete(FOLLOW_URL,HEADER)
       .then((res) => {
@@ -44,8 +47,8 @@ const IsFollow = ({ isFollow, getFollow, followUser }) => {
         <Button
           onClick={unfollow}
           style={{
-            border: "1px black solid",
-            color: "black"
+            color: "white",
+            backgroundColor: "#2e7d32",
           }}
           variant="outlined"
         >
@@ -57,7 +60,7 @@ const IsFollow = ({ isFollow, getFollow, followUser }) => {
           onClick={follow}
           style={{
             color: "white",
-            backgroundColor: "#1e88e5"
+            backgroundColor: "#2e7d32",
           }}
           variant="outlined"
         >
