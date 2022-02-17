@@ -84,15 +84,13 @@ export default function BasicTabs() {
   const [ like, setLike ] = React.useState(false);
   
 
-  const BASIC_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/basic/one/${campId}`
-  const DETAIL_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/detail/one/${campId}`
+  const BASIC_GET_URL = `http://i6c109.p.ssafy.io:8000/camp/basic/one/${campId}`
+  const DETAIL_GET_URL = `http://i6c109.p.ssafy.io:8000/camp/detail/one/${campId}`
 
   const REVIEW_GET_CAMP_URL = `http://i6c109.p.ssafy.io:8000/board/camp/${campId}`
-
-  const NOW_PAGE = `http://localhost:3000/camping/${campId}`;
   
   // const CAMPING_LIKE_URL = `http://i6c109.p.ssafy.io:8092/camp/like/`
-  const CAMPING_LIKE_URL = `http://i6c109.p.ssafy.io:8092/camp/like/`
+  const CAMPING_LIKE_URL = `http://i6c109.p.ssafy.io:8000/camp/like/`
 
   //캠핑후기 가져오기
   const getCampingReview = async () => {
@@ -109,7 +107,7 @@ export default function BasicTabs() {
 
   //캠핑 가져오기
   const getCamping = async () => {
-    axios.get(BASIC_GET_URL)
+    axios.get(BASIC_GET_URL,HEADER)
       .then((response) => {
           setBasics(response.data);
       }).catch((error) => {
@@ -147,12 +145,12 @@ export default function BasicTabs() {
   
   React.useEffect(() => {
     getCampingReview();
-    Axios.get(BASIC_GET_URL)
+    Axios.get(BASIC_GET_URL,HEADER)
       .then(res => setBasics(res.data))
   }, []);
 
   React.useEffect(() => {
-    Axios.get(DETAIL_GET_URL)
+    Axios.get(DETAIL_GET_URL,HEADER)
       .then(res => setDetails(res.data))   
   }, []);
  
