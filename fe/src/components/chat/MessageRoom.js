@@ -108,7 +108,7 @@ export default function MessageRoom(props) {
         prevChats = prevChats.concat(content);
         console.log(prevChats);
         setChats(prevChats);
-        //props.getLists();
+        props.getLists();
       }, {'Authorization': accessToken});
     });
   };

@@ -225,7 +225,7 @@ export default function MessageRooms() {
         md={6}
         align="center"
       >
-        <IfRoomId roomId={roomId} userId={userInfo.userId} nickname={userInfo.nickname} oppUserId={oppUser.oppUserId} oppNickname={oppUser.oppNickname} getLists={getLists}></IfRoomId>
+        <IfRoomId roomId={roomId} userId={userInfo.userId} nickname={userInfo.nickname} oppUserId={oppUser.oppUserId} oppNickname={oppUser.oppNickname} getLists={getLists} getNicknames={getNicknames} lists={lists} setLists={setLists}></IfRoomId>
        </Grid>
     </Grid>
 
