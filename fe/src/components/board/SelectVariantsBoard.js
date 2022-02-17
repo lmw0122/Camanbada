@@ -51,12 +51,17 @@ export default function SelectVariants() {
   var dropbox3 = [];
   var camps = [];
   var temp = [];
-
-  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list';
-  const BOARD_GET_URL = 'http://i6c109.p.ssafy.io:8051/board';
-  const SIGUNGU_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/basic/list/sigungu/${sido}`;
-  const SIDO_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list/sido';
-  const KEYWORD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/search/${titleKeyword}`
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
+  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8000/camp/basic/list';
+  const BOARD_GET_URL = 'http://i6c109.p.ssafy.io:8000/board';
+  const SIGUNGU_GET_URL = `http://i6c109.p.ssafy.io:8000/camp/basic/list/sigungu/${sido}`;
+  const SIDO_GET_URL = 'http://i6c109.p.ssafy.io:8000/camp/basic/list/sido';
+  const KEYWORD_GET_URL = `http://i6c109.p.ssafy.io:8000/board/search/${titleKeyword}`
 
   const getTitleKeyword = (e) => {
     setTitleKeyword(e.target.value);
@@ -85,7 +90,11 @@ export default function SelectVariants() {
   const getCampings = async() => {
     const json = await (
       await fetch (
-        CAMP_GET_URL
+        CAMP_GET_URL, {
+          headers: {
+            Authorization: accessToken
+          }
+        }
       )
     ).json();
     setCampings(json);
@@ -93,7 +102,7 @@ export default function SelectVariants() {
 
 
   React.useEffect(() => {
-    Axios.get(SIDO_GET_URL)
+    Axios.get(SIDO_GET_URL,HEADER)
       .then(res => setSidosjson(res.data))   
   }, []);
 
@@ -101,7 +110,7 @@ export default function SelectVariants() {
   // sido 값이 변화할 때만 api 호출!
   React.useEffect(() => {
     if (sido !== '') {
-      Axios.get(SIGUNGU_GET_URL)
+      Axios.get(SIGUNGU_GET_URL,HEADER)
         .then(res => setSigungusjson(res.data)) 
     }
   }, [sido]);
@@ -184,12 +193,15 @@ export default function SelectVariants() {
           else
             return 1;
         })
+        addCampName(boardList);
         setDataList(boardList);
       }).catch((error) => {
         alert("게시판이 비어있습니다");
       });
   };
-
+  const addCampName = async (boardList) => {
+    //Axios.get
+  }
   React.useEffect(() => {
     getBoards()
   }, [])
