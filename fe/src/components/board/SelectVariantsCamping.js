@@ -376,7 +376,6 @@ return (
                 {/* <TableCell>번호</TableCell> */}
                 <TableCell align="center" sx={{ fontWeight: 'bold',color : '#ffffff', fontSize: '18px' }}>말머리</TableCell>
                 <TableCell align="center" sx={{ fontWeight: 'bold',color : '#ffffff', fontSize: '18px' }}>제목</TableCell>
-                <TableCell align="center" sx={{ fontWeight: 'bold',color : '#ffffff', fontSize: '18px' }}> 작성자</TableCell>
                 <TableCell align="center" sx={{ fontWeight: 'bold',color : '#ffffff', fontSize: '18px' }}>작성날짜</TableCell>
               </TableRow>
             </TableHead>
@@ -395,8 +394,6 @@ return (
                       {d.title}
                       </Link>
                     </TableCell>
-                  <TableCell align="center">{d.clientId}</TableCell>
-                  {/* <TableCell align="center">{Date(d.date)}</TableCell> */}
                   <TableCell align="center">{(d.date)}</TableCell>
                 </TableRow>
               )) : ''}

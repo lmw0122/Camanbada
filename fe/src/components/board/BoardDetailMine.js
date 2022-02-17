@@ -285,25 +285,15 @@ export default function BoardDetailMine() {
               {/* <ProfileImage userInfo={ dataList } /> */}
             </Grid>
             <Grid>
-              <Stack direction="row" alignItems="center">
-                <Typography>아이디 {dataList.clientId}</Typography>
-                <Typography>닉네임 {nickName}</Typography>
-                {like ? (
-                  <FavoriteIcon
-                    onClick={(e) => {
-                      boardOneLike(e, dataList.boardId);
-                    }}
-                    sx={{ fontSize: 20, mx: 1, color: "#f44336" }}
-                  />
-                ) : (
-                  <FavoriteBorderIcon
-                    onClick={(e) => {
-                      boardOneLike(e, dataList.boardId);
-                    }}
-                    sx={{ fontSize: 20, mx: 1, color: "#f44336" }}
-                  />
-                )}
-                <Typography>{dataList.like}</Typography>
+              <Stack direction='row' alignItems="center">
+                <Typography>
+                  [{nickName}]
+                </Typography>
+                  { like ? <FavoriteIcon onClick={(e)=>{boardOneLike(e, dataList.boardId)}} sx={{ fontSize : 20, mx : 1, color : '#f44336'}}/> 
+                  : <FavoriteBorderIcon onClick={(e)=>{boardOneLike(e, dataList.boardId)}} sx={{ fontSize : 20, mx : 1, color : '#f44336'}}/> }
+                <Typography >
+                  {dataList.like}
+                </Typography>
               </Stack>
               <Typography>
                 {(function () {
@@ -356,23 +346,12 @@ export default function BoardDetailMine() {
                     <Typography sx={{ fontWeight: "bold" }}>
                       {comment.clientId}
                     </Typography>
-                    {likeComment ? (
-                      <FavoriteIcon
-                        onClick={(e) => {
-                          commentOneLike(e, comment.commentId);
-                        }}
-                        sx={{ fontSize: 25, mx: 1, color: "#f44336" }}
-                      />
-                    ) : (
-                      <FavoriteBorderIcon
-                        onClick={(e) => {
-                          commentOneLike(e, comment.commentId);
-                        }}
-                        sx={{ fontSize: 25, mx: 1, color: "#f44336" }}
-                      />
-                    )}
-                    <Typography>{comment.like}</Typography>
-                    <Grid sx={{ ml: 1 }}>
+                    { comment.like ? <FavoriteIcon onClick={(e)=>{commentOneLike(e, comment.commentId)}} sx={{ fontSize : 25, mx : 1, color : '#f44336'}}/> 
+                    : <FavoriteBorderIcon onClick={(e)=>{commentOneLike(e, comment.commentId)}} sx={{ fontSize : 25, mx : 1, color : '#f44336'}}/> }
+                    <Typography >
+                      {comment.like}
+                    </Typography>
+                    <Grid sx={{ ml : 1}}>
                       <IconButton>
                         {
                           clientId === comment.clientId && (
@@ -398,7 +377,7 @@ export default function BoardDetailMine() {
                 </Grid>
                 <Grid>
                   <Typography>
-                    {comment.date.replace("T", " ").substring(2, 16)}
+                    {/* {comment.date.replace("T", " ").substring(2,16)} */}
                   </Typography>
                 </Grid>
               </Grid>
