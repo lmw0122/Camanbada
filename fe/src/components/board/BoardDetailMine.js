@@ -322,7 +322,7 @@ export default function BoardDetailMine() {
                     </Typography>
                     <Grid sx={{ ml : 1}}>
                       <IconButton>
-                        {clientId === comment.clientId &&
+                        {clientId == comment.clientId &&
                           <DeleteIcon onClick={(e)=>{deleteOneComment(e, comment)}} sx={{ color : '#f44336' }}/>
                           // <Button variant="outlined" style={{ backgroundColor : "#f44336"}}
                           //   onClick={(e)=>{deleteOneComment(e, comment)}}

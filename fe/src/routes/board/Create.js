@@ -82,7 +82,7 @@ export default function Create() {
   //태그 받아오기
   const tag_camp_data = (data) => {
     console.log(data);
-    if (data == '장비 후기'|| data == '자유소통-자유') {
+    if (data === '장비 후기'|| data === '자유소통-자유') {
       setCommnunityTag(true);
       setCampTag(false);
     }
