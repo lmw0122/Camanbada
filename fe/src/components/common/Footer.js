@@ -18,7 +18,6 @@ function Copyright() {
     </Typography>
   );
 }
-
 export default function StickyFooter() {
   return (
     <Box
@@ -26,7 +25,9 @@ export default function StickyFooter() {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '1vh',
-        width : '100%',
+        width: '100%',
+        position: 'absolute',
+        marginTop: 30
       }}
     >
       <CssBaseline />

@@ -50,9 +50,8 @@ function Community() {
           </div>
           <Divider sx={{ borderBottomWidth: 2, my: 2 }} />
           <SelectVariantsBoard />
+          <StickyFooter></StickyFooter>
         </Grid>
-      {/* <BoardTable />   */}
-      <StickyFooter></StickyFooter>
     </Grid>
     </div>
   )
