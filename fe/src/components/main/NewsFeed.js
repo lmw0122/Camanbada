@@ -20,6 +20,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import ProfileImageInBoard from "../profile/ProfileImageInBoard";
 import Photo from "./Photo";
+import Button from "@mui/material/Button";
 
 const theme = createTheme();
 
