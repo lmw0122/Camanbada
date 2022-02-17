@@ -420,9 +420,7 @@ return (
               <TableRow sx={{ border : '1px solid black', bgcolor : '#1b5e20' }}>
                 {/* <TableCell>번호</TableCell> */}
                 <TableCell align="center" sx={{ fontWeight: 'bold',color : '#ffffff', fontSize: '18px' }}>말머리</TableCell>
-                <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>캠핑장명</TableCell>
-                <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>제목</TableCell>
-                <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>작성자</TableCell>
+                <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>게시물 제목</TableCell>
                 <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>작성날짜</TableCell>
               </TableRow>
             </TableHead>
@@ -432,6 +430,7 @@ return (
                   key={d.boardId}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
+                  {console.log(d)}
                   {/* <TableCell component="th" scope="row">
                     {d.boardId}
                   </TableCell> */}
@@ -442,12 +441,6 @@ return (
                     {d.title}
                     </Link>
                   </TableCell>
-                  <TableCell align="center" sx={{ fontSize: '15px'}}>
-                    <Link to={`/profile/${d.clientId}`} style={{ textDecoration: 'none', color : '#1b5e20'}}>
-                      {d.clientId}
-                    </Link>
-                    </TableCell>
-                  {/* <TableCell align="center">{Date(d.date)}</TableCell> */}
                   <TableCell align="center" sx={{ fontSize: '15px'}}>{d.date.replace("T", " ").substring(2,16)}</TableCell>
                 </TableRow>
               )) : ''}

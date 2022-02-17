@@ -153,7 +153,7 @@ export default function Update() {
   // 이미지 수정
   const [ image, setImage ] = useState({
     image_file : "",
-    preview_URL : "../img/dog.png",
+    preview_URL : dog,
   });
 
   const [ loaded, setLoaded ] = useState(false);
@@ -220,20 +220,42 @@ export default function Update() {
                     ref={refParam => inputRef = refParam}
                     style={{ display: "none" }}
                   />
-                  </div>
-                  <div className="img-wrapper">
-                    {loaded === false || loaded === true ? (
-                      <img src={image.preview_URL} alt="109"/>
-                    ) : (
-                      <span>이미지를 불러오는 중입니다.</span>
-                    )}
-                  </div>
-                  <div className="upload-button" >
-                    <Button variant="contained" sx={{ mt: 5, mr : 1 }} type="primary" onClick={() => inputRef.click()}>이미지 삽입</Button>
-                    <Button variant="contained" component="span" sx={{ mt: 5 }} onClick={sendImageToServer}>
+                </div>
+                <div className="img-wrapper">
+                  {loaded === false || loaded === true ? (
+                    <img src={image.preview_URL} alt="109"/>
+                  ) : (
+                    <span>이미지를 불러오는 중입니다.</span>
+                  )}
+                </div>
+                <div className="upload-button" >
+                  <Stack direction="column">
+                    <Button 
+                      variant="contained" 
+                      sx={{ mt: 5, mr : 1, width: "23ch" }} 
+                      type="primary" 
+                      onClick={() => inputRef.click()}
+                      style={{
+                        color: "white",
+                        backgroundColor: "#43a047"
+                      }}
+                    >
+                      이미지 선택
+                    </Button>
+                    <Button 
+                      variant="contained" 
+                      component="span" 
+                      sx={{ mt: 5, width: "23ch" }} 
+                      onClick={sendImageToServer}
+                      style={{
+                        color: "white",
+                        backgroundColor: "#43a047"
+                      }}
+                    >
                       프로필 이미지 변경
                     </Button>
-                  </div>
+                  </Stack>
+                </div>
               </Grid>
               <Grid item xs={9}>
                 <Stack direction="row" sx={{ mt: 2 }}>
@@ -283,7 +305,11 @@ export default function Update() {
                   <Button
                     variant="contained"
                     onClick={onCheckDuplicate}
-                    sx={{ ml: 2, width: "16ch" }}
+                    sx={{ ml: 2, width: "16ch", height: '7ch' }}
+                    style={{
+                      color: "white",
+                      backgroundColor: "#43a047"
+                    }}
                   >
                     중복 확인
                   </Button>

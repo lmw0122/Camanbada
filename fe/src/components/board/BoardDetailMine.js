@@ -255,11 +255,8 @@ export default function BoardDetailMine() {
             </Grid>
             <Grid>
               <Stack direction='row' alignItems="center">
-              <Typography>
-                아이디 {dataList.clientId}
-                </Typography>
                 <Typography>
-                  닉네임 {nickName}
+                  [{nickName}]
                 </Typography>
                   { like ? <FavoriteIcon onClick={(e)=>{boardOneLike(e, dataList.boardId)}} sx={{ fontSize : 20, mx : 1, color : '#f44336'}}/> 
                   : <FavoriteBorderIcon onClick={(e)=>{boardOneLike(e, dataList.boardId)}} sx={{ fontSize : 20, mx : 1, color : '#f44336'}}/> }
@@ -315,7 +312,7 @@ export default function BoardDetailMine() {
                     <Typography sx={{ fontWeight: 'bold' }}>
                       {comment.clientId}
                     </Typography>
-                    { likeComment ? <FavoriteIcon onClick={(e)=>{commentOneLike(e, comment.commentId)}} sx={{ fontSize : 25, mx : 1, color : '#f44336'}}/> 
+                    { comment.like ? <FavoriteIcon onClick={(e)=>{commentOneLike(e, comment.commentId)}} sx={{ fontSize : 25, mx : 1, color : '#f44336'}}/> 
                     : <FavoriteBorderIcon onClick={(e)=>{commentOneLike(e, comment.commentId)}} sx={{ fontSize : 25, mx : 1, color : '#f44336'}}/> }
                     <Typography >
                       {comment.like}
@@ -341,7 +338,7 @@ export default function BoardDetailMine() {
                 </Grid>
                 <Grid>
                   <Typography>
-                    {comment.date.replace("T", " ").substring(2,16)}
+                    {/* {comment.date.replace("T", " ").substring(2,16)} */}
                   </Typography>
                 </Grid>
 
