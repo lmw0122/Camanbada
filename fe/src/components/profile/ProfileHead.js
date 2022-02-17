@@ -238,12 +238,13 @@ export default function ProfileHead() {
                   {/* <AccountCircleIcon sx={{ fontSize: 150 }} /> */}
                 </Grid>
                 <Grid item md={7.2}>
-                  {/* 닉네임 */}
                   <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
                     <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                       {nick}
                     </Typography>
-                    <ProfileUser />
+                    {otherUserCheck == false &&
+                      <ProfileUser />
+                    }
                     {otherUserCheck == true && (
                         <IsFollow
                           isFollow={isFollow}
