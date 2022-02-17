@@ -27,7 +27,7 @@ export default function StickyFooter() {
         minHeight: '1vh',
         width: '100%',
         position: 'absolute',
-        marginTop: 30
+        marginTop: 40
       }}
     >
       <CssBaseline />
