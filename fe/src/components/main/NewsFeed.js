@@ -20,6 +20,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import ProfileImageInBoard from "../profile/ProfileImageInBoard";
 import Photo from "./Photo";
+import Button from "@mui/material/Button";
 
 const theme = createTheme();
 
@@ -115,9 +116,9 @@ export default function NewsFeed() {
       .get(BOARD_GET_URL, HEADER)
       .then((response) => {
         setBoardList(response.data);
-        console.log('ㅇㅇㅇ', response.data);
+        // console.log('ㅇㅇㅇ', response.data);
         getNickName(response.data.clientId);
-        console.log('겟보드',nickName);
+        // console.log('겟보드',nickName);
       })
       .catch((err) => {
         // alert("게시물이 아예 없습니다");
@@ -198,7 +199,18 @@ export default function NewsFeed() {
               color="text.primary"
               gutterBottom
             >
-              뉴스피드
+              뉴스피드{" "}
+              <Link to={"/community"} style={{ textDecoration: "none" }}>
+                <Button
+                  style={{
+                    border: "1px black solid",
+                    color: "black",
+                  }}
+                  variant="outlined"
+                >
+                  더보기
+                </Button>
+              </Link>
             </Typography>
           </Container>
         </Box>
@@ -218,7 +230,7 @@ export default function NewsFeed() {
                             <Photo boardList={ board } />                            
                           }
                           title={board.title}
-                          subheader={board.date}
+                          subheader={setCurTime(board.date)}
                         />
                         {board.photo != "" && (
                           <CardMedia
@@ -240,24 +252,22 @@ export default function NewsFeed() {
                                 <h2>더 보기</h2>
                               </div>
                             )}
-                            {board.photo == "" &&
-                              board.content.length <= 100 && (
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: board.content,
-                                  }}
-                                  style={{ height: 245 }}
-                                ></div>
-                              )}
-                            {board.photo != "" &&
-                              board.content.length <= 100 && (
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: board.content,
-                                  }}
-                                  style={{ height: 51 }}
-                                ></div>
-                              )}
+                            {board.photo == "" && board.content.length <= 100 && (
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: board.content,
+                                }}
+                                style={{ height: 245 }}
+                              ></div>
+                            )}
+                            {board.photo != "" && board.content.length <= 100 && (
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: board.content,
+                                }}
+                                style={{ height: 51 }}
+                              ></div>
+                            )}
                           </Typography>
                         </CardContent>
                         <CardActions disableSpacing>
@@ -310,24 +320,22 @@ export default function NewsFeed() {
                                 <h2>더 보기</h2>
                               </div>
                             )}
-                            {board.photo == "" &&
-                              board.content.length <= 100 && (
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: board.content,
-                                  }}
-                                  style={{ height: 245 }}
-                                ></div>
-                              )}
-                            {board.photo != "" &&
-                              board.content.length <= 100 && (
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: board.content,
-                                  }}
-                                  style={{ height: 51 }}
-                                ></div>
-                              )}
+                            {board.photo == "" && board.content.length <= 100 && (
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: board.content,
+                                }}
+                                style={{ height: 245 }}
+                              ></div>
+                            )}
+                            {board.photo != "" && board.content.length <= 100 && (
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: board.content,
+                                }}
+                                style={{ height: 51 }}
+                              ></div>
+                            )}
                           </Typography>
                         </CardContent>
                         <CardActions disableSpacing>

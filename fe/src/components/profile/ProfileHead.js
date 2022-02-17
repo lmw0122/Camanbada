@@ -11,6 +11,7 @@ import ProfileUser from "./ProfileUser";
 import CampingImage from "../camping/CampingImage";
 import ProfileImage from "./ProfileImage";
 import Paging from '../common/Pagination';
+import Photo from "../main/Photo";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -173,6 +174,48 @@ export default function ProfileHead() {
         // alert("게시물이 아예 없습니다");
       });
   };
+
+  function setCurTime(tmp) {
+    let date = new Date(tmp);
+    let year = date.getFullYear();
+    let isYun = false;
+    if (year % 4 == 0) {
+      if (year % 100 == 0) {
+        if (year % 400 == 0) {
+          isYun = true;
+        }
+      } else {
+        isYun = true;
+      }
+    }
+    let dayPerMonth = [];
+    if (isYun) {
+      dayPerMonth = [0,31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    } else {
+      dayPerMonth = [0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    }
+    let minute = date.getMinutes();
+    let hour = date.getHours() + 9;
+    let day = date.getDate();
+    if (hour >= 24) {
+      hour = hour % 24;
+      day++;
+    }
+    let month = date.getMonth() + 1;
+    if (day > dayPerMonth[month]) {
+      day %= dayPerMonth[month];
+      month++;
+    }
+    if (month > 12) {
+      month %= 12;
+      year++;
+    }
+    
+    let curTime = year+"년 "+month+"월 "+day+"일 "+hour+"시 "+minute+"분";
+    return curTime;
+  }
+
+
 
   React.useEffect(() => {
     getUserId();
@@ -358,13 +401,10 @@ export default function ProfileHead() {
                                 <Card sx={{ maxWidth: 345, maxHight: 345 }}>
                                   <CardHeader
                                     avatar={
-                                      <Avatar
-                                        sx={{ bgcolor: red[500] }}
-                                        aria-label="recipe"
-                                      />
+                                      <Photo boardList={ board } />  
                                     }
                                     title={board.title}
-                                    subheader={board.date}
+                                    subheader={setCurTime(board.date)}
                                   />
                                   {board.photo != "" && (
                                     <CardMedia

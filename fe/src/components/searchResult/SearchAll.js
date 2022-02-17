@@ -22,6 +22,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useParams } from 'react-router-dom';
 import Axios from "axios";
 import Paging from '../common/Pagination';
+import UserPhoto from './UserPhoto';
 
 
 const theme = createTheme();
@@ -48,6 +49,7 @@ export default function SearchAll() {
     .then(res => setUserList(res.data))
   }, []);
   
+  // console.log('유저리스트 서치올', userList);
   
   let totalListCount = userList.length;
   let offset = (pageNum - 1) * numPerPage;
@@ -60,7 +62,7 @@ export default function SearchAll() {
           sx={{
             bgcolor: 'background.paper',
             pt: 10,
-            pb: 6,
+            pb: 0,
           }}
         >
           <Container maxWidth="lg">
@@ -79,25 +81,23 @@ export default function SearchAll() {
           </Container>
         </Box>
         <Container sx={{ py: 0 }} maxWidth="lg">
-          <Grid container alignItems="center" >
+          {/* <Grid container alignItems="center" >
             <Grid>
               <Typography variant="h4">
                 사용자
               </Typography>
             </Grid>
-            <Link to={'/search/user'} style={{textDecoration:'none'}}>
-              <Grid>
-                <Typography variant="h6">
-                  더보기
-                </Typography>
-              </Grid>
-            </Link>
-          </Grid>
-          <Grid container spacing={4} sx={{mb: 8, mt: 1}}>
+          </Grid> */}
+          <Grid container spacing={4} sx={{mb: 8, mt: 1, }}>
             {userList.slice(offset,offset+numPerPage).map((user) => (
               <Grid item key={user} xs={12} sm={6} md={3}>
                 <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                  sx={{ 
+                    height: '100%', 
+                    display: 'flex', 
+                    flexDirection: 'column',
+                    maxWidth: 180
+                  }}
                   align="center"
                   onClick = {(e) => {
                     e.preventDefault();
@@ -110,11 +110,14 @@ export default function SearchAll() {
                       // 16:9
                       // pt: '56.25%',
                       // pt: '0%',
+                      // width: '12ch'
                     }}
                     // image="https://images.unsplash.com/photo-1641157141085-8454fbc33f3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0MzExNTc1NQ&ixlib=rb-1.2.1&q=80&w=1080"
                     // alt="CampingImage"
                   >
-                    <AccountCircleIcon sx={{ fontSize: 120 }} />
+                    {/* <AccountCircleIcon sx={{ fontSize: 120 }} /> */}
+                    <UserPhoto boardList={ user }/>
+                    {/* <Photo /> */}
                   </CardMedia>
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">

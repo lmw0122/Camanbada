@@ -110,18 +110,19 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
           <Typography>
             {setCurTime(chat.date)}
           </Typography>
-          {isClicked ? <button onClick={() => { deleteOverMessage() }}>줄이기</button>
-          : <button onClick={() => { getOverMessage(chat.message_id) }}>더보기</button>}
+          {isClicked ? <Button onClick={() => { deleteOverMessage() }}>줄이기</Button>
+          : <Button onClick={() => { getOverMessage(chat.message_id) }}>더보기</Button>}
         </Grid>
       )
     }
     else {
       return (
-        <Grid align="right">
+        // 본인 채팅
+        <Grid align="right" sx={{ py : 2, pr : 3}}>
           <Typography sx={{border : '1px solid #f9fbe7', maxWidth : "200px", backgroundColor : "#f9fbe7"}}>
             {chat.message}
           </Typography>
-          <Typography>
+          <Typography >
             {setCurTime(chat.date)}
           </Typography>
         </Grid>
@@ -140,18 +141,19 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
           <Typography>
             {setCurTime(chat.date)}
           </Typography>
-          {isClicked ? <button onClick={() => { deleteOverMessage() }}>줄이기</button>
-          : <button onClick={() => { getOverMessage(chat.message_id) }}>더보기</button>}
+          {isClicked ? <Button onClick={() => { deleteOverMessage() }}>줄이기</Button>
+          : <Button onClick={() => { getOverMessage(chat.message_id) }}>더보기</Button>}
         </Grid>
       )
     }
     else {     
       return (
+        // 상대방 채팅
         <Grid align="left" sx={{ py : 2, pl : 3}}>
-          <Typography sx={{ fontWeight: 'bold' }}>
+          <Typography sx={{ fontWeight: 'bold', fontSize : 20 }}>
             {oppNickname}
           </Typography>
-          <Typography id={chat.message_id} sx={{border : '1px solid #f1f8e9', maxWidth : "150px", backgroundColor : "#f1f8e9"}}>
+          <Typography id={chat.message_id} sx={{border : '1px solid #f1f8e9', maxWidth : "200px", backgroundColor : "#f1f8e9"}}>
             {chat.message}
           </Typography>
           <Typography>
