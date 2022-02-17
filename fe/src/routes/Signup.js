@@ -2,11 +2,11 @@ import React, { useState, useCallback } from 'react';
 import axios from 'axios'
 import { Container, TextField, Box, CssBaseline, Typography, Button, Link, Grid } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Copyright from "../components/common/Copyright";
 import Logo from "../img/logo.png";
 import Avatar from '@mui/material/Avatar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import StickyFooter from '../components/common/Footer';
+import CampingSearch from '../components/camping/CampingSearch';
 
 const theme = createTheme();
 const BASE_URL_USER = 'i6c109.p.ssafy.io:8000';
@@ -38,27 +38,30 @@ export default function SignUp() {
   const [ userId, setUserId ] = useState();
 
   async function handleJoin(e) {
-    e.preventDefault()
-    try {
-      //응답 성공 
-      const response = await axios.post('http://i6c109.p.ssafy.io:8000/user/',{
+    console.log(isId +" " + isNickname  +" " +  isEmail  +" " +  isPassword  +" " +  isPasswordConfirm);
+    if (isId == true && isNickname == true && isEmail == true && isPassword == true && isPasswordConfirm == true) {
+      try {
+        //응답 성공 
+        const response = await axios.post('http://i6c109.p.ssafy.io:8000/user/', {
           //보내고자 하는 데이터 
           id: id,
           password: password,
           nickname: nickname,
           email: email,
-      });
-      console.log(id)
-      console.log(password)
-      console.log(nickname)
-      console.log(response);
-      alert("회원가입에 성공하셨습니다!")
-      if (response.status === 200) {
-        <Link to="/main"></Link>
+        });
+        console.log(id)
+        console.log(password)
+        console.log(nickname)
+        console.log(response);
+        alert("회원가입에 성공하셨습니다!")
+        if (response.status === 200) {
+          //window.location.href = "http://localhost:3000";
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
-    }
+    } else
+      alert('회원가입 양식을 지켜주세요')
   }
 
   // 아이디
@@ -79,13 +82,21 @@ export default function SignUp() {
     axios.get(`http://i6c109.p.ssafy.io:8000/user/valid/${userId}`)
     .then(res=> {
       console.log(res)
+      if (userId.length < 5 || userId.length > 15) {
+        alert('5글자 이상 15글자 미만으로 입력해주세요.')
+        setIsId(false)
+      }
+
       if ( res.data === 'OK' && (5 < userId.length && userId.length < 15)) {
         alert('사용할 수 있는 아이디입니다.')
-      } if (userId.length < 5 || userId.length > 15) {
-        alert('5글자 이상 15글자 미만으로 입력해주세요.')
+        setIsId(true)
       } else {
-        alert('다른 사용자가 사용하고 있는 아이디입니다.')
+        setIsId(false)
       }
+      
+      
+    }).catch(e => {
+      alert('아이디를 다시 확인해주세요')
     })
   }
 
@@ -95,10 +106,10 @@ export default function SignUp() {
     setNickname(e.target.value)
     if (e.target.value.length < 2 || e.target.value.length > 15) {
       setNicknameMessage('2글자 이상 15글자 미만으로 입력해주세요.')
-      setIsNickname(false)
+      setIsNickname(false);
     } else {
       setNicknameMessage('올바른 닉네임 형식입니다 :)')
-      setIsNickname(true)
+      setIsNickname(true);
     }
   }, [])
 
@@ -107,13 +118,20 @@ export default function SignUp() {
     axios.get(`http://i6c109.p.ssafy.io:8000/user/${userNickname}`)
     .then(res => {
       // console.log(res.data[0])
-      if (res.data[0] !== undefined ) {
+      if (res.data[0] !== undefined) {
         alert('다른 사용자가 사용하고 있는 닉네임입니다.')
-      } if ( userNickname.length < 2 || userNickname.length > 15) {
-        alert('2글자 이상 15글자 미만으로 입력해주세요.')
+        setIsNickname(false);
       } else {
-        alert('사용하실 수 있는 닉네임입니다.')
+        if (userNickname.length < 2 || userNickname.length > 15) {
+          alert('2글자 이상 15글자 미만으로 입력해주세요.')
+          setIsNickname(false);
+        } else {
+          alert('사용가능한 닉네임입니다')
+          setIsNickname(true);
+        }
       }
+    }).catch(e => {
+      alert('닉네임을 다시 확인해주세요')
     })
   }
 
