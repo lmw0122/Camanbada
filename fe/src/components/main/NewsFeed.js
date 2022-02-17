@@ -115,9 +115,9 @@ export default function NewsFeed() {
       .get(BOARD_GET_URL, HEADER)
       .then((response) => {
         setBoardList(response.data);
-        console.log('ㅇㅇㅇ', response.data);
+        // console.log('ㅇㅇㅇ', response.data);
         getNickName(response.data.clientId);
-        console.log('겟보드',nickName);
+        // console.log('겟보드',nickName);
       })
       .catch((err) => {
         // alert("게시물이 아예 없습니다");

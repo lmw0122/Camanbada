@@ -11,6 +11,7 @@ import ProfileUser from "./ProfileUser";
 import CampingImage from "../camping/CampingImage";
 import ProfileImage from "./ProfileImage";
 import Paging from '../common/Pagination';
+import Photo from "../main/Photo";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -400,10 +401,7 @@ export default function ProfileHead() {
                                 <Card sx={{ maxWidth: 345, maxHight: 345 }}>
                                   <CardHeader
                                     avatar={
-                                      <Avatar
-                                        sx={{ bgcolor: red[500] }}
-                                        aria-label="recipe"
-                                      />
+                                      <Photo boardList={ board } />  
                                     }
                                     title={board.title}
                                     subheader={setCurTime(board.date)}
