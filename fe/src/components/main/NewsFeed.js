@@ -57,6 +57,45 @@ export default function NewsFeed() {
       });
   };
 
+  function setCurTime(tmp) {
+    let date = new Date(tmp);
+    let year = date.getFullYear();
+    let isYun = false;
+    if (year % 4 == 0) {
+      if (year % 100 == 0) {
+        if (year % 400 == 0) {
+          isYun = true;
+        }
+      } else {
+        isYun = true;
+      }
+    }
+    let dayPerMonth = [];
+    if (isYun) {
+      dayPerMonth = [0,31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    } else {
+      dayPerMonth = [0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    }
+    let minute = date.getMinutes();
+    let hour = date.getHours() + 9;
+    let day = date.getDate();
+    if (hour >= 24) {
+      hour = hour % 24;
+      day++;
+    }
+    let month = date.getMonth() + 1;
+    if (day > dayPerMonth[month]) {
+      day %= dayPerMonth[month];
+      month++;
+    }
+    if (month > 12) {
+      month %= 12;
+      year++;
+    }
+    
+    let curTime = year+"년 "+month+"월 "+day+"일 "+hour+"시 "+minute+"분";
+    return curTime;
+  }
   //현재 로그인한 사용자 아이디 가져오기
   const getId = async () => {
     axios
@@ -249,7 +288,7 @@ export default function NewsFeed() {
                             <Photo boardList={ board } />
                           }
                           title={board.title}
-                          subheader={board.date}
+                          subheader={setCurTime(board.date)}
                         />
                         {board.photo != "" && (
                           <CardMedia

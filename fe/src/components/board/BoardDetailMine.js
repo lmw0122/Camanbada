@@ -47,10 +47,11 @@ export default function BoardDetailMine() {
   const [userInfo, setUserInfo] = useState([]);
   const [loginUserProfile, setLoginUserProfile] = useState([]);
 
+  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8000/board/one/${boardId}`;
+  const BOARD_GET_CAMPNAME_URL = 'http://i6c109.p.ssafy.io:8000/camp/basic/one/'
   const ID_GET_URL = "http://i6c109.p.ssafy.io:8000/user";
   const NICKNAME_GET_URL = "http://i6c109.p.ssafy.io:8000/user/getnickname/";
 
-  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8000/board/one/${boardId}`;
   const BOARD_DELETE_URL = `http://i6c109.p.ssafy.io:8000/board/${boardId}`;
   const BOARD_ONE_LIKE_URL = `http://i6c109.p.ssafy.io:8000/like/board/`;
 
@@ -68,7 +69,47 @@ export default function BoardDetailMine() {
       Authorization: accessToken,
     },
   };
-  
+
+  // 시간 변환 함수
+  function setCurTime(tmp) {
+    let date = new Date(tmp);
+    let year = date.getFullYear();
+    let isYun = false;
+    if (year % 4 == 0) {
+      if (year % 100 == 0) {
+        if (year % 400 == 0) {
+          isYun = true;
+        }
+      } else {
+        isYun = true;
+      }
+    }
+    let dayPerMonth = [];
+    if (isYun) {
+      dayPerMonth = [0,31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    } else {
+      dayPerMonth = [0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    }
+    let minute = date.getMinutes();
+    let hour = date.getHours() + 9;
+    let day = date.getDate();
+    if (hour >= 24) {
+      hour = hour % 24;
+      day++;
+    }
+    let month = date.getMonth() + 1;
+    if (day > dayPerMonth[month]) {
+      day %= dayPerMonth[month];
+      month++;
+    }
+    if (month > 12) {
+      month %= 12;
+      year++;
+    }
+    
+    let curTime = year+"년 "+month+"월 "+day+"일 "+hour+"시 "+minute+"분";
+    return curTime;
+  }
   //사용자 가져오기
   function getUserInfo(nick){
     const USERINFO_GET_URL = `http://i6c109.p.ssafy.io:8000/user/${nick}`
@@ -81,13 +122,23 @@ export default function BoardDetailMine() {
       });
   };
 
+  const addCampName = async (boardList) => {
+    await axios.get(BOARD_GET_CAMPNAME_URL + boardList.campId, HEADER).then(res => {
+      if (res.data.facltNm == "string")
+        boardList.campName = "-";
+      else
+        boardList.campName = res.data.facltNm;
+    })
+    
+    setDataList(boardList);
+  }
   //게시판 가져오기
   const getBoards = async () => {
     axios
       .get(BOARD_GET_URL, HEADER)
       .then((response) => {
         setBoardUserId(response.data.clientId);
-        setDataList(response.data);
+        addCampName(response.data);
         getNickName(response.data.clientId);
         const onePhoto = response.data.photo;
         console.log(onePhoto);
@@ -168,6 +219,7 @@ export default function BoardDetailMine() {
         HEADER
       )
       .then((response) => {
+        oneContent.value = '';
         getComments();
       })
       .catch((error) => {
@@ -283,8 +335,13 @@ export default function BoardDetailMine() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
-        <Container sx={{ p: 0, mt: 12, mb: 8 }} maxWidth="md">
-          <Typography sx={{ mb: 1 }}>&#60;{dataList.tag}&#62;</Typography>
+        <Container sx={{ p:0, mt: 12, mb: 8}} maxWidth="md">
+          <Typography sx={{ mb: 1 }}>
+            &#60;{dataList.tag}&#62;
+          </Typography>
+          <Typography sx={{ mb: 1 }}>
+            &#60;{dataList.campName}&#62;
+          </Typography>
           <Typography variant="h4" sx={{ mb: 2 }}>
             {dataList.title}
           </Typography>
@@ -312,10 +369,7 @@ export default function BoardDetailMine() {
                 </Typography>
               </Stack>
               <Typography>
-                {(function () {
-                  if (dataList.date !== undefined)
-                    return dataList.date.replace("T", " ").substring(2, 16);
-                })()}
+                {setCurTime(dataList.date)}
               </Typography>
             </Grid>
           </Stack>
@@ -386,7 +440,7 @@ export default function BoardDetailMine() {
                 </Grid>
                 <Grid>
                   <Typography>
-                    {/* {comment.date.replace("T", " ").substring(2,16)} */}
+                    {setCurTime(comment.date)}
                   </Typography>
                 </Grid>
               </Grid>
@@ -405,6 +459,7 @@ export default function BoardDetailMine() {
             >
             </Input>
             <Button
+              id="summitBtn"
               type="submit"
               sx={{
                 m: 1,

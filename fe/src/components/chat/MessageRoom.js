@@ -116,7 +116,8 @@ export default function MessageRoom(props) {
   };
   const sendMessage = () => {
     let msg = document.getElementById("userMessageInput");
-    stomp.send('/pub/chatting/message', {'Authorization': accessToken}, JSON.stringify({ chatroomId: roomId, date: new Date(), message: msg.value, sender: user.userId }));
+    let date = new Date();
+    stomp.send('/pub/chatting/message', {'Authorization': accessToken}, JSON.stringify({ chatroomId: roomId, date: date, message: msg.value, sender: user.userId }));
     msg.value = '';
   };
 

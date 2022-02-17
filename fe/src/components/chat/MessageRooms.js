@@ -34,6 +34,46 @@ export default function MessageRooms() {
       'Authorization': accessToken
     }
   }
+  // 시간 변환 함수
+  function setCurTime(tmp) {
+    let date = new Date(tmp);
+    let year = date.getFullYear();
+    let isYun = false;
+    if (year % 4 == 0) {
+      if (year % 100 == 0) {
+        if (year % 400 == 0) {
+          isYun = true;
+        }
+      } else {
+        isYun = true;
+      }
+    }
+    let dayPerMonth = [];
+    if (isYun) {
+      dayPerMonth = [0,31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    } else {
+      dayPerMonth = [0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    }
+    let minute = date.getMinutes();
+    let hour = date.getHours() + 9;
+    let day = date.getDate();
+    if (hour >= 24) {
+      hour = hour % 24;
+      day++;
+    }
+    let month = date.getMonth() + 1;
+    if (day > dayPerMonth[month]) {
+      day %= dayPerMonth[month];
+      month++;
+    }
+    if (month > 12) {
+      month %= 12;
+      year++;
+    }
+    
+    let curTime = year+"년 "+month+"월 "+day+"일 "+hour+"시 "+minute+"분";
+    return curTime;
+  }
   // 채팅 리스트를 클릭하면 해당 채팅방 내용을 어떻게 띄워줄지?????
   // 초기에 roomNum을 null이면 채팅방 내용X 
   // -> 채팅방 클릭시 해당 채팅방 내용 표시
@@ -138,32 +178,42 @@ export default function MessageRooms() {
   
   return (
 
-    <Grid container component="main" sx={{ mt: 15}}>
+    <Grid container maxWidth="xl" component="main" sx={{ mt: 10, mx : 1}} >
       <CssBaseline />
       <Grid
         item
         md={6}
         align="center"
+        style={{ border : '1px solid black'}}
       >
+        <Typography variant="h4" sx={{ my : 2}}>
+          Message List
+        </Typography>
         {lists.map((list , i) => (
           <Grid 
             onClick={() => { createMessageRoom(list.chatroomId, list.user, list.nickname); }}
             justifyContent="center"
             alignItems="center"
-            md={6}
+            md={8}
             direction="row"
+            style={{ border : '1px solid black'}}
           >
-            <Stack direction="row" alignItems="center">
+            <Stack direction="row" alignItems="center" style={{ mt : 1}}>
               <Grid item align="center" sx={{ mr:1 }}>
-                <AccountCircleIcon sx={{ fontSize: 50 }} />
+                <AccountCircleIcon sx={{ fontSize: 50, m : 1 }} />
               </Grid>
               <Grid>
                 <Stack direction="row" spacing={2}>
                   <Typography sx={{ fontWeight: 'bold' }}>
                     {list.nickname}님
                   </Typography>
-                  <Typography align="right">
+<<<<<<< HEAD
+                  <Typography alignItems="right" >
                     {list.date} 
+=======
+                  <Typography align="right">
+                    {setCurTime(list.date)} 
+>>>>>>> 36f1be096ad100b5ed006e5435e9bbae6a811cd0
                   </Typography>
                 </Stack>
                 <Stack>
