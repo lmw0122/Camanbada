@@ -24,6 +24,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // import Input from '@mui/material/Input';
 
 import ProfileImage from "../profile/ProfileImage";
+import ProfileImageInBoard from "../profile/ProfileImageInBoard";
 
 const theme = createTheme();
 
@@ -76,6 +77,7 @@ export default function BoardDetailMine() {
       .then((res) => {
         setUserInfo(res);
         setLoginUserProfile(res.data[0].photo);
+        console.log('로그은유저프로ㅓ필',loginUserProfile);
       });
   };
 
@@ -208,8 +210,7 @@ export default function BoardDetailMine() {
   //댓글 좋아요와 싫어요
   const [likeComment, setLikeComment] = useState(false);
   const commentOneLike = (e, commentId) => {
-    {
-      const URL = COMMENT_ONE_LIKE_URL + commentId;
+    const URL = COMMENT_ONE_LIKE_URL + commentId;
       axios
         .get(URL, HEADER)
         .then((response) => {
@@ -232,14 +233,12 @@ export default function BoardDetailMine() {
         .catch((error) => {
           alert("좋아요에 실패하였습니다");
         });
-    }
-  };
+    };
 
   //게시판 좋아요와 싫어요 & 아이콘 변경
   const [like, setLike] = useState(false);
   const boardOneLike = (e, boardId) => {
-    {
-      const URL = BOARD_ONE_LIKE_URL + boardId;
+    const URL = BOARD_ONE_LIKE_URL + boardId;
       axios
         .get(URL, HEADER)
         .then((response) => {
@@ -262,7 +261,6 @@ export default function BoardDetailMine() {
         .catch((error) => {
           alert("좋아요에 실패하였습니다");
         });
-    }
   };
 
   function goProfile(e, id) {
@@ -278,8 +276,6 @@ export default function BoardDetailMine() {
   useEffect(() => {
     getUserInfo();
   }, [boardId]);
-
-  console.log('넘어온 유저정보',userInfo);
 
   const content = dataList.content;
 
@@ -300,14 +296,19 @@ export default function BoardDetailMine() {
               mb: 2,
             }}
           >
-            <Grid sx={{width: '5ch'  }}>
+<<<<<<< HEAD
+            <Grid>
               <AccountCircleIcon
                 sx={{ fontSize: 60 }}
                 onClick={(e) => {
-                  goProfile(e, boardUserId);
+                  goProfile(e, nickName);
                 }}
               />
-              <ProfileImage userInfo={ loginUserProfile } />
+              {/* <ProfileImage userInfo={ dataList } /> */}
+=======
+            <Grid sx={{width: '5ch'  }}>
+              <ProfileImageInBoard loginUserProfile={ loginUserProfile }/>
+>>>>>>> dd87740bfb4da9835cf2bc75561012b895f2819d
             </Grid>
             <Grid>
               <Stack direction='row' alignItems="center">
@@ -464,3 +465,4 @@ export default function BoardDetailMine() {
     </ThemeProvider>
   );
 }
+
