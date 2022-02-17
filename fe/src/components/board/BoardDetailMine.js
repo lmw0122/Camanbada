@@ -377,7 +377,10 @@ export default function BoardDetailMine() {
                 </Grid>
                 <Grid>
                   <Typography>
+                    {/* {console.log(comment.date)} */}
+                    {/* {console.log(Date(comment.date))} */}
                     {/* {comment.date.replace("T", " ").substring(2,16)} */}
+                    {Date(comment.date)}
                   </Typography>
                 </Grid>
               </Grid>
