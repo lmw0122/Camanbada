@@ -1,15 +1,12 @@
 // 채팅방 목록 표시
 import React, { Component,useRef } from "react";
+import { Grid, Box, Typography, Container, Button, Input} from '@mui/material';
 import { Link } from "react-router-dom";
 import SocketJsClient from "react-stomp";
 import ChatBubble from "./ChatBubble";
-
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
+
 
 export default function MessageRoom(props) {
   const [user, setUser] = React.useState({});
@@ -163,9 +160,8 @@ export default function MessageRoom(props) {
   },[buttonVisible]);
   
   return (
-    <div>
+    <div >
       <div style={{ height: 700, overflowY: 'auto' }} onScroll={scroll}>
-        
         <Grid>
           {console.log(props.oppNickname)}
           {chats.map((chat, i) => (
@@ -173,13 +169,13 @@ export default function MessageRoom(props) {
             ))}
         </Grid>
       </div>
-      <div style={buttonStyle}>
-        
-        <input id='userMessageInput' type="text" onKeyPress={onKeyPress}></input>
-        <button
+      <div style={buttonStyle} align="right">
+        <Input id='userMessageInput'sx={{ width : '650px' }} type="text" onKeyPress={onKeyPress}></Input>
+        <Button
           onClick={sendMessage}
-        >전송</button>
-
+          variant="contained"
+          sx={{backgroundColor : '#1b5e20', ml : 1}}
+        >전송</Button>
       </div>
     </div>
   )
