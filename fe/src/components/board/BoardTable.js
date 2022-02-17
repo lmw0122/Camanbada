@@ -79,7 +79,7 @@ export default function BoardTable() {
                       {d.title}
                       </Link>
                     </TableCell>
-                  <TableCell align="center">{d.clientId}</TableCell>
+                  {/* <TableCell align="center">{d.clientId}</TableCell> */}
                   <TableCell align="center">{d.date}</TableCell>
                 </TableRow>
               )) : ''}
