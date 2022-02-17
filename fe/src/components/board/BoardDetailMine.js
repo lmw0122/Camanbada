@@ -60,8 +60,8 @@ export default function BoardDetailMine() {
   const COMMENT_DELETE_URL = `http://i6c109.p.ssafy.io:8000/comment/`;
   const COMMENT_ONE_LIKE_URL = `http://i6c109.p.ssafy.io:8000/like/comment/`;
 
-  const HOME_TEST_URL = "http://localhost:3000/community";
-  const PROFILE_MOVE_URL = "http://localhost:3000/profile/";
+  const HOME_TEST_URL = "http://i6c109.p.ssafy.io:80/community";
+  const PROFILE_MOVE_URL = "http://i6c109.p.ssafy.io:80/profile/";
 
   const accessToken = localStorage.getItem("accessToken");
   const HEADER = {

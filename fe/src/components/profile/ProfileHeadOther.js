@@ -52,10 +52,10 @@ export default function ProfileHeadOther() {
     setValue(newValue);
   };
 
-    const NOW_PAGE = `http://localhost:3000/camping/${campId}`;
+    const NOW_PAGE = `http://i6c109.p.ssafy.io:80/camping/${campId}`;
   
   // const CAMPING_LIKE_URL = `http://i6c109.p.ssafy.io:8092/camp/like/`
-  const CAMPING_LIKE_URL = `http://localhost:8092/camp/like/`
+  const CAMPING_LIKE_URL = `http://i6c109.p.ssafy.io:8000/camp/like/`
 
   const accessToken = localStorage.getItem("accessToken");
   const HEADER = {

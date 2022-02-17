@@ -23,7 +23,7 @@ export default function BoardUpdate() {
 
   const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8000/board/one/${boardId}`;
   const BOARD_UPDATE_URL = 'http://i6c109.p.ssafy.io:8000/board';
-  const HOME_TEST_URL = `http://localhost:3000/board/${boardId}`;
+  const HOME_TEST_URL = `http://i6c109.p.ssafy.io:80/board/${boardId}`;
 
   const accessToken = localStorage.getItem("accessToken");
   const HEADER = {

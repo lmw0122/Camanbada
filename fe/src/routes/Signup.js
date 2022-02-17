@@ -6,7 +6,6 @@ import Logo from "../img/logo.png";
 import Avatar from '@mui/material/Avatar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import StickyFooter from '../components/common/Footer';
-import CampingSearch from '../components/camping/CampingSearch';
 
 const theme = createTheme();
 const BASE_URL_USER = 'i6c109.p.ssafy.io:8000';
@@ -37,31 +36,25 @@ export default function SignUp() {
   const [ userNickname, setUserNickname ] = useState();
   const [ userId, setUserId ] = useState();
 
-  async function handleJoin(e) {
+  
+  const handleJoin = async () => {
     if (isId == true && isNickname == true && isEmail == true && isPassword == true && isPasswordConfirm == true) {
-      try {
-        //응답 성공 
-        const response = await axios.post('http://i6c109.p.ssafy.io:8000/user/', {
+      await axios
+        .post('http://i6c109.p.ssafy.io:8000/user/', {
           //보내고자 하는 데이터 
           id: id,
           password: password,
           nickname: nickname,
           email: email,
+        }).then((res) => {
+          console.log(res)
+          alert("회원가입에 성공하셨습니다!");
+          window.location.href = "http://i6c109.p.ssafy.io/"
+        }).catch((error) => {
+          console.error(error);
         });
-        console.log(id)
-        console.log(password)
-        console.log(nickname)
-        console.log(response);
-        alert("회원가입에 성공하셨습니다!")
-
-        if (response.status === 200) {
-          window.location.href = "http://localhost:3000";
-        }
-        
-      } catch (error) {
-        console.error(error);
-      }
-    } else
+    }
+    else
       alert('회원가입 양식을 지켜주세요')
   }
 
@@ -86,13 +79,15 @@ export default function SignUp() {
       if (userId.length < 5 || userId.length > 15) {
         alert('5글자 이상 15글자 미만으로 입력해주세요.')
         setIsId(false)
-      }
-
-      if ( res.data === 'OK' && (5 < userId.length && userId.length < 15)) {
-        alert('사용할 수 있는 아이디입니다.')
-        setIsId(true)
       } else {
-        setIsId(false)
+        if (res.data == 'OK' && (5 <= userId.length && userId.length <= 15)) {
+          alert('사용할 수 있는 아이디입니다.')
+          setIsId(true)
+        } else {
+          alert('사용할 수 없습니다.')
+          console.log(userId.length)
+          setIsId(false)
+        }
       }
       
       
@@ -208,7 +203,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5" sx={{ mb: 6, mt: 2 }}>
             Sign up
           </Typography>
-          <Box component="form" noValidate xs={{ mt: 3 }} onSubmit={handleJoin}>
+          <Box component="form" noValidate xs={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={9}>
                 <TextField
@@ -327,12 +322,11 @@ export default function SignUp() {
             </Grid>
             {/* 위의 유효성 검사가 성립된다면 버튼 활성화 */}
             <Button
-              type="submit"
-              // disabled={!(isId && isEmail && isPassword && isPasswordConfirm)}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 1, height: 55 }}
-              style={{ backgroundColor: "#1b5e20", color : '#fafafa' }}
+              style={{ backgroundColor: "#1b5e20", color: '#fafafa' }}
+              onClick={handleJoin}
             >
               Sign Up
             </Button>

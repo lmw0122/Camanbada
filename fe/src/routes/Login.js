@@ -32,7 +32,7 @@ export default function SignInSide() {
   const KAKAO_AUTH_URL = "http://i6c109.p.ssafy.io:8000/oauth/getKakao";
   const AUTH_URL = "http://i6c109.p.ssafy.io:8000/user/login";
   const HOME_URL = "http://i6c109.p.ssafy.io:80/main";
-  const HOME_TEST_URL = "http://localhost:3000/main";
+  const HOME_TEST_URL = "http://i6c109.p.ssafy.io:80/main";
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -64,7 +64,7 @@ export default function SignInSide() {
   //     .then((response) => {
   //       console.log(response.data);
   //       let url = response.data;
-  //       url = url.replace("localhost", "i6c109.p.ssafy.io");
+  //       url = url.replace("i6c109.p.ssafy.io", "i6c109.p.ssafy.io");
   //       console.log(url);
   //       window.location.href=(url);
   //   });

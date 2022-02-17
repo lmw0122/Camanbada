@@ -19,7 +19,7 @@ export default function Create() {
   const [campTag, setCampTag] = useState(true);
 
   const BOARD_CREATE_URL = 'http://i6c109.p.ssafy.io:8000/board';
-  const BOARD_LIST_URL = 'http://localhost:3000/community';
+  const BOARD_LIST_URL = 'http://i6c109.p.ssafy.io:80/community';
   const ID_GET_URL = 'http://i6c109.p.ssafy.io:8000/user'
   const accessToken = localStorage.getItem("accessToken");
   const HEADER = {

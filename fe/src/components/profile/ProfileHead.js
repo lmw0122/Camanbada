@@ -104,8 +104,8 @@ export default function ProfileHead() {
   const encoded = encodeURI(uri);
 
   //현재 프로필 사용자
-  const getUserId = () => {
-    axios.get(encoded).then((res) => {
+  const getUserId = async() => {
+    await axios.get(encoded).then((res) => {
       setUserInfo(res.data);
       setLoading(false);
       setUserIntro(res.data[0].intro);
@@ -115,9 +115,9 @@ export default function ProfileHead() {
   };
 
   //팔로잉 리스트
-  function getFollwoingList(loginUserId, profileUserId) {
+  async function getFollwoingList(loginUserId, profileUserId) {
     const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/following`;
-    axios.get(URL, HEADER).then((res) => {
+    await axios.get(URL, HEADER).then((res) => {
       setFollowingList(res.data);
       console.log('팔로잉`````````````````````````````````````````````````````````````');
       res.data.map((folloUser) => {
@@ -130,9 +130,9 @@ export default function ProfileHead() {
     });
   }
   //팔로워 리스트
-  function getFollowerList(profileUserId) {
+  async function getFollowerList(profileUserId) {
     const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/follower`;
-    axios.get(URL, HEADER).then((res) => {
+    await axios.get(URL, HEADER).then((res) => {
       console.log('팔로워`````````````````````````````````````````````````````````````');
       console.log(res.data);
       setFollowerList(res.data)
@@ -140,9 +140,9 @@ export default function ProfileHead() {
   }
 
   //현재 로그인한 사용자인지 아닌지
-  function followCheck(user) {
+  async function followCheck(user) {
     const URI = `http://i6c109.p.ssafy.io:8000/user`;
-    axios.get(URI, HEADER).then((res) => {
+    await axios.get(URI, HEADER).then((res) => {
       getFollwoingList(res.data, user[0].id); //검색한 프로필 id
       getFollowerList(user[0].id);
 
@@ -155,8 +155,8 @@ export default function ProfileHead() {
   }
 
   //닉네임을 이용하여 해당 유저가 좋아요한 캠핑장 리스트 불러오기
-  const getLikedCampingList = () => {
-    axios
+  const getLikedCampingList = async() => {
+    await axios
       .get(encodeURI(`http://i6c109.p.ssafy.io:8000/camp/like/list/${nick}`),HEADER)
       .then((res) => {
         setLikedCampings(res.data);
@@ -164,8 +164,8 @@ export default function ProfileHead() {
   };
 
   //모든 게시판 가져오기
-  const getBoardList = () => {
-    axios
+  const getBoardList = async() => {
+    await axios
       .get(`http://i6c109.p.ssafy.io:8000/board`, HEADER)
       .then((response) => {
         setBoardList(response.data);
@@ -218,7 +218,6 @@ export default function ProfileHead() {
 
 
   React.useEffect(() => {
-    getUserId();
     getFollowerList();
   }, []);
 
