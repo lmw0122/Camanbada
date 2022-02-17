@@ -319,6 +319,14 @@ export default function BoardDetailMine() {
     window.location.href = PROFILE_MOVE_URL + id;
   }
 
+  function formatDate(date) {
+    return date.getFullYear() + '년 ' + 
+      (date.getMonth() + 1) + '월 ' + 
+      date.getDate() + '일 ' + 
+      date.getHours() + '시 ' + 
+      date.getMinutes() + '분';
+  }
+
   useEffect(() => {
     getBoards();
     getComments();
