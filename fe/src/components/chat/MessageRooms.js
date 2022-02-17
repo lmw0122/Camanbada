@@ -178,7 +178,7 @@ export default function MessageRooms() {
   
   return (
 
-    <Grid container maxWidth="xl" component="main" sx={{ mt: 10, mx : 1}} >
+    <Grid container maxWidth="xl" component="main" sx={{ mt: 12, mx : 3}} >
       <CssBaseline />
       <Grid
         item
