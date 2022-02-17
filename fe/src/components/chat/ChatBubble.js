@@ -58,7 +58,7 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
     setoriginM(chat.message);
   },[])
   // 전송자가 본인일 때
-  if (chat.sender === userId) {
+  if (chat.sender == userId) {
     if (chat.over) {
       return (
         <Grid align="right">

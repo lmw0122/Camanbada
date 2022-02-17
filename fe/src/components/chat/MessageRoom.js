@@ -119,6 +119,12 @@ export default function MessageRoom(props) {
     stomp.send('/pub/chatting/message', {'Authorization': accessToken}, JSON.stringify({ chatroomId: roomId, date: new Date(), message: msg.value, sender: user.userId }));
     msg.value = '';
   };
+
+  const onKeyPress = (e) => {
+    console.log(e);
+      if (e.key == 'Enter') sendMessage(); 
+  }
+
   React.useEffect(() => {
     console.log("use Effect1 act");
   }, []);
@@ -168,8 +174,10 @@ export default function MessageRoom(props) {
       </div>
       <div style={buttonStyle}>
         
-        <input id='userMessageInput' type="text"></input>
-        <button onClick={sendMessage}>전송</button>
+        <input id='userMessageInput' type="text" onKeyPress={onKeyPress}></input>
+        <button
+          onClick={sendMessage}
+        >전송</button>
 
       </div>
     </div>

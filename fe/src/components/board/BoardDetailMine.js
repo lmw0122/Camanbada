@@ -139,6 +139,10 @@ export default function BoardDetailMine() {
         alert("댓글 작성에 실패하였습니다");
       });
   }
+
+  const onKeyPress = (e) => {
+      if (e.key == 'Enter') createOneComment(); 
+  }
   
   //댓글 지우기
   const deleteOneComment = (e, comment) => {
@@ -319,7 +323,7 @@ export default function BoardDetailMine() {
                     </Typography>
                     <Grid sx={{ ml : 1}}>
                       <IconButton>
-                        {clientId === comment.clientId &&
+                        {clientId == comment.clientId &&
                           <DeleteIcon onClick={(e)=>{deleteOneComment(e, comment)}} sx={{ color : '#f44336' }}/>
                           // <Button variant="outlined" style={{ backgroundColor : "#f44336"}}
                           //   onClick={(e)=>{deleteOneComment(e, comment)}}
@@ -353,7 +357,8 @@ export default function BoardDetailMine() {
           >
             <Input
               placeholder="댓글을 남겨보세요."
-              id = "newComment"
+              id="newComment"
+              onKeyPress={onKeyPress}
             >
             </Input>
             <Button
