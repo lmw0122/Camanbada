@@ -47,10 +47,11 @@ export default function BoardDetailMine() {
   const [userInfo, setUserInfo] = useState([]);
   const [loginUserProfile, setLoginUserProfile] = useState([]);
 
+  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8000/board/one/${boardId}`;
+  const BOARD_GET_CAMPNAME_URL = 'http://i6c109.p.ssafy.io:8000/camp/basic/one/'
   const ID_GET_URL = "http://i6c109.p.ssafy.io:8000/user";
   const NICKNAME_GET_URL = "http://i6c109.p.ssafy.io:8000/user/getnickname/";
 
-  const BOARD_GET_URL = `http://i6c109.p.ssafy.io:8000/board/one/${boardId}`;
   const BOARD_DELETE_URL = `http://i6c109.p.ssafy.io:8000/board/${boardId}`;
   const BOARD_ONE_LIKE_URL = `http://i6c109.p.ssafy.io:8000/like/board/`;
 
@@ -81,13 +82,23 @@ export default function BoardDetailMine() {
       });
   };
 
+  const addCampName = async (boardList) => {
+    await axios.get(BOARD_GET_CAMPNAME_URL + boardList.campId, HEADER).then(res => {
+      if (res.data.facltNm == "string")
+        boardList.campName = "-";
+      else
+        boardList.campName = res.data.facltNm;
+    })
+    
+    setDataList(boardList);
+  }
   //게시판 가져오기
   const getBoards = async () => {
     axios
       .get(BOARD_GET_URL, HEADER)
       .then((response) => {
         setBoardUserId(response.data.clientId);
-        setDataList(response.data);
+        addCampName(response.data);
         getNickName(response.data.clientId);
         const onePhoto = response.data.photo;
         console.log(onePhoto);
@@ -283,8 +294,13 @@ export default function BoardDetailMine() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
-        <Container sx={{ p: 0, mt: 12, mb: 8 }} maxWidth="md">
-          <Typography sx={{ mb: 1 }}>&#60;{dataList.tag}&#62;</Typography>
+        <Container sx={{ p:0, mt: 12, mb: 8}} maxWidth="md">
+          <Typography sx={{ mb: 1 }}>
+            &#60;{dataList.tag}&#62;
+          </Typography>
+          <Typography sx={{ mb: 1 }}>
+            &#60;{dataList.campName}&#62;
+          </Typography>
           <Typography variant="h4" sx={{ mb: 2 }}>
             {dataList.title}
           </Typography>

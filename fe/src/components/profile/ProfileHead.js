@@ -113,16 +113,16 @@ export default function ProfileHead() {
     });
   };
 
-  //console.log("현재 눌러본 프로필의 아이디" + userInfo[0].id);
   //팔로잉 리스트
   function getFollwoingList(loginUserId, profileUserId) {
-    const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/follower`;
+    const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/following`;
     axios.get(URL, HEADER).then((res) => {
       setFollowingList(res.data);
-      //console.log(res.data + "````````````````````` " + loginUserId + "````````````````````` " + profileUserId);
+      console.log('팔로잉`````````````````````````````````````````````````````````````');
       res.data.map((folloUser) => {
         //console.log(folloUser.following + " " + loginUserId);
-        if (folloUser.following == loginUserId) {
+        if (folloUser.follower == loginUserId) {
+          console.log('팔로잉 중이야~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
           setIsFollow(true);
         }
       });
@@ -130,8 +130,12 @@ export default function ProfileHead() {
   }
   //팔로워 리스트
   function getFollowerList(profileUserId) {
-    const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/following`;
-    axios.get(URL, HEADER).then((res) => setFollowerList(res.data));
+    const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/follower`;
+    axios.get(URL, HEADER).then((res) => {
+      console.log('팔로워`````````````````````````````````````````````````````````````');
+      console.log(res.data);
+      setFollowerList(res.data)
+    });
   }
 
   //현재 로그인한 사용자인지 아닌지
@@ -141,7 +145,8 @@ export default function ProfileHead() {
       getFollwoingList(res.data, user[0].id); //검색한 프로필 id
       getFollowerList(user[0].id);
 
-      if (res.data == user[0].id) setOtherUserCheck(false);
+      if (res.data == user[0].id)
+        setOtherUserCheck(false);
       else {
         setOtherUserCheck(true);
       }
@@ -224,33 +229,32 @@ export default function ProfileHead() {
                       {nick}
                     </Typography>
                     <ProfileUser />
-
                     {otherUserCheck == true && (
-                      <div>
                         <IsFollow
                           isFollow={isFollow}
                           followUser={userInfo[0].id}
                           getFollow={getFollow}
                         ></IsFollow>
-                        {console.log(userInfo.id)}
+                          )}
+                    {otherUserCheck == true && (
                         <Link
                           to={"/message"}
                           state={{
                             oppUserId: userInfo[0].id,
                           }}
                           style={{ textDecoration: "none" }}
-                        >
+                          >
                           <Button
                             style={{
-                              border: "1px black solid",
-                              color: "black",
+                              color: "white",
+                              variant: "secondary",
+                              backgroundColor: "#1b5e20",
                             }}
                             variant="outlined"
                           >
                             메시지 보내기
                           </Button>
                         </Link>
-                      </div>
                     )}
                     {otherUserCheck == false && (
                       <div>
@@ -278,16 +282,16 @@ export default function ProfileHead() {
                       </Typography>
                     </Stack>
                     <Stack direction="row" spacing={1}>
-                      <Typography sx={{ fontSize: 20 }}>팔로잉</Typography>
+                      <Typography sx={{ fontSize: 20 }}>팔로워</Typography>
                       <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
-                        {otherUserCheck === true && followerList.length}
+                        {otherUserCheck === true && followingList.length}
                         {otherUserCheck === false && followingList.length}
                       </Typography>
                     </Stack>
                     <Stack direction="row" spacing={1}>
-                      <Typography sx={{ fontSize: 20 }}>팔로워</Typography>
+                      <Typography sx={{ fontSize: 20 }}>팔로잉</Typography>
                       <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
-                        {otherUserCheck === true && followingList.length}
+                        {otherUserCheck === true && followerList.length}
                         {otherUserCheck === false && followerList.length}
                       </Typography>
                     </Stack>
@@ -337,42 +341,6 @@ export default function ProfileHead() {
                   </Tabs>
                 </Box>
                 <TabPanel value={value} index={0} align="center">
-                  {/* <Card sx={{ maxWidth: 345 }}>
-                    <CardHeader
-                      avatar={
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                          U
-                        </Avatar>
-                      }
-                      action={
-                        <IconButton aria-label="settings">
-                          <MoreVertIcon />
-                        </IconButton>
-                      }
-                      title="제목"
-                      subheader="날짜?"
-                    />
-                    <CardMedia
-                      component="img"
-                      height="194"
-                      image="https://images.unsplash.com/photo-1641157141085-8454fbc33f3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0MzExNTc1NQ&ixlib=rb-1.2.1&q=80&w=1080"
-                      alt="BoardImage"
-                    />
-                    <CardContent>
-                      <Typography variant="body2" color="text.secondary">
-                        게시글 내용
-                      </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing>
-                      <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
-                      </IconButton>
-                      <IconButton aria-label="share">
-                        <ShareIcon />
-                      </IconButton>
-                    </CardActions>
-                  </Card> */}
-
                   <Container sx={{ py: 0, mb: 8 }} maxWidth="lg">
                     <Grid container spacing={4}>
                       {console.log(boardList.length)}
