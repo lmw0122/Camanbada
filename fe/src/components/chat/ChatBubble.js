@@ -19,6 +19,45 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
   const [isSec, setIsSec] = React.useState(false);
   const [originM, setoriginM] = React.useState("");
   const [overdM, setoverdM] = React.useState("");
+  function setCurTime(tmp) {
+    let date = new Date(tmp);
+    let year = date.getFullYear();
+    let isYun = false;
+    if (year % 4 == 0) {
+      if (year % 100 == 0) {
+        if (year % 400 == 0) {
+          isYun = true;
+        }
+      } else {
+        isYun = true;
+      }
+    }
+    let dayPerMonth = [];
+    if (isYun) {
+      dayPerMonth = [0,31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    } else {
+      dayPerMonth = [0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    }
+    let minute = date.getMinutes();
+    let hour = date.getHours() + 9;
+    let day = date.getDate();
+    if (hour >= 24) {
+      hour = hour % 24;
+      day++;
+    }
+    let month = date.getMonth() + 1;
+    if (day > dayPerMonth[month]) {
+      day %= dayPerMonth[month];
+      month++;
+    }
+    if (month > 12) {
+      month %= 12;
+      year++;
+    }
+    
+    let curTime = year+"년 "+month+"월 "+day+"일 "+hour+"시 "+minute+"분";
+    return curTime;
+  }
   
   console.log(oppNickname + " " + userId)
   const getOverMessage = async (messageId) => {
@@ -62,11 +101,11 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
     if (chat.over) {
       return (
         <Grid align="right">
-          <Typography id={chat.message_id}>
+          <Typography id={chat.message_id} >
             {chat.message}
           </Typography>
           <Typography>
-            {chat.date}
+            {setCurTime(chat.date)}
           </Typography>
           {isClicked ? <button onClick={() => { deleteOverMessage() }}>줄이기</button>
           : <button onClick={() => { getOverMessage(chat.message_id) }}>더보기</button>}
@@ -76,11 +115,11 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
     else {
       return (
         <Grid align="right">
-          <Typography>
+          <Typography sx={{border : '1px solid #f9fbe7', maxWidth : "200px", backgroundColor : "#f9fbe7"}}>
             {chat.message}
           </Typography>
           <Typography>
-            {chat.date}
+            {setCurTime(chat.date)}
           </Typography>
         </Grid>
       )
@@ -88,33 +127,32 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
   } else {
     if (chat.over) {
       return (
-        <Grid align="left">
+        <Grid align="left" >
           <Typography sx={{ fontWeight: 'bold' }}>
             {oppNickname}
           </Typography>
-          <Typography id={chat.message_id}>
+          <Typography id={chat.message_id} sx={{ border : '1px solid black'}}>
             {chat.message}
           </Typography>
           <Typography>
-            {chat.date}
+            {setCurTime(chat.date)}
           </Typography>
           {isClicked ? <button onClick={() => { deleteOverMessage() }}>줄이기</button>
           : <button onClick={() => { getOverMessage(chat.message_id) }}>더보기</button>}
         </Grid>
       )
     }
-    else {
-      
+    else {     
       return (
-        <Grid align="left">
+        <Grid align="left" sx={{ py : 2, pl : 3}}>
           <Typography sx={{ fontWeight: 'bold' }}>
             {oppNickname}
           </Typography>
-          <Typography id={chat.message_id}>
+          <Typography id={chat.message_id} sx={{border : '1px solid #f1f8e9', maxWidth : "150px", backgroundColor : "#f1f8e9"}}>
             {chat.message}
           </Typography>
           <Typography>
-            {chat.date}
+            {setCurTime(chat.date)}
           </Typography>
         </Grid>
       )

@@ -18,7 +18,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Button from '@mui/material/Button';
+import ProfileImageInBoard from "../profile/ProfileImageInBoard";
+import Photo from "./Photo";
 
 const theme = createTheme();
 
@@ -26,20 +27,75 @@ export default function NewsFeed() {
   const [boardList, setBoardList] = useState([]);
   const [followBoardList, setFollowBoardList] = useState([]);
 
+  const [nickName, setNickName] = useState([]);
+  const [loginUserProfile, setLoginUserProfile] = useState([]);
+  const [userInfo, setUserInfo] = useState([]);
+  
   const accessToken = localStorage.getItem("accessToken");
   const HEADER = {
     headers: {
       Authorization: accessToken,
     },
   };
-
+  
   const BOARD_GET_URL = "http://i6c109.p.ssafy.io:8000/board";
   const BOARD_FOLLOW_URL = "http://i6c109.p.ssafy.io:8000/board/follow";
-
+  
   const FOLLOW_USER_URL = "http://i6c109.p.ssafy.io:8000/follow/";
-
+  
   const ID_GET_URL = "http://i6c109.p.ssafy.io:8000/user";
+  const NICKNAME_GET_URL = "http://i6c109.p.ssafy.io:8000/user/getnickname/";
 
+  function getUserInfo(nick){
+    const USERINFO_GET_URL = `http://i6c109.p.ssafy.io:8000/user/${nick}`
+    axios
+      .get(USERINFO_GET_URL, HEADER)
+      .then((res) => {
+        setUserInfo(res);
+        console.log('유저 정보:', res)
+        setLoginUserProfile(res.data[0].photo);
+      });
+  };
+
+  function setCurTime(tmp) {
+    let date = new Date(tmp);
+    let year = date.getFullYear();
+    let isYun = false;
+    if (year % 4 == 0) {
+      if (year % 100 == 0) {
+        if (year % 400 == 0) {
+          isYun = true;
+        }
+      } else {
+        isYun = true;
+      }
+    }
+    let dayPerMonth = [];
+    if (isYun) {
+      dayPerMonth = [0,31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    } else {
+      dayPerMonth = [0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    }
+    let minute = date.getMinutes();
+    let hour = date.getHours() + 9;
+    let day = date.getDate();
+    if (hour >= 24) {
+      hour = hour % 24;
+      day++;
+    }
+    let month = date.getMonth() + 1;
+    if (day > dayPerMonth[month]) {
+      day %= dayPerMonth[month];
+      month++;
+    }
+    if (month > 12) {
+      month %= 12;
+      year++;
+    }
+    
+    let curTime = year+"년 "+month+"월 "+day+"일 "+hour+"시 "+minute+"분";
+    return curTime;
+  }
   //현재 로그인한 사용자 아이디 가져오기
   const getId = async () => {
     axios
@@ -59,6 +115,9 @@ export default function NewsFeed() {
       .get(BOARD_GET_URL, HEADER)
       .then((response) => {
         setBoardList(response.data);
+        console.log('ㅇㅇㅇ', response.data);
+        getNickName(response.data.clientId);
+        console.log('겟보드',nickName);
       })
       .catch((err) => {
         // alert("게시물이 아예 없습니다");
@@ -102,10 +161,20 @@ export default function NewsFeed() {
       });
   }
 
+
+  function getNickName(userId) {
+    const URL = NICKNAME_GET_URL + userId;
+    axios.get(URL, HEADER).then((res) => {
+      setNickName(res.data);
+      getUserInfo(res.data);
+    })
+  }
+
   useEffect(() => {
-    getId();
     getBoard();
+    getId();
   }, []);
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -157,13 +226,10 @@ export default function NewsFeed() {
                       <Card sx={{ maxWidth: 345 }}>
                         <CardHeader
                           avatar={
-                            <Avatar
-                              sx={{ bgcolor: red[500] }}
-                              aria-label="recipe"
-                            />
+                            <Photo boardList={ board } />                            
                           }
                           title={board.title}
-                          subheader={board.date}
+                          subheader={setCurTime(board.date)}
                         />
                         {board.photo != "" && (
                           <CardMedia
@@ -228,13 +294,10 @@ export default function NewsFeed() {
                       <Card sx={{ maxWidth: 345, maxHight: 345 }}>
                         <CardHeader
                           avatar={
-                            <Avatar
-                              sx={{ bgcolor: red[500] }}
-                              aria-label="recipe"
-                            />
+                            <Photo boardList={ board } />
                           }
                           title={board.title}
-                          subheader={board.date}
+                          subheader={setCurTime(board.date)}
                         />
                         {board.photo != "" && (
                           <CardMedia

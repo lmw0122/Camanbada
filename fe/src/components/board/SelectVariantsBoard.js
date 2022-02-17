@@ -18,6 +18,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paging from '../common/Pagination';
 
+// d.date
 
 export default function SelectVariants() {
   const [camp, setCamp] = React.useState('');
@@ -51,13 +52,59 @@ export default function SelectVariants() {
   var dropbox3 = [];
   var camps = [];
   var temp = [];
+  const accessToken = localStorage.getItem("accessToken");
+  const HEADER = {
+    headers: {
+      Authorization: accessToken,
+    },
+  };
+  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8000/camp/basic/list';
+  const CAMP_GET_NAME_URL = `http://i6c109.p.ssafy.io:8000/camp/basic/one/`;
+  const BOARD_GET_URL = 'http://i6c109.p.ssafy.io:8000/board';
+  const SIGUNGU_GET_URL = `http://i6c109.p.ssafy.io:8000/camp/basic/list/sigungu/${sido}`;
+  const SIDO_GET_URL = 'http://i6c109.p.ssafy.io:8000/camp/basic/list/sido';
+  const KEYWORD_GET_URL = `http://i6c109.p.ssafy.io:8000/board/search/${titleKeyword}`
 
-  const CAMP_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list';
-  const BOARD_GET_URL = 'http://i6c109.p.ssafy.io:8051/board';
-  const SIGUNGU_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/basic/list/sigungu/${sido}`;
-  const SIDO_GET_URL = 'http://i6c109.p.ssafy.io:8092/camp/basic/list/sido';
-  const KEYWORD_GET_URL = `http://i6c109.p.ssafy.io:8051/board/search/${titleKeyword}`
-
+  // 시간 변환 함수
+  function setCurTime(tmp) {
+    let date = new Date(tmp);
+    let year = date.getFullYear();
+    let isYun = false;
+    if (year % 4 == 0) {
+      if (year % 100 == 0) {
+        if (year % 400 == 0) {
+          isYun = true;
+        }
+      } else {
+        isYun = true;
+      }
+    }
+    let dayPerMonth = [];
+    if (isYun) {
+      dayPerMonth = [0,31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    } else {
+      dayPerMonth = [0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    }
+    let minute = date.getMinutes();
+    let hour = date.getHours() + 9;
+    let day = date.getDate();
+    if (hour >= 24) {
+      hour = hour % 24;
+      day++;
+    }
+    let month = date.getMonth() + 1;
+    if (day > dayPerMonth[month]) {
+      day %= dayPerMonth[month];
+      month++;
+    }
+    if (month > 12) {
+      month %= 12;
+      year++;
+    }
+    
+    let curTime = year+"년 "+month+"월 "+day+"일 "+hour+"시 "+minute+"분";
+    return curTime;
+  }
   const getTitleKeyword = (e) => {
     setTitleKeyword(e.target.value);
   }
@@ -85,7 +132,8 @@ export default function SelectVariants() {
   const getCampings = async() => {
     const json = await (
       await fetch (
-        CAMP_GET_URL
+        CAMP_GET_URL, HEADER
+        
       )
     ).json();
     setCampings(json);
@@ -93,7 +141,7 @@ export default function SelectVariants() {
 
 
   React.useEffect(() => {
-    Axios.get(SIDO_GET_URL)
+    Axios.get(SIDO_GET_URL,HEADER)
       .then(res => setSidosjson(res.data))   
   }, []);
 
@@ -101,7 +149,7 @@ export default function SelectVariants() {
   // sido 값이 변화할 때만 api 호출!
   React.useEffect(() => {
     if (sido !== '') {
-      Axios.get(SIGUNGU_GET_URL)
+      Axios.get(SIGUNGU_GET_URL,HEADER)
         .then(res => setSigungusjson(res.data)) 
     }
   }, [sido]);
@@ -173,7 +221,7 @@ export default function SelectVariants() {
   }
 
   const getBoards = async () => {
-    Axios.get(BOARD_GET_URL,)
+    Axios.get(BOARD_GET_URL,HEADER)
       .then((response) => {
         let boardList = response.data;
         boardList.sort(function (a, b) {
@@ -184,19 +232,29 @@ export default function SelectVariants() {
           else
             return 1;
         })
-        setDataList(boardList);
+        addCampName(boardList);
       }).catch((error) => {
         alert("게시판이 비어있습니다");
       });
-  };
-
+    };
+const addCampName = async (boardList) => {
+  for (let i = 0; i < boardList.length; i++){
+    await Axios.get(CAMP_GET_NAME_URL + boardList[i].campId, HEADER).then(res => {
+      if (res.data.facltNm == "string")
+        boardList[i].campName = "-";
+      else
+        boardList[i].campName = res.data.facltNm;
+    })
+  }
+  setDataList(boardList);
+  }
   React.useEffect(() => {
     getBoards()
   }, [])
 
   console.log(tag)
 
-  var selectedTag = [];
+  let selectedTag = [];
 
   // const [selectedTag, setSelectedTag] = React.useState('');
  
@@ -408,6 +466,7 @@ return (
               <TableRow sx={{ border : '1px solid black', bgcolor : '#1b5e20' }}>
                 {/* <TableCell>번호</TableCell> */}
                 <TableCell align="center" sx={{ fontWeight: 'bold',color : '#ffffff', fontSize: '18px' }}>말머리</TableCell>
+                <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>캠핑장명</TableCell>
                 <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>게시물 제목</TableCell>
                 <TableCell align="center" sx={{ fontWeight: 'bold', color : '#ffffff', fontSize: '18px' }}>작성날짜</TableCell>
               </TableRow>
@@ -424,12 +483,14 @@ return (
                   </TableCell> */}
                   <TableCell align="center" sx={{ fontSize: '15px'}}>{d.tag}</TableCell>
                   {/* <TableCell align="center" sx={{ fontSize: '15px'}}>{d}</TableCell> */}
+                  <TableCell align="center" sx={{ fontSize: '15px'}}>{d.campName}</TableCell>
+                  
                   <TableCell align="center" sx={{ fontSize: '15px'}}>
                     <Link to={`/board/${d.boardId}`} style={{ textDecoration: 'none', color : '#1b5e20'}}>
                     {d.title}
                     </Link>
                   </TableCell>
-                  <TableCell align="center" sx={{ fontSize: '15px'}}>{d.date.replace("T", " ").substring(2,16)}</TableCell>
+                  <TableCell align="center" sx={{ fontSize: '15px'}}>{setCurTime(d.date)}</TableCell>
                 </TableRow>
               )) : ''}
             </TableBody>

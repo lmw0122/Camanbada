@@ -1,28 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import { Link, useParams } from "react-router-dom";
+import { Container, CssBaseline, Typography, Grid, Stack, Box, Tabs, Tab, Card, CardMedia, Button, CardHeader, Avatar, IconButton, CardContent, CardActions, Paper } from "@mui/material";
+import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { red } from "@mui/material/colors";
 import PropTypes from "prop-types";
 import IsFollow from "./IsFollow";
 import ProfileUser from "./ProfileUser";
-import { Container, CssBaseline, Typography, Grid, Stack, Box } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import Button from "@mui/material/Button";
-import CardHeader from "@mui/material/CardHeader";
-import Avatar from "@mui/material/Avatar";
-import { red } from "@mui/material/colors";
-import IconButton from "@mui/material/IconButton";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
 import CampingImage from "../camping/CampingImage";
 import ProfileImage from "./ProfileImage";
 import Paging from '../common/Pagination';
@@ -128,16 +113,16 @@ export default function ProfileHead() {
     });
   };
 
-  //console.log("현재 눌러본 프로필의 아이디" + userInfo[0].id);
   //팔로잉 리스트
   function getFollwoingList(loginUserId, profileUserId) {
-    const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/follower`;
+    const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/following`;
     axios.get(URL, HEADER).then((res) => {
       setFollowingList(res.data);
-      //console.log(res.data + "````````````````````` " + loginUserId + "````````````````````` " + profileUserId);
+      console.log('팔로잉`````````````````````````````````````````````````````````````');
       res.data.map((folloUser) => {
         //console.log(folloUser.following + " " + loginUserId);
-        if (folloUser.following == loginUserId) {
+        if (folloUser.follower == loginUserId) {
+          console.log('팔로잉 중이야~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
           setIsFollow(true);
         }
       });
@@ -145,8 +130,12 @@ export default function ProfileHead() {
   }
   //팔로워 리스트
   function getFollowerList(profileUserId) {
-    const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/following`;
-    axios.get(URL, HEADER).then((res) => setFollowerList(res.data));
+    const URL = `http://i6c109.p.ssafy.io:8000/follow/${profileUserId}/follower`;
+    axios.get(URL, HEADER).then((res) => {
+      console.log('팔로워`````````````````````````````````````````````````````````````');
+      console.log(res.data);
+      setFollowerList(res.data)
+    });
   }
 
   //현재 로그인한 사용자인지 아닌지
@@ -156,7 +145,8 @@ export default function ProfileHead() {
       getFollwoingList(res.data, user[0].id); //검색한 프로필 id
       getFollowerList(user[0].id);
 
-      if (res.data == user[0].id) setOtherUserCheck(false);
+      if (res.data == user[0].id)
+        setOtherUserCheck(false);
       else {
         setOtherUserCheck(true);
       }
@@ -183,6 +173,48 @@ export default function ProfileHead() {
         // alert("게시물이 아예 없습니다");
       });
   };
+
+  function setCurTime(tmp) {
+    let date = new Date(tmp);
+    let year = date.getFullYear();
+    let isYun = false;
+    if (year % 4 == 0) {
+      if (year % 100 == 0) {
+        if (year % 400 == 0) {
+          isYun = true;
+        }
+      } else {
+        isYun = true;
+      }
+    }
+    let dayPerMonth = [];
+    if (isYun) {
+      dayPerMonth = [0,31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    } else {
+      dayPerMonth = [0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    }
+    let minute = date.getMinutes();
+    let hour = date.getHours() + 9;
+    let day = date.getDate();
+    if (hour >= 24) {
+      hour = hour % 24;
+      day++;
+    }
+    let month = date.getMonth() + 1;
+    if (day > dayPerMonth[month]) {
+      day %= dayPerMonth[month];
+      month++;
+    }
+    if (month > 12) {
+      month %= 12;
+      year++;
+    }
+    
+    let curTime = year+"년 "+month+"월 "+day+"일 "+hour+"시 "+minute+"분";
+    return curTime;
+  }
+
+
 
   React.useEffect(() => {
     getUserId();
@@ -233,39 +265,39 @@ export default function ProfileHead() {
                   {/* <AccountCircleIcon sx={{ fontSize: 150 }} /> */}
                 </Grid>
                 <Grid item md={7.2}>
-                  {/* 닉네임 */}
                   <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
                     <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                       {nick}
                     </Typography>
-                    <ProfileUser />
-
+                    {otherUserCheck == false &&
+                      <ProfileUser />
+                    }
                     {otherUserCheck == true && (
-                      <div>
                         <IsFollow
                           isFollow={isFollow}
                           followUser={userInfo[0].id}
                           getFollow={getFollow}
                         ></IsFollow>
-                        {console.log(userInfo.id)}
+                          )}
+                    {otherUserCheck == true && (
                         <Link
                           to={"/message"}
                           state={{
                             oppUserId: userInfo[0].id,
                           }}
                           style={{ textDecoration: "none" }}
-                        >
+                          >
                           <Button
                             style={{
-                              border: "1px black solid",
-                              color: "black",
+                              color: "white",
+                              variant: "secondary",
+                              backgroundColor: "#1b5e20",
                             }}
                             variant="outlined"
                           >
                             메시지 보내기
                           </Button>
                         </Link>
-                      </div>
                     )}
                     {otherUserCheck == false && (
                       <div>
@@ -293,16 +325,16 @@ export default function ProfileHead() {
                       </Typography>
                     </Stack>
                     <Stack direction="row" spacing={1}>
-                      <Typography sx={{ fontSize: 20 }}>팔로잉</Typography>
+                      <Typography sx={{ fontSize: 20 }}>팔로워</Typography>
                       <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
-                        {otherUserCheck === true && followerList.length}
+                        {otherUserCheck === true && followingList.length}
                         {otherUserCheck === false && followingList.length}
                       </Typography>
                     </Stack>
                     <Stack direction="row" spacing={1}>
-                      <Typography sx={{ fontSize: 20 }}>팔로워</Typography>
+                      <Typography sx={{ fontSize: 20 }}>팔로잉</Typography>
                       <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
-                        {otherUserCheck === true && followingList.length}
+                        {otherUserCheck === true && followerList.length}
                         {otherUserCheck === false && followerList.length}
                       </Typography>
                     </Stack>
@@ -352,42 +384,6 @@ export default function ProfileHead() {
                   </Tabs>
                 </Box>
                 <TabPanel value={value} index={0} align="center">
-                  {/* <Card sx={{ maxWidth: 345 }}>
-                    <CardHeader
-                      avatar={
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                          U
-                        </Avatar>
-                      }
-                      action={
-                        <IconButton aria-label="settings">
-                          <MoreVertIcon />
-                        </IconButton>
-                      }
-                      title="제목"
-                      subheader="날짜?"
-                    />
-                    <CardMedia
-                      component="img"
-                      height="194"
-                      image="https://images.unsplash.com/photo-1641157141085-8454fbc33f3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0MzExNTc1NQ&ixlib=rb-1.2.1&q=80&w=1080"
-                      alt="BoardImage"
-                    />
-                    <CardContent>
-                      <Typography variant="body2" color="text.secondary">
-                        게시글 내용
-                      </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing>
-                      <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
-                      </IconButton>
-                      <IconButton aria-label="share">
-                        <ShareIcon />
-                      </IconButton>
-                    </CardActions>
-                  </Card> */}
-
                   <Container sx={{ py: 0, mb: 8 }} maxWidth="lg">
                     <Grid container spacing={4}>
                       {console.log(boardList.length)}
@@ -410,7 +406,7 @@ export default function ProfileHead() {
                                       />
                                     }
                                     title={board.title}
-                                    subheader={board.date}
+                                    subheader={setCurTime(board.date)}
                                   />
                                   {board.photo != "" && (
                                     <CardMedia
