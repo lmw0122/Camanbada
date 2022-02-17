@@ -16,6 +16,7 @@ import CampingImage from "../camping/CampingImage";
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Link } from "react-router-dom";
+import Paging from '../common/Pagination';
 
 
 
@@ -29,7 +30,10 @@ export default function SearchCampingAlbum() {
 
   const SEARCHKEYWORD_GET_URL = `http://i6c109.p.ssafy.io:8092/camp/basic/list/keyword/${searchkeyword}`
  
-
+  const [pageNum, setPageNum] = React.useState(1);
+  const [numPerPage, setNumPerPage] = React.useState(8);
+  let totalListCount = campings.length;
+  let offset = (pageNum - 1) * numPerPage;
   React.useEffect(() => {
     Axios.get(SEARCHKEYWORD_GET_URL)
       .then(res => setCampings(res.data))
@@ -78,7 +82,7 @@ export default function SearchCampingAlbum() {
         <Container sx={{ py: 0 }} maxWidth="lg">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {campings.map((camp) => (
+            {campings.slice(offset,offset+numPerPage).map((camp) => (
               <Grid item key={camp.campId} xs={12} sm={6} md={3}>
                 
                 <Card
@@ -110,6 +114,7 @@ export default function SearchCampingAlbum() {
             ))}
           </Grid>
         </Container>
+        <Paging pageNum={pageNum} setPageNum={setPageNum} numPerPage={numPerPage} totalListCount={totalListCount}></Paging>
       </main>
     </ThemeProvider>
   );

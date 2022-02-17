@@ -32,6 +32,7 @@ import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import CampingImage from "../camping/CampingImage";
 import ProfileImage from "./ProfileImage";
+import Paging from '../common/Pagination';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -85,7 +86,13 @@ export default function ProfileHead() {
       Authorization: accessToken,
     },
   };
-
+  //페이지네이션 관련
+  const [boardPageNum, setBoardPageNum] = React.useState(1);
+  const [LikedCampingPageNum, setLikedCampingPageNum] = React.useState(1);
+  const [numPerPage, setNumPerPage] = React.useState(3);
+  
+  let boardOffset = (boardPageNum - 1) * numPerPage;
+  let LCOffset = (LikedCampingPageNum - 1) * numPerPage;
   const { nick } = useParams("");
   const [userInfo, setUserInfo] = useState("");
   const [otherUserCheck, setOtherUserCheck] = useState("");
@@ -202,11 +209,16 @@ export default function ProfileHead() {
   }, []);
 
   const searchList = [];
-
+  const myBoardList = [];
   for (var i = 0; i < likedCampings.length; i++) {
     searchList.push(likedCampings[i]);
   }
-
+  for (var i = 0; i < boardList.length; i++) {
+    if(boardList[i].clientId === userInfo[0].id)
+      myBoardList.push(boardList[i]);
+  }
+  let totalBoardListCount = myBoardList.length;
+  let totalLikedCampingCount = searchList.length;
   return (
     <div>
       {loading ? null : (
@@ -284,7 +296,7 @@ export default function ProfileHead() {
                     <Stack direction="row" spacing={1}>
                       <Typography sx={{ fontSize: 20 }}>게시물</Typography>
                       <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
-                        4
+                        {myBoardList.length}
                       </Typography>
                     </Stack>
                     <Stack direction="row" spacing={1}>
@@ -385,9 +397,12 @@ export default function ProfileHead() {
 
                   <Container sx={{ py: 0, mb: 8 }} maxWidth="lg">
                     <Grid container spacing={4}>
-                      {boardList.map(
+                      {console.log(boardList.length)}
+                      {console.log(totalBoardListCount)}
+                      {myBoardList.slice(boardOffset,boardOffset+numPerPage).map(
                         (board, idx) =>
-                          board.clientId === userInfo[0].id && (
+                           (
+                            
                             <Grid item key={board} xs={12} sm={6} md={4}>
                               <Link
                                 to={`/board/${board.boardId}`}
@@ -465,6 +480,7 @@ export default function ProfileHead() {
                       )}
                     </Grid>
                   </Container>
+                  <Paging pageNum={boardPageNum} setPageNum={setBoardPageNum} numPerPage={numPerPage} totalListCount={totalBoardListCount}></Paging>
                 </TabPanel>
                 <TabPanel value={value} index={1} align="center">
                   {/* <Card
@@ -498,7 +514,7 @@ export default function ProfileHead() {
                     {/* End hero unit */}
                     <Grid container spacing={4}>
                       {/* {console.log("mmmmmmmmmmmmmmmmmmmmmmmmmm")} */}
-                      {searchList.map((camp) => (
+                      {searchList.slice(LCOffset, LCOffset+numPerPage).map((camp) => (
                         <Grid item key={camp.campId} xs={12} sm={6} md={3}>
                           <Card
                             sx={{
@@ -534,6 +550,7 @@ export default function ProfileHead() {
                       ))}
                     </Grid>
                   </Container>
+                  <Paging pageNum={LikedCampingPageNum} setPageNum={setLikedCampingPageNum} numPerPage={numPerPage} totalListCount={totalLikedCampingCount}></Paging>
                 </TabPanel>
               </Box>
             </Container>
