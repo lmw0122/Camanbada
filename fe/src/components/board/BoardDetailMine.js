@@ -24,6 +24,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // import Input from '@mui/material/Input';
 
 import ProfileImage from "../profile/ProfileImage";
+import ProfileImageInBoard from "../profile/ProfileImageInBoard";
 
 const theme = createTheme();
 
@@ -76,6 +77,7 @@ export default function BoardDetailMine() {
       .then((res) => {
         setUserInfo(res);
         setLoginUserProfile(res.data[0].photo);
+        console.log('로그은유저프로ㅓ필',loginUserProfile);
       });
   };
 
@@ -279,8 +281,6 @@ export default function BoardDetailMine() {
     getUserInfo();
   }, [boardId]);
 
-  console.log('넘어온 유저정보',userInfo);
-
   const content = dataList.content;
 
   return (
@@ -301,13 +301,7 @@ export default function BoardDetailMine() {
             }}
           >
             <Grid sx={{width: '5ch'  }}>
-              <AccountCircleIcon
-                sx={{ fontSize: 60 }}
-                onClick={(e) => {
-                  goProfile(e, boardUserId);
-                }}
-              />
-              <ProfileImage userInfo={ loginUserProfile } />
+              <ProfileImageInBoard loginUserProfile={ loginUserProfile }/>
             </Grid>
             <Grid>
               <Stack direction='row' alignItems="center">
