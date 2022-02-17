@@ -105,7 +105,7 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
     if (chat.over) {
       return (
         <Grid align="right">
-          <Typography id={chat.message_id}>
+          <Typography id={chat.message_id} >
             {chat.message}
           </Typography>
           <Typography>
@@ -119,7 +119,7 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
     else {
       return (
         <Grid align="right">
-          <Typography>
+          <Typography sx={{border : '1px solid #f9fbe7', maxWidth : "200px", backgroundColor : "#f9fbe7"}}>
             {chat.message}
           </Typography>
           <Typography>
@@ -131,11 +131,11 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
   } else {
     if (chat.over) {
       return (
-        <Grid align="left">
+        <Grid align="left" >
           <Typography sx={{ fontWeight: 'bold' }}>
             {oppNickname}
           </Typography>
-          <Typography id={chat.message_id}>
+          <Typography id={chat.message_id} sx={{ border : '1px solid black'}}>
             {chat.message}
           </Typography>
           <Typography>
@@ -146,14 +146,13 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
         </Grid>
       )
     }
-    else {
-      
+    else {     
       return (
-        <Grid align="left">
+        <Grid align="left" sx={{ py : 2, pl : 3}}>
           <Typography sx={{ fontWeight: 'bold' }}>
             {oppNickname}
           </Typography>
-          <Typography id={chat.message_id}>
+          <Typography id={chat.message_id} sx={{border : '1px solid #f1f8e9', maxWidth : "150px", backgroundColor : "#f1f8e9"}}>
             {chat.message}
           </Typography>
           <Typography>

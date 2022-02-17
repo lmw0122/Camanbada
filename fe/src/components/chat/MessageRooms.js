@@ -138,31 +138,36 @@ export default function MessageRooms() {
   
   return (
 
-    <Grid container component="main" sx={{ mt: 15}}>
+    <Grid container maxWidth="xl" component="main" sx={{ mt: 10, mx : 1}} >
       <CssBaseline />
       <Grid
         item
         md={6}
         align="center"
+        style={{ border : '1px solid black'}}
       >
+        <Typography variant="h4" sx={{ my : 2}}>
+          Message List
+        </Typography>
         {lists.map((list , i) => (
           <Grid 
             onClick={() => { createMessageRoom(list.chatroomId, list.user, list.nickname); }}
             justifyContent="center"
             alignItems="center"
-            md={6}
+            md={8}
             direction="row"
+            style={{ border : '1px solid black'}}
           >
-            <Stack direction="row" alignItems="center">
+            <Stack direction="row" alignItems="center" style={{ mt : 1}}>
               <Grid item align="center" sx={{ mr:1 }}>
-                <AccountCircleIcon sx={{ fontSize: 50 }} />
+                <AccountCircleIcon sx={{ fontSize: 50, m : 1 }} />
               </Grid>
               <Grid>
                 <Stack direction="row" spacing={2}>
                   <Typography sx={{ fontWeight: 'bold' }}>
                     {list.nickname}님
                   </Typography>
-                  <Typography align="right">
+                  <Typography alignItems="right" >
                     {list.date} 
                   </Typography>
                 </Stack>
