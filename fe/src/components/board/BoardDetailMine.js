@@ -296,19 +296,9 @@ export default function BoardDetailMine() {
               mb: 2,
             }}
           >
-<<<<<<< HEAD
-            <Grid>
-              <AccountCircleIcon
-                sx={{ fontSize: 60 }}
-                onClick={(e) => {
-                  goProfile(e, nickName);
-                }}
-              />
               {/* <ProfileImage userInfo={ dataList } /> */}
-=======
-            <Grid sx={{width: '5ch'  }}>
-              <ProfileImageInBoard loginUserProfile={ loginUserProfile }/>
->>>>>>> dd87740bfb4da9835cf2bc75561012b895f2819d
+            <Grid sx={{width: '5ch'  }} onClick={(e) => {goProfile(e, nickName);}}>
+              <ProfileImageInBoard loginUserProfile={ loginUserProfile } />
             </Grid>
             <Grid>
               <Stack direction='row' alignItems="center">
