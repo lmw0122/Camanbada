@@ -296,7 +296,7 @@ export default function ProfileHead() {
                     <Stack direction="row" spacing={1}>
                       <Typography sx={{ fontSize: 20 }}>게시물</Typography>
                       <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
-                        4
+                        {myBoardList.length}
                       </Typography>
                     </Stack>
                     <Stack direction="row" spacing={1}>
