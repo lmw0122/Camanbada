@@ -21,6 +21,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useParams } from 'react-router-dom';
 import Axios from "axios";
+import Paging from '../common/Pagination';
 
 
 const theme = createTheme();
@@ -33,13 +34,17 @@ export default function SearchAll() {
   const [userList, setUserList] = React.useState([]);
 
   const KEYWORD_GET_URL = `http://i6c109.p.ssafy.io:8050/user/search/${keyword}`
-
+  const [pageNum, setPageNum] = React.useState(1);
+  const [numPerPage, setNumPerPage] = React.useState(8);
+  
   React.useEffect(() => {
     Axios.get(KEYWORD_GET_URL)
-      .then(res => setUserList(res.data))
+    .then(res => setUserList(res.data))
   }, []);
-
-
+  
+  
+  let totalListCount = userList.length;
+  let offset = (pageNum - 1) * numPerPage;
   return (
     <ThemeProvider theme={theme}>    
       <CssBaseline />
@@ -83,7 +88,7 @@ export default function SearchAll() {
             </Link>
           </Grid>
           <Grid container spacing={4} sx={{mb: 8, mt: 1}}>
-            {userList.map((user) => (
+            {userList.slice(offset,offset+numPerPage).map((user) => (
               <Grid item key={user} xs={12} sm={6} md={3}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
@@ -115,6 +120,8 @@ export default function SearchAll() {
             ))}
           </Grid>
         </Container>
+        <Paging pageNum={pageNum} setPageNum={setPageNum} numPerPage={numPerPage} totalListCount={totalListCount}></Paging>
+
       </main>
     </ThemeProvider>
   );

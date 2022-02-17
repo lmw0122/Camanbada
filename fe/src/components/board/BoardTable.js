@@ -61,7 +61,6 @@ export default function BoardTable() {
                 {/* <TableCell>번호</TableCell> */}
                 <TableCell align="center">말머리</TableCell>
                 <TableCell align="center">제목</TableCell>
-                <TableCell align="center">작성자</TableCell>
                 <TableCell align="center">작성날짜</TableCell>
               </TableRow>
             </TableHead>

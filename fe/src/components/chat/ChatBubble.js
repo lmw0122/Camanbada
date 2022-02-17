@@ -14,31 +14,51 @@ import Axios from "axios";
 //const [moreButtonStyle, setMoreButtonStyle] = React.useState({});
 
 const ChatBubble = ({ chat, i, userId, oppNickname }) => {
+  const [isClicked, setIsClicked] = React.useState(false);
   const accessToken = localStorage.getItem("accessToken");
-  console.log(oppNickname+ " "+ userId)
+  const [isSec, setIsSec] = React.useState(false);
+  const [originM, setoriginM] = React.useState("");
+  const [overdM, setoverdM] = React.useState("");
+  
+  console.log(oppNickname + " " + userId)
   const getOverMessage = async (messageId) => {
     console.log("getOverMessage act");
-    await fetch(
-      `http://i6c109.p.ssafy.io:8000/chat/over/${messageId}`, {
-        headers: {
-          'Authorization': accessToken
-        }
-      }
-    ).then(res => {
-      console.log(res);
-      if (res.ok) {
-        return res.json();
-      }
-    }).then(data => {
-      console.log(data);
+    if (isSec) {
       let cM = document.getElementById(chat.message_id);
-      cM.innerText = chat.message + data.overMessage;
-    });
+      cM.innerText = originM + overdM;
+    }
+    else {
+      await fetch(
+        `http://i6c109.p.ssafy.io:8000/chat/over/${messageId}`, {
+          headers: {
+            'Authorization': accessToken
+          }
+        }
+      ).then(res => {
+        console.log(res);
+        if (res.ok) {
+          return res.json();
+        }
+      }).then(data => {
+        console.log(data);
+        setoverdM(data.overMessage);
+        setIsSec(true);
+        let cM = document.getElementById(chat.message_id);
+        cM.innerText = chat.message + data.overMessage;
+      });  
+    }
+    setIsClicked(true);
   };
-
-
+  const deleteOverMessage = () => {
+    let cM = document.getElementById(chat.message_id);
+    cM.innerText = originM;
+    setIsClicked(false);
+  }
+  React.useEffect(() => {
+    setoriginM(chat.message);
+  },[])
   // 전송자가 본인일 때
-  if (chat.sender === userId) {
+  if (chat.sender == userId) {
     if (chat.over) {
       return (
         <Grid align="right">
@@ -48,7 +68,8 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
           <Typography>
             {chat.date}
           </Typography>
-          <button onClick={() => { getOverMessage(chat.message_id) }}>더보기</button>
+          {isClicked ? <button onClick={() => { deleteOverMessage() }}>줄이기</button>
+          : <button onClick={() => { getOverMessage(chat.message_id) }}>더보기</button>}
         </Grid>
       )
     }
@@ -77,7 +98,8 @@ const ChatBubble = ({ chat, i, userId, oppNickname }) => {
           <Typography>
             {chat.date}
           </Typography>
-          <button onClick={() => { getOverMessage(chat.message_id) }}>더보기</button>
+          {isClicked ? <button onClick={() => { deleteOverMessage() }}>줄이기</button>
+          : <button onClick={() => { getOverMessage(chat.message_id) }}>더보기</button>}
         </Grid>
       )
     }
